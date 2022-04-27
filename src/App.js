@@ -13,7 +13,8 @@ function App() {
       <Routes>
         <Switch>
               <Route exact path="/" component={HomePage} />
-              <Route path="/admin" component={AdminPage}/>
+              <Route exact path="/admin/" component={AdminPage}/>
+              <Route exact path="/admin/:option" component={AdminPage}/>
               <Route path="/signin" component={SignInPage} />
               <Route path="/quiz" component={Quiz} />
               <Route path="/result" component={Result} />
