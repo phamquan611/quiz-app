@@ -1,0 +1,124 @@
+{
+    "results": [
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "How many times did Martina Navratilova win the Wimbledon Singles Championship?",
+        "correct_answer": "Nine",
+        "incorrect_answers": [
+          "Ten",
+          "Seven",
+          "Eight"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "What tool lends it&#039;s name to a last-stone advantage in an end in Curling?",
+        "correct_answer": "Hammer",
+        "incorrect_answers": [
+          "Wrench",
+          "Drill",
+          "Screwdriver"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which Italian footballer told Neuer where he&#039;s putting his shot and dragging it wide, during the match Italy-Germany, UEFA EURO 2016?",
+        "correct_answer": "Pelle",
+        "incorrect_answers": [
+          "Insigne",
+          "Barzagli",
+          "Giaccherini"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which male player won the gold medal of table tennis singles in 2016 Olympics Games?",
+        "correct_answer": "Ma Long (China)",
+        "incorrect_answers": [
+          "Zhang Jike (China)",
+          "Jun Mizutani (Japan)",
+          "Vladimir Samsonov (Belarus)"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "What is the full name of the footballer &quot;Cristiano Ronaldo&quot;?",
+        "correct_answer": "Cristiano Ronaldo dos Santos Aveiro",
+        "incorrect_answers": [
+          "Cristiano Ronaldo los Santos Diego",
+          "Cristiano Armando Diego Ronaldo",
+          "Cristiano Luis Armando Ronaldo"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which city features all of their professional sports teams&#039; jersey&#039;s with the same color scheme?",
+        "correct_answer": "Pittsburgh",
+        "incorrect_answers": [
+          "New York",
+          "Seattle",
+          "Tampa Bay"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Which player &quot;kung-fu kicked&quot; a Crystal Palace fan in January 1995?",
+        "correct_answer": "Eric Cantona",
+        "incorrect_answers": [
+          "David Seamen",
+          "Ashley Cole",
+          "Mark Hughes"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "Who is Manchester United&#039;s leading appearance maker?",
+        "correct_answer": "Ryan Giggs",
+        "incorrect_answers": [
+          "David Beckham",
+          "Wayne Rooney",
+          "Eric Cantona"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "What is &ldquo;The Sport of Kings&rdquo;?",
+        "correct_answer": "Horse Racing",
+        "incorrect_answers": [
+          "Chess",
+          "Jousting",
+          "Fencing"
+        ]
+      },
+      {
+        "category": "Sports",
+        "type": "multiple",
+        "difficulty": "hard",
+        "question": "In Canadian football, scoring a rouge is worth how many points?",
+        "correct_answer": "1",
+        "incorrect_answers": [
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    ]
+  }
