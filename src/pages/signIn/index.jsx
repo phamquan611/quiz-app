@@ -4,14 +4,15 @@ export default function SignInPage() {
   const [input, setInput] = useState({account : "", password : ""});
   const {account, password} = input;
   const handleChangeInput = (e) => {
-    return setInput({...input, })
+    return setInput({...input, [e.target.name] : e.target.value })
   }
   return (
     <>
       <div className='flex-auto'>
-        <h1>SIGN IN PQ-Quizz !</h1>
+        <div className='mt-20 ml-5 text-3xl font-bold text-[#50d71e] cursor-pointer w-[180px]'>PQ Quizz!!!</div>
       </div>
       <div className='w-full h-full mt-20'>
+        <div className='mx-auto text-center font-bold text-2xl'>Sign in with <b className='text-[#50d71e]'>PQ Quizz!!!</b></div>
         <div className='lg:w-1/3 md:w-2/3 sm:w-full max-w-full mx-auto mb-5 mt-10 px-4'>
         <label className="block">
           <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
@@ -41,6 +42,11 @@ export default function SignInPage() {
               placeholder="password" 
             />
           </label>
+        </div>
+        <div className='text-center mt-10'>
+          <button className='py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75'>
+            Sign In
+          </button>
         </div>
       </div>
     </>

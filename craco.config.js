@@ -11,6 +11,7 @@ module.exports = {
       "@utils": path.resolve(__dirname, "src/utils"),
       "@guards": path.resolve(__dirname, "src/guards"),
       "@store": path.resolve(__dirname, "src/store"),
+      "@middleware": path.resolve(__dirname, "src/middleware"),
     },
   },
 };
