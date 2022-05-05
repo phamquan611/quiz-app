@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useLocation , NavLink, Switch , Route, Link} from 'react-router-dom';
+import { withRouter ,useHistory} from 'react-router-dom';
 import ProfilePage from '@pages/profile';
 import CategoryPage from '@pages/category';
 import ActivityPage from '@pages/activity';
-import { withRouter ,useHistory} from 'react-router-dom';
 import CreateTopic from '@pages/createTopic';
 import TopicContent from '@pages/topicContent';
 
 function AdminPage() {
   const history = useHistory();
-  const [search, setSearchCategory] = useState("");
   const location = useLocation();
+  const [searchQuiz, setHandleSearchQuiz] = useState("");
 
-  const handleChangeSearch = (e) => {
-    // setSearchCategory(e.target.value);
+  const handleInputSearch = (e) => {
+    //  TODO
   }
-  useEffect(() => {
-    
-  },[])
+  
   return (
     <>
         <div className='text-center bg-indigo-500 p-4  flex justify-between'>
@@ -30,8 +27,8 @@ function AdminPage() {
                     placeholder="Search for anything..." 
                     type="text" 
                     name="search"
-                    value={search}
-                    onChange={handleChangeSearch}
+                    value={searchQuiz}
+                    onChange={handleInputSearch}
                     />
                 </label>
                 <button className='py-2 px-4 bg-[#51ad32] text-white font-semibold rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-opacity-75 ml-2'>
@@ -52,28 +49,24 @@ function AdminPage() {
 
         <div className='flex justify-left bg-[#f5f5f5] px-4 py-5 mb-5'>
             <NavLink exact to="/admin"
-                className={isActive => 'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' + (isActive ? "text-indigo-500" : "text-[#111111]" )}
+                className={isActive => {return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${isActive ? "text-indigo-500" : "text-[#111111]"}`}}
             >
-                    Home
+                Home
             </NavLink>
             <NavLink to="/admin/activity"
-                className={isActive => {
-                            return 'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' + (isActive ? "text-indigo-500" : "text-[#111111]" )
-                        }
-                    }
+                className={isActive => {return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${isActive ? "text-indigo-500" : "text-[#111111]"}`}}
             >
-                    Activity
+                Activity
             </NavLink>
         </div>
 
         <div>
         <Switch>
-                <Route exact path="/admin" render={() => <CategoryPage />} 
-                />
-                <Route exact path="/admin/profile" render={() => <ProfilePage/>} />
-                <Route exact path="/admin/activity" render={() => <ActivityPage/>} />
-                <Route exact path="/admin/create-topic" render={() => <CreateTopic/>} />
-                <Route exact path="/admin/topic/:topicId" render={() => <TopicContent/>} />
+                <Route exact path="/admin" component={CategoryPage}/>
+                <Route exact path="/admin/profile" component={ProfilePage} />
+                <Route exact path="/admin/activity" component={ActivityPage} />
+                <Route exact path="/admin/create-topic" component={CreateTopic} />
+                <Route exact path="/admin/topic/:topicId" component={TopicContent} />
                 
         </Switch>
         </div>

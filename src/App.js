@@ -4,6 +4,7 @@ import { BrowserRouter as Routes, Route, Switch, Redirect } from 'react-router-d
 import AdminPage from "@pages/admin";
 import SignInPage from "@pages/signIn";
 import HomePage from "@pages/user/Home/home";
+import Error from '@pages/error';
 import Quiz from "@pages/user/Quiz/Quiz";
 import Result from "@pages/user/Result/result";
 import "./sass/main.css";
@@ -17,6 +18,7 @@ function App() {
               <Route path="/signin" component={SignInPage} />
               <Route path="/quiz" component={Quiz} />
               <Route path="/result" component={Result} />
+              <Route path="/error" component={Error} />
               <Redirect to="/"/>
           </Switch>
       </Routes>

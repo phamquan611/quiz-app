@@ -1,26 +1,31 @@
 import React , {useState, useEffect}from 'react'
 import { withRouter, Link, useHistory} from 'react-router-dom';
-import {url} from "@services/http";
 import axios from 'axios';
-
+import {url} from "@services/http";
  function CategoryPage(props) {
     const history = useHistory();
-    const [quizzes, setGetQuizzes] = useState([]);
+    const [quizzes, setChangeQuizzes] = useState([]);
 
     useEffect(() => {
         (async() => {
-            const resQuizzes = await axios.get(url + "/quizzes");
-            setGetQuizzes(resQuizzes.data);
+            try{
+                const resQuizzes = await axios.get(url + "/quizzes");
+                if(resQuizzes.data){
+                    return setChangeQuizzes(resQuizzes.data)
+                }
+            }catch(err){
+                console.log(err)
+            }
         })()
       },[]);
 
   return (
     <div className='mb-10'>
         <div className='flex flex-wrap'>
-            {quizzes.map((quiz) => {
+            {quizzes.map((quiz, index) => {
                 return (
                         <div className='w-1/4 px-4 pb-5 mb-5' 
-                            key={quiz.category}
+                            key={quiz._id}
                             onClick={() => history.push(`/admin/topic/${quiz._id}`)}
                         >
                                 <img src="https://png.pngtree.com/thumb_back/fh260/background/20211031/pngtree-abstract-bg-image_914283.png" 
@@ -30,8 +35,8 @@ import axios from 'axios';
                                 <div className='cursor-pointer text-center font-bold mt-2'>
                                     {quiz.category}
                                 </div>
-                                <div className='cursor-pointer'>
-                                    {quiz.description.substring(0, 300) + "..."}
+                                <div className='cursor-pointer h-[200px]  leading-5 text-ellipsis overflow-hidden md:text-clip'>
+                                    {quiz.description}
                                 </div>
                         </div>
                 )
