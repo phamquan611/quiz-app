@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation , NavLink, Switch , Route, Link} from 'react-router-dom';
-import { withRouter ,useHistory} from 'react-router-dom';
+import { useLocation , NavLink, Switch , Route, Link, withRouter ,useHistory} from 'react-router-dom';
 import ProfilePage from '@pages/profile';
 import CategoryPage from '@pages/category';
 import ActivityPage from '@pages/activity';
@@ -10,10 +9,10 @@ import TopicContent from '@pages/topicContent';
 function AdminPage() {
   const history = useHistory();
   const location = useLocation();
-  const [searchQuiz, setHandleSearchQuiz] = useState("");
+  const [searchQuiz, setSearchQuiz] = useState("");
 
   const handleInputSearch = (e) => {
-    //  TODO
+    //  TODO SCRIPT HANDLE
   }
   
   return (

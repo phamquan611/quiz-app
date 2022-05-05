@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 function ProfilePage() {
   return (
@@ -79,4 +78,4 @@ function ProfilePage() {
   )
 }
 
-export default withRouter(ProfilePage);
+export default ProfilePage;

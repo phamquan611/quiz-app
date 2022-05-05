@@ -4,14 +4,14 @@ import axios from 'axios';
 import {url} from "@services/http";
  function CategoryPage(props) {
     const history = useHistory();
-    const [quizzes, setChangeQuizzes] = useState([]);
+    const [quizzes, setQuizzes] = useState([]);
 
     useEffect(() => {
         (async() => {
             try{
                 const resQuizzes = await axios.get(url + "/quizzes");
                 if(resQuizzes.data){
-                    return setChangeQuizzes(resQuizzes.data)
+                    return setQuizzes(resQuizzes.data)
                 }
             }catch(err){
                 console.log(err)

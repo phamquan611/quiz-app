@@ -5,7 +5,7 @@ import {FcCheckmark} from "react-icons/fc";
 export default function CreateTopic() {
     const [quizTitle, setGetQuizTitle] = useState("");
     const [questions, setGetQuestions] = useState([]);
-    const [isToggleOpenForm, setHandleToggleForm] = useState(false);
+    const [isToggleForm, setToggleForm] = useState(false);
 
     const handleChangeQuizTitle = (e) => {
         setGetQuizTitle(e.target.value)
@@ -20,7 +20,7 @@ export default function CreateTopic() {
             return ;
         }
         
-        setHandleToggleForm(!isToggleOpenForm)
+        setToggleForm(!isToggleForm)
     }
 
     const clickCreateQuestion = () => {
@@ -31,7 +31,7 @@ export default function CreateTopic() {
         <div className='w-full px-5'>
             <div className='w-[800px] p-5 max-w-full mx-auto bg-[#f5f5f5]'>
                 {
-                    !isToggleOpenForm ? 
+                    !isToggleForm ? 
                     <div>
                         <label htmlFor="quizTitle" className='cursor-pointer'>
                             <span className='text-2xl'>

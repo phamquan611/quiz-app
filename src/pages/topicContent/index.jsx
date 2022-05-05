@@ -4,14 +4,15 @@ import { useParams, useHistory } from 'react-router-dom';
 import {RiDeleteBin6Line, RiAddCircleFill, RiMessage2Line, RiAddLine} from "react-icons/ri";
 import {FcCheckmark} from "react-icons/fc";
 import {url} from "@services/http";
+import { IDEA } from '@utils';
 import Error from '@pages/error';
 
 export default function TopicContent() {
      const params = useParams();
      const history = useHistory();
-     const [quiz, setHandleQUiz] = useState([]);
+     const [quiz, setQuiz] = useState([]);
      const [questions, setChangeQuestions] = useState([]);
-     const [exercise, setHandleExercise] = useState({});
+     const [exercise, setExercise] = useState({});
      const [indexQuestion , setGetIndexQuestion] = useState("");
      const topicId = params.topicId;
 
@@ -21,38 +22,36 @@ export default function TopicContent() {
                     if(!topicId){
                          return history.push("/error");
                     }
-                    const resQuiz = await axios.get(url + "/quizzes/" + topicId, { headers: {"Authorization" : `Bearer kaka`} });
-                    if(resQuiz.status === 400){
+                    const resQuiz = await axios.get(`${url}/quizzes/${topicId}`, { headers: {"Authorization" : `Bearer kaka`} });
+
+                    if(!resQuiz){
                          history.push("/error")
                     }
                     if(!resQuiz.data.error){
-                         setHandleQUiz(resQuiz.data[0]);
+                         setQuiz(resQuiz.data[0]);
                          setChangeQuestions(resQuiz.data[0].questions);
-                         console.log(resQuiz.data[0]);
                     };
                }catch(err){
                     history.push("/error");
-                    console.log(err);
                }
           })()
      },[]);
 
-     const idea = ["A", "B", "C", "D", "E", "F", "G"];
      const openPopupQuestion = (exercise, index) => {
-          setHandleExercise(exercise);
+          setExercise(exercise);
           setGetIndexQuestion(index);
      }
 
      const handleChangeExercise = () => {
-          // TODO
+          // TODO script
      }
 
      const handleChangeAnswer = () => {
-          // TODO
+          // TODO script
      }
 
      const openFormAddExercise = () => {
-          // TODO
+          // TODO script
      }
 
      return (
@@ -119,7 +118,7 @@ export default function TopicContent() {
                                                                  {answers.map((answer, index) => {
                                                                       return (
                                                                            <p className='w-1/2' key={index}>
-                                                                                <b className={exercise.correct_answer.includes(answer) ? "text-red-500" : "font-thin"}>{idea[index]}</b> : {answer}
+                                                                                <b className={exercise.correct_answer.includes(answer) ? "text-red-500" : "font-thin"}>{IDEA[index]}</b> : {answer}
                                                                            </p>
                                                                       )
                                                                  })}
@@ -149,7 +148,7 @@ export default function TopicContent() {
                                                   return (
                                                        <div className='w-full flex justify-between mb-3' key={index}>
                                                             <div className="flex">
-                                                                      {idea[index]}: {answer}
+                                                                      {IDEA[index]}: {answer}
                                                                       {isCorrect?<FcCheckmark className='cursor-pointer text-[20px] font-bold ml-3 ' /> : <></>}
                                                             </div>
                                                             <div className='flex'>

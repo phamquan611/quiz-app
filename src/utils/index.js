@@ -1,0 +1,1 @@
+export const IDEA = ["A", "B", "C", "D", "E", "F", "G"];
