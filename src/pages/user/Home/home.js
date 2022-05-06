@@ -12,10 +12,10 @@ const Home = ({name, setName , viewAnswer, setViewAnswer, handleSelected,setHand
           setError(true)
       }
       else{
-          // setError(false);  
+        history.push("/quiz")
+          setError(false);  
           setViewAnswer(false)
           setHandleSelected(null)
-          history.push("/quiz")
       }
     }
   return (

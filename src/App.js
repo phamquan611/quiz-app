@@ -25,6 +25,7 @@ function App() {
       .then((res) => {
         setHandleSelected(res.data[0].isSelected);
         setQuestions(res.data[0].questions);
+        console.log(res.data);
       });
   }, []);
   return (

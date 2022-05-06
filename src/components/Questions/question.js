@@ -18,7 +18,7 @@ const Question = ({
   setViewAnswer
 
 }) => {
-  
+  // console.log(questions[0].question);
   const history = useHistory();
   const handleNext = () => {
     if (currentQuestion > 8) {
@@ -28,7 +28,8 @@ const Question = ({
       setCurrentQuestion(currentQuestion + 1);
       setCurrentPick(currentPick + 1);
       setHandleSelected(handleSelected);
-    }
+
+    } 
   };
 
   const handlePrev = () => {
