@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { FcCheckmark } from "react-icons/fc";
 import {AiOutlineClose} from "react-icons/ai"
 const CheckQuestions = ({ questions, currentQuestion, setCurrentQuestion, currentPick, setCurrentPick, handleSelected}) => {
-  const handleCheck = (event) => {
-    setCurrentQuestion(event);
-    setCurrentPick(event)
-    console.log(questions[event].question);
-    console.log(questions[currentPick].handleSelected);
+  const handleCheck = (index) => {
+    setCurrentQuestion(index);
+    setCurrentPick(index)
+    // console.log(questions[event].question);
+    // console.log(questions[currentPick].handleSelected);
   };
 //   console.log(questions[currentPick].isSelected);
 //   console.log(questions);
