@@ -1,3 +1,4 @@
+import axios from "axios";
 import './App.css';
 import React,{useState, useEffect} from "react";
 import { BrowserRouter as Routes, Route, Switch, Redirect , useHistory} from 'react-router-dom';
@@ -8,7 +9,6 @@ import Error from '@pages/error';
 import Quiz from "@pages/user/Quiz/Quiz";
 import Result from "@pages/user/Result/result";
 import "./sass/main.css";
-import axios from "axios";
 import Home from "./pages/user/Home/home"
 
 function App() {

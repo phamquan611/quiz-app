@@ -5,15 +5,15 @@ import axios from "axios";
 
 const Home = ({name, setName , viewAnswer, setViewAnswer, handleSelected,setHandleSelected}) => {
 
-    const [error, setError] = useState(false)
+    const [isError, setIsError] = useState(false)
     const history = useHistory()
     const handleSubmit =()=>{
       if (!name) {
-          setError(true)
+          setIsError(true)
       }
       else{
         history.push("/quiz")
-          setError(false);  
+          setIsError(false);  
           setViewAnswer(false)
           setHandleSelected(null)
       }
@@ -23,7 +23,7 @@ const Home = ({name, setName , viewAnswer, setViewAnswer, handleSelected,setHand
       <div className="container 2xl m-[auto] flex flex-col">
         <h2 className="text-[30px] m-[auto]">Welcome to my Quiz</h2>
       <div className='flex flex-col'>
-        {error ? "Please fill all the fields" : ""}
+        {isError ? "Please fill all the fields" : ""}
         <label className="block w-2/4 m-[auto] p-5 ">
           <span className="text-lg after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
             Your Username
