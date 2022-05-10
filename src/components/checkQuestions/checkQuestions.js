@@ -12,7 +12,7 @@ const CheckQuestions = ({ questions, currentQuestion, setCurrentQuestion, curren
 //   console.log(questions);
   return (
     <>
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-between mb-5">
         <div >
           <button className={questions[0].isSelected === null  ? "bg-red-500 shadow-2xl p-3 m-2 m-auto rounded-lg flex items-center" :"bg-green-500 border-2 p-3 m-2 m-auto rounded-lg flex items-center"}  onClick={() => handleCheck(0)}>Question 1
           {questions[0].isSelected == null ? <AiOutlineClose className="bg-white rounded-full ml-1.5 text-red-500"/> : <FcCheckmark className="bg-white rounded-full ml-1.5"/>}

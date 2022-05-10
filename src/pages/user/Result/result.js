@@ -1,11 +1,12 @@
 import {useHistory} from 'react-router-dom'
- const Result = ({viewAnswer, setViewAnswer}) =>{
+ const Result = ({viewAnswer, setViewAnswer, getID ,setGetID}) =>{
     const history = useHistory()
     const handleSubmit=()=>{
         // TO DO
     }
     const handleView=()=>{
-        history.push("/quiz")
+        debugger
+        history.push(`/quiz/${getID}`)
         // setViewAnswer(true)
     }
     return (

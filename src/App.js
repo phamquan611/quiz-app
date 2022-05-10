@@ -13,10 +13,32 @@ import Home from "./pages/user/Home/home"
 
 function App() {
   const [name, setName] = useState("");
+  const [ getID ,setGetID] = useState("");
   const [questions, setQuestions] = useState();
   const [handleSelected, setHandleSelected] = useState();
   const history = useHistory();
   const[viewAnswer, setViewAnswer] = useState(false)
+  const [checkID, setCheckID] = useState()
+  const [isSubmit, setIsSubmit] = useState(false)
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://quiz-app-winds.herokuapp.com/sessions"
+      )
+      .then((res) => {
+          console.log(res.data);
+          const Data = res.data;
+          // const test = Object.entries(Data)
+          // console.log(test);
+          // const Check = [Data.map(id => id._id)]
+          setCheckID(Data)
+          // console.log(Check);
+          setGetID(getID)
+        });
+      }, []);
+      console.log(getID);
+
   useEffect(() => {
     axios
       .get(
@@ -25,7 +47,6 @@ function App() {
       .then((res) => {
         setHandleSelected(res.data[0].isSelected);
         setQuestions(res.data[0].questions);
-        console.log(res.data);
       });
   }, []);
   return (
@@ -50,12 +71,18 @@ function App() {
           </Route>
           <Route path="/result" >
             <Result
+              getID={getID}
               viewAnswer={viewAnswer}
               setViewAnswer={setViewAnswer}
+            setGetID={setGetID}
             />
           </Route>
           <Route path="/home">
             <Home name={name} 
+            getID={getID}
+            setGetID={setGetID}
+            checkID={checkID}
+            setCheckID={setCheckID}
             setName={setName}
             viewAnswer={viewAnswer}
             setViewAnswer={setViewAnswer}

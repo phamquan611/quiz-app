@@ -16,7 +16,7 @@ const Quiz = ({
   const [currentPick, setCurrentPick] = useState(0);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [value, setValue] =useState()
-  
+  const [isSubmit, setIsSubmit] = useState(false)
   // const history = useHistory();
 
   const handleShuffle = (options) => {
@@ -27,6 +27,7 @@ const Quiz = ({
   const userPick = questions[currentPick].isSelected;
   setHandleSelected(userPick);
   useEffect(() => {
+    setIsSubmit(false)
     // console.log(userPick);
     setOptions(
       questions && handleShuffle([...questions[currentQuestion]?.answers])
@@ -48,6 +49,8 @@ const Quiz = ({
           handleSelected={handleSelected}
         />
         <Question
+        setIsSubmit={setIsSubmit}
+        isSubmit={isSubmit}
           name={name}
           currentQuestion={currentQuestion}
           setCurrentQuestion={setCurrentQuestion}
