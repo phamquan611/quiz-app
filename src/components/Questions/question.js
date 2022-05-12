@@ -17,7 +17,9 @@ const Question = ({
   viewAnswer,
   setViewAnswer,
   setIsSubmit,
-  isSubmit
+  isSubmit, 
+  isCheckTime,
+  setIsCheckTime
 }) => {
   // console.log(questions[0].question);
   const [isDone, setIsDone] = useState(false);
@@ -28,7 +30,6 @@ const Question = ({
     if (currentQuestion > 8) {
       setIsShow(true);
       setIsSubmit(true)
-      debugger
       // if (isDone === true) {
       //   history.push("/result");
       // }
@@ -36,6 +37,7 @@ const Question = ({
       setCurrentQuestion(currentQuestion + 1);
       setCurrentPick(currentPick + 1);
       setHandleSelected(handleSelected);
+      setIsCheckTime(true)
     }
   };
 
@@ -43,11 +45,55 @@ const Question = ({
     setCurrentQuestion(currentQuestion - 1);
     setCurrentPick(currentPick - 1);
     setHandleSelected(handleSelected);
+    setIsCheckTime(true)
   };
 
   const handleSelectOption = (index) => {
     questions[currentPick].isSelected = index;
     setSelectedOption(questions[currentPick].isSelected);
+    setIsCheckTime(true)
+ 
+    if (currentQuestion === 0) {
+      localStorage.setItem('choose_answer0' , index)
+      localStorage.setItem('question0' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 1) {
+      localStorage.setItem('choose_answer1' , index)
+      localStorage.setItem('question1' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 2) {
+      localStorage.setItem('choose_answer2' , index)
+      localStorage.setItem('question2' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 3) {
+      localStorage.setItem('choose_answer3' , index)
+      localStorage.setItem('question3' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 4) {
+      localStorage.setItem('choose_answer4' , index)
+      localStorage.setItem('question4' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 5) {
+      localStorage.setItem('choose_answer5' , index)
+      localStorage.setItem('question5' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 6) {
+      localStorage.setItem('choose_answer6' , index)
+      localStorage.setItem('question6' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 7) {
+      localStorage.setItem('choose_answer7' , index)
+      localStorage.setItem('question7' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 8) {
+      localStorage.setItem('choose_answer8' , index)
+      localStorage.setItem('question8' , questions[currentQuestion].question)
+    }
+    else if (currentQuestion === 9) {
+      localStorage.setItem('choose_answer9' , index)
+      localStorage.setItem('question9' , questions[currentQuestion].question)
+    }
+
   };
   // const renderer = ({ hours, minutes, seconds, completed }) => {
   //   if (completed) {
@@ -88,11 +134,11 @@ const Question = ({
           Previous
         </button>
         {/* <Countdown date={Date.now() + 300000 }  renderer={renderer} /> */}
-        {isSubmit == true ? 
+        {currentQuestion == 9 ? 
         <button
           onClick={handleNext}
           className="px-10 py-5 ml-3.5  text-2xl bg-green-300 hover:bg-green-900 rounded-3xl shadow-lg "
-        >Next
+        >Submit
         </button>
         :<button
         onClick={handleNext}
@@ -103,7 +149,9 @@ const Question = ({
       </div>
       <div className="m-[auto] py-6">
         <div className="px-36 py-20 bg-white mb-5 rounded-3xl shadow-xl">
-          {/* <p>{name}</p> */}
+          {localStorage.getItem('name') && (
+            <h2>{name}</h2>
+          )}
           <p className="text-xl font-extrabold text-center text-indigo-700 pb-3.5">
             Question: {currentQuestion + 1}
           </p>
@@ -120,8 +168,8 @@ const Question = ({
                   handleSelected === index
                     ? "over:bg-violet-600 cursor-pointer hover:text-stone-50 bg-white py-3.5 rounded-3xl text-2xl   mb-5 border-2 bg-indigo-900"
                     : " border-2 cursor-pointer hover:bg-violet-600 hover:text-stone-50 bg-white py-3.5 rounded-3xl text-2xl mb-5"
-                  // && viewAnswer === true ? "border-2 bg-white py-3.5 rounded-3xl text-2xl mb-5 text-slate-300":
-                  //  " border-2 cursor-pointer hover:bg-violet-600 hover:text-stone-50 bg-white py-3.5 rounded-3xl text-2xl mb-5"
+                  && viewAnswer === true ? "border-2 bg-white py-3.5 rounded-3xl text-2xl mb-5 text-slate-300":
+                   " border-2 cursor-pointer hover:bg-violet-600 hover:text-stone-50 bg-white py-3.5 rounded-3xl text-2xl mb-5"
                 }
               >
                 {item}
@@ -130,18 +178,18 @@ const Question = ({
         </div>
       </div>
       {isShow === true ? (
-        <div className="fixed inset-0 bg-black opacity-75 w-full flex ">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[500px] rounded-xl text-[#000] flex  flex-col">
+        <div className="fixed inset-0 bg-black w-full flex ">
+          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col ">
             <h2 className="m-[auto] text-5xl">Chắc chưa ?</h2>
             <div className="m-[auto] flex justify-between">
               <button
-                className="p-5 text-[20px] bg-green-500 rounded-xl mr-[20px] "
+                className="p-5 text-[24px] bg-green-500 rounded-xl mr-[20px] px-9 "
                 onClick={handleCheckdone}
               >
                 Oke
               </button>
               <button
-                className="p-5 text-[20px] bg-red-600 rounded-xl ml-[20px]"
+                className="p-5 text-[24px] bg-red-600 rounded-xl ml-[20px] px-9"
                 onClick={handleChecknone}
               >
                 No
