@@ -14,21 +14,25 @@ const Home = ({
   setGetTimeStamp,
   setGetQuizID,
   setQuestions,
+  setSaveAnswer
 }) => {
   const [isError, setIsError] = useState(false);
   const history = useHistory();
   const [isExpired ,  setIsExpired] = useState(false)
   const [checkSessionID ,  setCheckSessionID] = useState(true)
   const handleSubmit = () => {
-    const tesst = checkID.filter(function (id) {
-      return id._id == getID;
-    });
     if (!name) {
       setIsError(true);
     } else if (!getID) {
       setIsError(true);
     }
-    if (getID == tesst[0]._id) {
+    const tesst = checkID.filter(function (id) {
+      return id._id == getID;
+    });
+    if (tesst[0] === undefined) {
+      setCheckSessionID(false)
+    }
+    else if (getID == tesst[0]._id) {
       setIsError(false);
       setViewAnswer(false);
       setHandleSelected(null);
@@ -44,31 +48,24 @@ const Home = ({
       });
       
       var currentDate = +new Date();
-      console.log(currentDate);
-      console.log(tesst[0].timeStart);
-      console.log(tesst[0].timeEnd);
       var date = new Date(tesst[0].timeStart);
-      console.log(date)
-      console.log(currentDate - tesst[0].timeStart)
       // debugger
       if (tesst[0].timeStart < currentDate  && currentDate < tesst[0].timeEnd) {
         history.push(`/quiz/${tesst[0].quizId}`);
       }
       else{
         setIsExpired(true)
+        history.push(`/quiz/${tesst[0].quizId}`);
       }
       localStorage.setItem("userName", name);
       localStorage.setItem("sessionID", getID);
-    }
-    else{
-      setCheckSessionID(false)
     }
   };
   const handleCheck = ()=>{
     setIsExpired(false)
   }
   const handleCheckID = ()=>{
-    setIsExpired(false)
+    setCheckSessionID(true)
   }
   return (
     <>
@@ -131,7 +128,7 @@ const Home = ({
       checkSessionID === false ?
     <div className="fixed inset-0 bg-black w-full flex">
       <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
-        <h2 className="m-[auto] text-5xl">Wrong sessionID !!!</h2>
+        <h2 className="m-[auto] text-5xl text-center">SessionID bạn điền không tồn tại !!!</h2>
         <button
                 className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
                 onClick={handleCheckID}
