@@ -86,7 +86,10 @@ const Quiz = ({
   };
 
   const userPick = questions[currentPick].isSelected;
-  setHandleSelected(userPick);
+  // localStorage.setItem("user_answer" , JSON.stringify(userPick))
+  useEffect(()=>{
+    setHandleSelected(userPick);
+  })
   useEffect(() => {
     clearTimer(getDeadTime());
     // setTimer (timer)

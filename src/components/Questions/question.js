@@ -27,7 +27,7 @@ const Question = ({
   const history = useHistory();
   
   const handleNext = () => {
-    if (currentQuestion > 8) {
+    if (currentQuestion === questions.length - 1) { 
       setIsShow(true);
       setIsSubmit(true)
       // if (isDone === true) {
@@ -38,6 +38,7 @@ const Question = ({
       setCurrentPick(currentPick + 1);
       setHandleSelected(handleSelected);
       setIsCheckTime(true)
+
     }
   };
 
@@ -52,48 +53,6 @@ const Question = ({
     questions[currentPick].isSelected = index;
     setSelectedOption(questions[currentPick].isSelected);
     setIsCheckTime(true)
- 
-    if (currentQuestion === 0) {
-      localStorage.setItem('choose_answer0' , index)
-      localStorage.setItem('question0' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 1) {
-      localStorage.setItem('choose_answer1' , index)
-      localStorage.setItem('question1' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 2) {
-      localStorage.setItem('choose_answer2' , index)
-      localStorage.setItem('question2' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 3) {
-      localStorage.setItem('choose_answer3' , index)
-      localStorage.setItem('question3' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 4) {
-      localStorage.setItem('choose_answer4' , index)
-      localStorage.setItem('question4' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 5) {
-      localStorage.setItem('choose_answer5' , index)
-      localStorage.setItem('question5' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 6) {
-      localStorage.setItem('choose_answer6' , index)
-      localStorage.setItem('question6' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 7) {
-      localStorage.setItem('choose_answer7' , index)
-      localStorage.setItem('question7' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 8) {
-      localStorage.setItem('choose_answer8' , index)
-      localStorage.setItem('question8' , questions[currentQuestion].question)
-    }
-    else if (currentQuestion === 9) {
-      localStorage.setItem('choose_answer9' , index)
-      localStorage.setItem('question9' , questions[currentQuestion].question)
-    }
-
   };
   // const renderer = ({ hours, minutes, seconds, completed }) => {
   //   if (completed) {
@@ -111,7 +70,7 @@ const Question = ({
 
   const handleCheckdone = () => {
     setIsDone(true);
-    if (currentQuestion > 8) {
+    if (currentQuestion === questions.length - 1) {
       history.push("/result");
     }
   };
@@ -134,11 +93,11 @@ const Question = ({
           Previous
         </button>
         {/* <Countdown date={Date.now() + 300000 }  renderer={renderer} /> */}
-        {currentQuestion == 9 ? 
+        {currentQuestion == questions.length - 1 ? 
         <button
           onClick={handleNext}
           className="px-10 py-5 ml-3.5  text-2xl bg-green-300 hover:bg-green-900 rounded-3xl shadow-lg "
-        >Submit
+        >Finish
         </button>
         :<button
         onClick={handleNext}

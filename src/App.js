@@ -29,7 +29,6 @@ function App() {
   const [getQuizID, setGetQuizID] = useState();
   const [checkViewTime, setCheckViewTime] = useState(false);
 
-
   useEffect(() => {
     axios.get("https://quiz-app-winds.herokuapp.com/sessions").then((res) => {
       console.log(res.data[0].timeChallenge);
@@ -42,11 +41,10 @@ function App() {
       // setCheckDateTime()
     });
     setGetQuizID(getQuizID);
-    setHandleSelected(handleSelected)
-    setQuestions(questions)
-      }, []);
-      console.log(getQuizID);
-
+    setHandleSelected(handleSelected);
+    setQuestions(questions);
+    setViewAnswer(viewAnswer)
+  }, []);
   return (
     <>
       <Routes>
@@ -74,6 +72,10 @@ function App() {
           </Route>
           <Route path="/result">
             <Result
+              name={name}
+              setName={setName}
+              questions={questions}
+              setQuestions={setQuestions}
               getID={getID}
               viewAnswer={viewAnswer}
               setViewAnswer={setViewAnswer}
