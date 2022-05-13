@@ -22,23 +22,27 @@ const Result = ({
     setViewAnswer(true);
     setGetID(getID);
     setName(setName);
-    setIsSubmit(true)
     // console.log(name);
     const body = questions.map((quest)=>({question: quest.question, answerChoose: quest.isSelected}))
-  console.log(body); 
+    console.log({
+      sessionId: getQuizID,
+      userName: name,
+      questions:body
+      
+    }); 
     const data = await axios.post(
       `https://quiz-app-winds.herokuapp.com/sessions/${getID}`,
       {
         sessionId: getQuizID,
         userName: name,
-        questions:
-        [
-            body
-        ],
+        questions:body
+        
       }
-    );
-    setUserPoint(data.data.points)
-    console.log(data.data.points);
+      );
+      // setUserPoint(data.data.points)
+      setUserPoint(data.data.points)
+      setIsSubmit(true)
+    console.log(data.data);
   }
   const handleView = () => {
     history.push(`/quiz/${getQuizID}`);
@@ -69,11 +73,11 @@ const Result = ({
         </div>
       </div>
       {
-      isSubmit === true ?
+      isSubmit  ?
     <div className="fixed inset-0 bg-black w-full flex">
       <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
         <h2 className="m-[auto] text-5xl text-center">Câu trả lời của bạn đã được lưu lại !!!</h2>
-        <h2 className="m-[auto] text-5xl text-center">Điểm của bạn là {userPoint} </h2>
+        <h2 className="m-[auto] text-5xl text-center">Điểm của bạn là : {userPoint} </h2>
         <button
                 className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
                 onClick={checkSubmit}
