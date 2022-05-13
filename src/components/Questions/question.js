@@ -131,7 +131,7 @@ const Question = ({
                    " border-2 cursor-pointer hover:bg-violet-600 hover:text-stone-50 bg-white py-3.5 rounded-3xl text-2xl mb-5"
                 }
               >
-                {item}
+                {index + 1}.  {item}
               </button>
             ))}
         </div>

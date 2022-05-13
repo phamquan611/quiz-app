@@ -16,6 +16,7 @@ const Result = ({
 }) => {
   const history = useHistory();
   const[isSubmit, setIsSubmit]= useState(false)
+  const [userPoint, setUserPoint] = useState(false)
   const handleSubmit = async () => {
     // TO DO
     setViewAnswer(true);
@@ -36,7 +37,8 @@ const Result = ({
         ],
       }
     );
-    console.log(data.data);
+    setUserPoint(data.data.points)
+    console.log(data.data.points);
   }
   const handleView = () => {
     history.push(`/quiz/${getQuizID}`);
@@ -71,6 +73,7 @@ const Result = ({
     <div className="fixed inset-0 bg-black w-full flex">
       <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
         <h2 className="m-[auto] text-5xl text-center">Câu trả lời của bạn đã được lưu lại !!!</h2>
+        <h2 className="m-[auto] text-5xl text-center">Điểm của bạn là {userPoint} </h2>
         <button
                 className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
                 onClick={checkSubmit}

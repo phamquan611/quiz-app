@@ -24,7 +24,7 @@ const CheckQuestions = ({
               className={
                 questions[index].isSelected === null
                   ? "bg-slate-300 shadow-2xl p-3 m-2 m-auto rounded-lg flex items-center"
-                  : "bg-violet-800 border-2 p-3 m-2 m-auto rounded-lg flex items-center"
+                  : "bg-violet-600 border-2 p-3 m-2 m-auto rounded-lg flex items-center"
               }
               onClick={() => handleCheck(index)}
               key={index}
