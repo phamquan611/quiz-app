@@ -1,4 +1,5 @@
 import React from 'react';
+import withAdmin from "@middleware/withAdmin"
 
 function ProfilePage() {
   return (
@@ -78,4 +79,4 @@ function ProfilePage() {
   )
 }
 
-export default ProfilePage;
+export default withAdmin(ProfilePage);
