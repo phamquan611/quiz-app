@@ -24,6 +24,7 @@ function Home() {
   };
 
   return (
+    // TO DO : check id is valid, build form if it's not valid
     <div className="bg-home flex">
       <div className="container 2xl m-[auto] flex flex-col bg-white w-[500px] py-20 shadow-2xl rounded-lg home">
         <h2 className="text-[30px] m-[auto]">Welcome to my Quiz</h2>

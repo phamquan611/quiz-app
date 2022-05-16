@@ -3,7 +3,7 @@ import { BsLightbulb } from "react-icons/bs";
 
 function CheckQuestion() {
   return (
-    // TO DO
+    // TO DO : map choose question when click and do prev and next btn question
     <div className=" w-[49%] h-96 flex flex-col ">
       <div className="flex justify-evenly rounded-lg shadow-2xl  border-sky-500 border-2 bg-white p-[20px]">
         <button className="bg-rose-600 py-5 px-10 rounded-xl text-[20px]">

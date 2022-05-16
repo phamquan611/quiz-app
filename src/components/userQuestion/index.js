@@ -2,7 +2,7 @@ import React from "react";
 
 function Question() {
   return (
-    // TO DO
+    // TO DO : map questions and option answer
     <div className="w-[49%] h-96">
       <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-xl mb-[20px] border-2  border-sky-500">
         <p className="pb-[10px]">Question 1/10 </p>
