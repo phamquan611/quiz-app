@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Countdown from "react-countdown";
 const Question = ({
   currentQuestion,
   name,
