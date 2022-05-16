@@ -21,5 +21,9 @@ module.exports = {
     "linebreak-style": 0,
     quotes: [1, "double"],
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/button-has-type": 0,
+    "react/no-unescaped-entities": 0,
+    "jsx-a11y/label-has-associated-control": 0,
+    "import/no-unresolved": 0,
   },
 };

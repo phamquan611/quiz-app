@@ -1,8 +1,8 @@
-/* eslint-disable react/button-has-type */
 import React from "react";
 
 function Result() {
   return (
+    // TO DO
     <div className="bg-result">
       <div className="container m-[auto]">
         <div className="bg-white w-[30%] rounded-lg shadow-2xl m-[auto] py-5 text-center text-[40px] mb-[20px] border-2  border-sky-500">

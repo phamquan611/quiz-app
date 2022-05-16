@@ -1,7 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import React from "react";
-import Question from "@components/user_question";
-import CheckQuestion from "@components/user_question_check";
+import Question from "@components/userQuestion";
+import CheckQuestion from "@components/userQuestionCheck";
 
 function Quiz() {
   return (
