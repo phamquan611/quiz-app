@@ -3,11 +3,11 @@
 }
 .bg-home{
     background: url(https://www.abc27.com/wp-content/uploads/sites/55/2022/02/Weekly-News-quiz-02-e1645743057119.png)  center / cover no-repeat ;
-    padding: 245px;
+    padding: 299px;
 }
 .bg-quiz{
-    background: url(https://i.pinimg.com/originals/db/34/d4/db34d40b271fb59477621550bf73ea0b.jpg)  center / cover no-repeat ;
-    padding: 300px 0 ;
+    background: #fdefe4;
+    padding: 292px 0 ;
 }
 
 .bg-result{
@@ -26,4 +26,7 @@
     right: -3px;
     top: 50%;
     transform: translateY(-50%);
+}
+.ques-item{
+    transform: translateY(-50px);
 }

@@ -1,23 +1,23 @@
-/* eslint-disable import/no-unresolved */
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "@store";
-import Home from "@pages/user-page/home/index";
-import Quiz from "@pages/user-page/quiz/index";
-import Result from "@pages/user-page/result";
+import Home from "@pages/userPage/home/index";
+import Quiz from "@pages/userPage/quiz/index";
+import Result from "@pages/userPage/result";
 import "./App.css";
 
 function App() {
+  const [quizzesID, setQuizzesID] = useState();
   const store = configureStore();
   return (
     <Provider store={store}>
       <Router>
         <Route exact path="/">
-          <Home />
+          <Home quizzesID={quizzesID} setQuizzesID={setQuizzesID} />
         </Route>
         <Route path="/quiz">
-          <Quiz />
+          <Quiz quizzesID={quizzesID} setQuizzesID={setQuizzesID} />
         </Route>
         <Route path="/result">
           <Result />

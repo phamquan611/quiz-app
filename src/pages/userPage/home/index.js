@@ -1,12 +1,24 @@
-import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { url } from "@services/http";
 
-function Home() {
+function Home({ quizzesID, setQuizzesID }) {
   const [isError, setIsError] = useState(true);
   const [isErrorID, setIsErrorID] = useState(true);
   const [name, setName] = useState("");
   const [quizzID, setQuizzID] = useState("");
-  //   const history = useHistory();
+  const [checkID, setCheckID] = useState();
+  const [mesWrongID, setMesWrongID] = useState(false);
+  const [mesWrongTime, setMesWrongTime] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    axios.get(`${url}/sessions`).then((res) => {
+      setCheckID(res.data);
+    });
+  }, []);
+
   const handleSubmitUser = (e) => {
     setIsError(true);
     setName(e.target.value);
@@ -16,11 +28,33 @@ function Home() {
     setIsErrorID(true);
   };
   const handleSubmit = () => {
+    const tesst = checkID.filter((id) => id._id === quizzID);
+    const currentDate = +new Date();
+
     if (!name) {
       setIsError(false);
     } else if (!quizzID) {
       setIsErrorID(false);
+    } else if (tesst.length === 0) {
+      setMesWrongID(true);
+    } else if (quizzID === tesst[0]._id) {
+      const { timeStart } = tesst[0];
+      const { timeEnd } = tesst[0];
+      setQuizzesID(quizzesID);
+      const getQuizID = tesst[0].quizId;
+      setQuizzesID(tesst[0].quizId);
+      if (timeStart < currentDate && currentDate < timeEnd) {
+        history.push(`/quiz/${getQuizID}`);
+      } else {
+        setMesWrongTime(true);
+        history.push(`/quiz/${getQuizID}`);
+      }
     }
+  };
+
+  const handleCheckID = () => {
+    setMesWrongID(false);
+    setMesWrongTime(false);
   };
 
   return (
@@ -73,6 +107,36 @@ function Home() {
           </button>
         </div>
       </div>
+      {mesWrongID && (
+        <div className="fixed inset-0 bg-black w-full flex">
+          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
+            <h2 className="m-[auto] text-5xl text-center">
+              SessionID bạn điền không tồn tại !!!
+            </h2>
+            <button
+              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+              onClick={handleCheckID}
+            >
+              OKE NHA !
+            </button>
+          </div>
+        </div>
+      )}
+      {mesWrongTime && (
+        <div className="fixed inset-0 bg-black w-full flex">
+          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
+            <h2 className="m-[auto] text-5xl text-center">
+              Bạn đang vào sai giờ , kiểm tra lại nha !!!
+            </h2>
+            <button
+              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+              onClick={handleCheckID}
+            >
+              OKE NHA !
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
