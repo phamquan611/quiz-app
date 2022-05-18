@@ -1,12 +1,22 @@
-const initialState = {
-  // TODO
-};
+// import { userActionType } from "@actions/admin.action";
 
-const User = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+// const initialState = {
+//   count: 0,
+// };
 
-export default User;
+// const User = (state = initialState, action) => {
+//   switch (action.type) {
+//     case userActionType.INCREMENT:
+//       return {
+//         count: state.count + 1,
+//       };
+//     case userActionType.DECREMENT:
+//       return {
+//         count: state.count - 1,
+//       };
+//     default:
+//       return state;
+//   }
+// };
+
+// export default User;

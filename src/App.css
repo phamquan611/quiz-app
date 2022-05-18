@@ -6,8 +6,8 @@
     padding: 299px;
 }
 .bg-quiz{
-    background: #fdefe4;
-    padding: 292px 0 ;
+    background: #e4f9ea;
+    padding: 240px 0 ;
 }
 
 .bg-result{
@@ -27,6 +27,4 @@
     top: 50%;
     transform: translateY(-50%);
 }
-.ques-item{
-    transform: translateY(-50px);
-}
+
