@@ -1,3 +1,3 @@
-export const adminActionType = {
-    // TODO
-}
+export const userActionType = {
+  // TODO
+};
