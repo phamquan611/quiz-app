@@ -29,12 +29,6 @@ export const getTimeStamp = (time) => {
   return +new Date(time);
 };
 
-export const INITIAL_VALUES = {
-  date: "01/01/2022",
-  timeStart: "00:00:00",
-  timeEnd: "02:00:00",
-};
-
 export const convertMinuteToMilliseconds = (minute) => {
   return minute * 60000;
 };

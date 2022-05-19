@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -13,12 +13,13 @@ import { adminRequireSignIn } from "@actions/admin.action";
 
 const SignInPage = () => {
   const history = useHistory();
+  const [isClickSignIn, setIsClickSignIn] = useState("NotClick");
   const dispatch = useDispatch();
   const adminStore = useSelector((state) => state.admin);
 
   useEffect(() => {
-    const { clickSignIn, adminToken, isSignIn } = adminStore;
-    if (clickSignIn && adminToken) {
+    const { adminToken, isSignIn } = adminStore;
+    if (adminToken) {
       localStorage.setItem(LOCAL_ACCESS_TOKEN, adminStore.adminToken);
       Swal.fire("Well come to PQ quiz app .").then((result) => {
         if (result.isConfirmed) {
@@ -26,16 +27,15 @@ const SignInPage = () => {
         }
       });
     }
-    if (clickSignIn && !isSignIn) {
+    if (isSignIn === false) {
       Swal.fire({
         position: "top-end",
         icon: "error",
         title: "Account or password incorrect",
         showConfirmButton: false,
-        timer: 1500,
       });
     }
-  }, [adminStore.adminToken, adminStore.clickSignIn]);
+  }, [isClickSignIn, adminStore.isClickSignIn]);
 
   const validate = (values) => {
     const errors = {};
@@ -61,6 +61,7 @@ const SignInPage = () => {
     },
     validate,
     onSubmit: async () => {
+      setIsClickSignIn(!isClickSignIn);
       return dispatch(adminRequireSignIn(formik.values));
     },
   });

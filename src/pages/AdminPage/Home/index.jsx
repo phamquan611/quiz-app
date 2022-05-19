@@ -15,9 +15,9 @@ export default function HomeAdmin() {
 
   return (
     <div className="flex flex-wrap justify-between 2xl:mx-[50px]">
-      {quizzesStore.listQuiz.length === 0
+      {quizzesStore.length === 0
         ? "No data"
-        : quizzesStore.listQuiz.map((quiz) => {
+        : quizzesStore.map((quiz) => {
           return (
             <div className="w-[200px]" key={quiz._id}>
               <button className="py-2 w-[100%] text-[20px] px-4 bg-[#51ad32] text-white font-semibold opacity-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75">{quiz.category}</button>

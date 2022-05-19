@@ -16,17 +16,17 @@ function Session() {
     setListSession(listSession);
   };
   useEffect(() => {
-    if (sessionsStore.listSession.length === 0) {
+    if (sessionsStore.length === 0) {
       dispatch(getListSession());
     }
-    if (quizzesStore.listQuiz.length === 0) {
+    if (quizzesStore.length === 0) {
       dispatch(getQuizzes());
     }
   }, []);
 
   useEffect(() => {
-    setListSession(sessionsStore.listSession);
-  }, [sessionsStore.listSession.length]);
+    setListSession(sessionsStore);
+  }, [sessionsStore.length]);
   return (
     <div>
       <hr className="w-[80%] my-[30px] mx-auto" />
