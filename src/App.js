@@ -6,7 +6,10 @@ import configureStore from "@store";
 import Home from "@pages/user-page/home/index";
 import Quiz from "@pages/user-page/quiz/index";
 import Result from "@pages/user-page/result";
+import AdminPage from "@pages/AdminPage";
+import SignInPage from "@pages/SignInPage";
 import "./App.css";
+import "antd/dist/antd.min.css";
 
 function App() {
   const store = configureStore();
@@ -22,6 +25,8 @@ function App() {
         <Route path="/result">
           <Result />
         </Route>
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/signin" component={SignInPage} />
       </Router>
     </Provider>
   );
