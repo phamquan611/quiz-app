@@ -3,14 +3,15 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { url } from "@services/http";
 
-function Home({ quizzesID, setQuizzesID }) {
+function Home({
+  quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID
+}) {
   const [isError, setIsError] = useState(true);
   const [isErrorID, setIsErrorID] = useState(true);
-  const [name, setName] = useState("");
-  const [quizzID, setQuizzID] = useState("");
   const [checkID, setCheckID] = useState();
   const [mesWrongID, setMesWrongID] = useState(false);
   const [mesWrongTime, setMesWrongTime] = useState(false);
+  const [duplicate, setDuplicate] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function Home({ quizzesID, setQuizzesID }) {
     setQuizzID(e.target.value);
     setIsErrorID(true);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const tesst = checkID.filter((id) => id._id === quizzID);
     const currentDate = +new Date();
 
@@ -43,7 +44,15 @@ function Home({ quizzesID, setQuizzesID }) {
       setQuizzesID(quizzesID);
       const getQuizID = tesst[0].quizId;
       setQuizzesID(tesst[0].quizId);
-      if (timeStart < currentDate && currentDate < timeEnd) {
+      const data = await axios.post(
+        `${url}/sessions/${quizzID}`,
+        {
+          username: name,
+        }
+      );
+      if (data.data.error === "Username duplicate.") {
+        setDuplicate(true);
+      } else if (timeStart < currentDate && currentDate < timeEnd) {
         history.push(`/quiz/${getQuizID}`);
       } else {
         setMesWrongTime(true);
@@ -55,6 +64,7 @@ function Home({ quizzesID, setQuizzesID }) {
   const handleCheckID = () => {
     setMesWrongID(false);
     setMesWrongTime(false);
+    setDuplicate(false);
   };
 
   return (
@@ -136,6 +146,21 @@ function Home({ quizzesID, setQuizzesID }) {
             </button>
           </div>
         </div>
+      )}
+      {duplicate && (
+      <div className="fixed inset-0 bg-black w-full flex">
+        <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
+          <h2 className="m-[auto] text-5xl text-center">
+            Tên của bạn đã có, nhập tên khác nhé !!!
+          </h2>
+          <button
+            className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+            onClick={handleCheckID}
+          >
+            OKE NHA !
+          </button>
+        </div>
+      </div>
       )}
     </div>
   );

@@ -7,15 +7,17 @@ import CheckQuestion from "@components/userQuestionCheck";
 import { url } from "@services/http";
 import { useHistory } from "react-router-dom";
 
-function Quiz({ quizzesID, setQuizzesID }) {
+function Quiz({
+  quizzesID,
+  isOptionAvailable,
+  setIsCheckTime,
+  isCheckTime,
+  setIsOptionAvailable,
+  setViewAnswers
+}) {
   const [questions, setQuestions] = useState([]);
   const [timeStamp, setTimeStamp] = useState();
-  const [question, setQuestion] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  // const [selectedAnswer, setSelectedAnswer] = useState();
-  const [currentPick, setCurrentPick] = useState(0);
-  const [currentAnswers, setCurrentAnswers] = useState();
-  const [userSelected, setUserSelected] = useState(-1);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -24,27 +26,14 @@ function Quiz({ quizzesID, setQuizzesID }) {
       setQuestions(res.data?.questions);
       setTimeStamp(res.data?.timeChangllenge);
     });
-    // setCurrentPick(currentPick);
-  }, [currentQuestion, currentPick]);
-  // const nextQuestion = () => {
-  //   setCurrentQuestion(currentQuestion + 1);
-  //   setCurrentPick(currentPick + 1);
-  //   // setCurrentAnswers(questions[currentQuestion]?.answers);
-  //   setSelectedAnswer(selectedAnswer);
-  //   if (currentQuestion === questions.length - 1) {
-  //     history.push("/result");
-  //   }
-  // };
+  }, []);
 
-  // const prevQuestion = () => {
-  //   setCurrentQuestion(currentQuestion - 1);
-  //   setCurrentPick(currentPick + 1);
-  //   // setCurrentAnswers(questions[currentQuestion]?.answers);
-  //   setSelectedAnswer(selectedAnswer);
-
-  //   // setSelectedAnswer(questions[currentPick].answers);
-  // };
-
+  const onSelectAnswer = (answerId) => {
+    const _questions = [...questions];
+    _questions[currentQuestionIndex].selectedAnswer = answerId;
+    setQuestions(_questions);
+    setViewAnswers(_questions);
+  };
   return (
     // TO DO : prev and next btn
     <div className="bg-quiz">
@@ -53,28 +42,24 @@ function Quiz({ quizzesID, setQuizzesID }) {
           {questions.length > 0 && (
             <CheckQuestion
               questions={questions}
-              currentQuestion={currentQuestion}
-              setCurrentQuestion={setCurrentQuestion}
-              currentPick={currentPick}
-              currentAnswers={currentAnswers}
-              setCurrentAnswers={setCurrentAnswers}
-              userSelected={userSelected}
+              currentQuestionIndex={currentQuestionIndex}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
+              isCheckTime={isCheckTime}
+              setIsCheckTime={setIsCheckTime}
+              onSelectAnswer={onSelectAnswer}
             />
           )}
           {questions.length > 0 && (
             <Question
               questions={questions}
               timeStamp={timeStamp}
-              currentQuestion={currentQuestion}
-              setCurrentQuestion={setCurrentQuestion}
-              question={question}
-              setQuestion={setQuestion}
-              currentPick={currentPick}
-              setCurrentPick={setCurrentPick}
-              currentAnswers={currentAnswers}
-              setCurrentAnswers={setCurrentAnswers}
-              setUserSelected={setUserSelected}
-              userSelected={userSelected}
+              currentQuestionIndex={currentQuestionIndex}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
+              onSelectAnswer={onSelectAnswer}
+              isCheckTime={isCheckTime}
+              setIsCheckTime={setIsCheckTime}
+              isOptionAvailable={isOptionAvailable}
+              setIsOptionAvailable={setIsOptionAvailable}
             />
           )}
         </div>
