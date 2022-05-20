@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const IDEA = [
   "A",
   "B",
@@ -47,9 +49,17 @@ export const convertMillisecondToMinute = (milliseconds) => {
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 };
 
+export const convertHourToTimeStamp = (date, hour) => {
+  const hourInDate = moment(`${date} ${hour}`).format();
+  return +new Date(hourInDate);
+};
+
 export const url = "https://quiz-app-wind-remake.herokuapp.com";
 
 export const LOCAL_ACCESS_TOKEN = "accessToken";
+
+export const ERROR_SIGN_IN = "Account or password incorrect";
+
 
 // status session
 const WAITING_STATUS = "Waiting";
@@ -81,7 +91,22 @@ export const COLUMNS_SESSION_TABLE = [
     key: "category",
   },
   {
-    title: "Status",
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Start",
+    dataIndex: "timeStart",
+    key: "timeStart",
+  },
+  {
+    title: "End",
+    dataIndex: "timeEnd",
+    key: "timeStart",
+  },
+  {
+    title: "status",
     dataIndex: "status",
     key: "status",
     render: (text) => <div className={`${setClassStatus(text)}`}>{text}</div>,
@@ -94,7 +119,7 @@ export const convertSessionsToView = (sessions) => {
 
   return sessions.map((session, index) => {
     const {
-      _id, category, timeStart, timeEnd,
+      _id, category, timeStart, timeEnd, date,
     } = session;
     const status = timeEnd < currentTime
       ? EXPIRES_STATUS
@@ -107,6 +132,9 @@ export const convertSessionsToView = (sessions) => {
       index,
       id: _id,
       category,
+      date: moment(date).format("DD-MM-YYYY"),
+      timeStart: convertTimeStampToDateTime(timeStart),
+      timeEnd: convertTimeStampToDateTime(timeEnd),
       status,
     };
   });
