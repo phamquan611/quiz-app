@@ -8,6 +8,7 @@ import {
   validationEmail,
   displayErrorMessage,
   LOCAL_ACCESS_TOKEN,
+  ERROR_SIGN_IN,
 } from "@utils";
 import { adminRequireSignIn } from "@actions/admin.action";
 
@@ -18,7 +19,7 @@ const SignInPage = () => {
   const adminStore = useSelector((state) => state.admin);
 
   useEffect(() => {
-    const { adminToken, isSignIn } = adminStore;
+    const { adminToken, error } = adminStore;
     if (adminToken) {
       localStorage.setItem(LOCAL_ACCESS_TOKEN, adminStore.adminToken);
       Swal.fire("Well come to PQ quiz app .").then((result) => {
@@ -27,15 +28,15 @@ const SignInPage = () => {
         }
       });
     }
-    if (isSignIn === false) {
+    if (error === ERROR_SIGN_IN && !adminToken) {
       Swal.fire({
         position: "top-end",
         icon: "error",
-        title: "Account or password incorrect",
+        title: ERROR_SIGN_IN,
         showConfirmButton: false,
       });
     }
-  }, [isClickSignIn, adminStore.isClickSignIn]);
+  }, [adminStore.adminToken, adminStore.error]);
 
   const validate = (values) => {
     const errors = {};

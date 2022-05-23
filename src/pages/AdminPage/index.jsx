@@ -4,6 +4,8 @@ import {
 } from "react-router-dom";
 import Session from "@pages/AdminPage/Session";
 import HomeAdmin from "@pages/AdminPage/Home";
+import QuizWithId from "@pages/AdminPage/QuizWithId";
+import Participants from "@pages/AdminPage/Participants";
 
 const AdminPage = () => {
   return (
@@ -34,41 +36,24 @@ const AdminPage = () => {
         <NavLink
           exact
           to="/admin"
-          className={(isActive) => {
-            return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${
-              isActive ? "text-indigo-500" : "text-[#111111]"
-            }`;
-          }}
+          activeClassName="text-indigo-900"
+          className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
         >
           Home
         </NavLink>
         <NavLink
-          to="/admin/activity"
-          className={(isActive) => {
-            return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${
-              isActive ? "text-indigo-500" : "text-[#111111]"
-            }`;
-          }}
-        >
-          Activity
-        </NavLink>
-        <NavLink
+          exact
           to="/admin/session"
-          className={(isActive) => {
-            return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${
-              isActive ? "text-indigo-500" : "text-[#111111]"
-            }`;
-          }}
+          activeClassName="text-indigo-900"
+          className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
         >
           Session
         </NavLink>
         <NavLink
+          exact
           to="/admin/create-quiz"
-          className={(isActive) => {
-            return `'pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75 ' ${
-              isActive ? "text-indigo-500" : "text-[#111111]"
-            }`;
-          }}
+          activeClassName="text-indigo-900"
+          className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
         >
           CreateQuiz
         </NavLink>
@@ -77,9 +62,13 @@ const AdminPage = () => {
       <div>
         <Switch>
           <Route exact path="/admin" component={HomeAdmin} />
-          {/* <Route exact path="/admin/activity" component={Activity} />
-                      <Route exact path="/admin/create-quiz" component={CreateQuiz} />
-                      <Route exact path="/admin/quiz/:quizId" component={QuizContent} /> */}
+          <Route exact path="/admin/session/participants/:sessionId" component={Participants} />
+          {/* <Route exact path="/admin/create-quiz" component={CreateQuiz} /> */}
+          <Route
+            exact
+            path="/admin/quiz/:quizId"
+            component={QuizWithId}
+          />
           <Route exact path="/admin/session" component={Session} />
         </Switch>
       </div>

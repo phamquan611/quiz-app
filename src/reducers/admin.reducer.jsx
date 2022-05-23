@@ -1,8 +1,9 @@
 import { adminActionType } from "@actions/admin.action";
+import { ERROR_SIGN_IN } from "@utils";
 
 const initialState = {
   adminToken: null,
-  isSignIn: null,
+  error: null,
 };
 
 const Admin = (state = initialState, action) => {
@@ -11,10 +12,10 @@ const Admin = (state = initialState, action) => {
       return {
         ...state,
         adminToken: action.payload,
-        isSignIn: true,
+        error: null,
       };
     case adminActionType.ADMIN_SIGN_iN_FAIL:
-      return { ...state, isSignIn: false };
+      return { ...state, error: ERROR_SIGN_IN };
     case adminActionType.ADMIN_SIGN_OUT:
       return initialState;
     default:

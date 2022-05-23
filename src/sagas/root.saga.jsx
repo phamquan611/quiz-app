@@ -8,5 +8,6 @@ export function* RootSaga() {
     adminSaga.adminSignInWatcher(),
     sessionSaga.getListSessionWatcher(),
     quizzesSaga.getQuizzesWatcher(),
+    sessionSaga.postNewSessionWatcher(),
   ]);
 }
