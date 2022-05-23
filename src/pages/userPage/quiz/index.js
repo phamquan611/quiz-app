@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import Question from "@components/userQuestion";
 import CheckQuestion from "@components/userQuestionCheck";
-import { url } from "@services/http";
+import { url } from "@utils";
 import { useHistory } from "react-router-dom";
 
 function Quiz({

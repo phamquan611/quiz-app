@@ -6,8 +6,10 @@ import configureStore from "@store";
 import Home from "@pages/userPage/home/index";
 import Quiz from "@pages/userPage/quiz/index";
 import Result from "@pages/userPage/result";
+import NotFound from "@pages/userPage/404Page";
 import "./App.css";
 
+const store = configureStore();
 function App() {
   const [quizzesID, setQuizzesID] = useState();
   const [isOptionAvailable, setIsOptionAvailable] = useState(false);
@@ -15,7 +17,7 @@ function App() {
   const [name, setName] = useState("");
   const [quizzID, setQuizzID] = useState("");
   const [viewAnswers, setViewAnswers] = useState();
-  const store = configureStore();
+
   return (
     <Provider store={store}>
       <Router>
@@ -28,6 +30,9 @@ function App() {
         <Route path="/result">
           <Result quizzesID={quizzesID} setIsOptionAvailable={setIsOptionAvailable} setIsCheckTime={setIsCheckTime} name={name} quizzID={quizzID} viewAnswers={viewAnswers} />
         </Route>
+        {/* <Route path="/*">
+          <NotFound />
+        </Route> */}
       </Router>
     </Provider>
   );

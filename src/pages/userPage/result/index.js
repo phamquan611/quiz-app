@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { url } from "@services/http";
+import { url } from "@utils";
 
 function Result({
   quizzesID,
@@ -12,8 +12,8 @@ function Result({
   name,
   quizzID,
 }) {
-  const [isSubmit, setIsSubmit] = useState(false);
-  const [userSubmit, setUserSubmit] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmited, setisSubmitted] = useState(true);
   const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
@@ -23,8 +23,8 @@ function Result({
     setIsCheckTime(true);
   };
   const handleSubmit = async () => {
-    setIsSubmit(true);
-    if (userSubmit === true) {
+    setIsSubmitting(true);
+    if (isSubmited === true) {
       setIsOptionAvailable(true);
       const body = viewAnswers.map((quest) => ({
         questionId: quest.id,
@@ -41,11 +41,11 @@ function Result({
     }
   };
   const handleCheckdone = () => {
-    setIsSubmit(false);
-    setUserSubmit(true);
+    setIsSubmitting(false);
+    setisSubmitted(true);
   };
   const handleChecknone = () => {
-    setIsSubmit(false);
+    setIsSubmitting(false);
   };
   const checkSubmit = () => {
     setDone(false);
@@ -75,7 +75,7 @@ function Result({
           </button>
         </div>
       </div>
-      {isSubmit === true && (
+      {isSubmitting === true && (
         <div className="fixed inset-0 bg-black w-full flex ">
           <div className="m-[auto] opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col ">
             <h2 className="m-[auto] text-5xl text-center">

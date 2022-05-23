@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { url } from "@services/http";
+import { url } from "@utils";
+import { getAllDataSessions } from "@actions/user.action";
+import { selectSessionsID } from "@store/slice";
 
 function Home({
   quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID
@@ -13,13 +16,16 @@ function Home({
   const [mesWrongTime, setMesWrongTime] = useState(false);
   const [duplicate, setDuplicate] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const sessionsStore = useSelector(selectSessionsID);
 
   useEffect(() => {
-    axios.get(`${url}/sessions`).then((res) => {
-      setCheckID(res.data);
-    });
+    dispatch(getAllDataSessions());
   }, []);
 
+  useEffect(() => {
+    setCheckID(sessionsStore);
+  }, [sessionsStore]);
   const handleSubmitUser = (e) => {
     setIsError(true);
     setName(e.target.value);
@@ -29,21 +35,17 @@ function Home({
     setIsErrorID(true);
   };
   const handleSubmit = async () => {
-    const tesst = checkID.filter((id) => id._id === quizzID);
+    const test = checkID.filter((id) => id._id === quizzID);
     const currentDate = +new Date();
-
-    if (!name) {
-      setIsError(false);
-    } else if (!quizzID) {
-      setIsErrorID(false);
-    } else if (tesst.length === 0) {
+    if (!name || !quizzID) {
+      setIsError(true);
+    } else if (test.length === 0) {
       setMesWrongID(true);
-    } else if (quizzID === tesst[0]._id) {
-      const { timeStart } = tesst[0];
-      const { timeEnd } = tesst[0];
-      setQuizzesID(quizzesID);
-      const getQuizID = tesst[0].quizId;
-      setQuizzesID(tesst[0].quizId);
+    } else if (quizzID === test[0]._id) {
+      const { timeStart } = test[0];
+      const { timeEnd } = test[0];
+      const getQuizID = test[0].quizId;
+      setQuizzesID(test[0].quizId);
       const data = await axios.post(
         `${url}/sessions/${quizzID}`,
         {
