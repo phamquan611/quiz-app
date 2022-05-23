@@ -49,22 +49,32 @@ function Session() {
 
   useEffect(() => {
     setListSession(sessionsStore);
-  }, [sessionsStore.length]);
+  }, [sessionsStore]);
 
   const handleChangeInput = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
-  const clickCreateSession = () => {
+  // validation create session
+  const validationCreateSession = (session) => {
+    let isValid = true;
     const currentDate = moment(new Date()).format("YYYY-MM-DD");
+    if (getTimeStamp(session.date) < getTimeStamp(currentDate)) {
+      Swal.fire("The test can not a date in the past time .");
+      isValid = false;
+    }
+
+    if (session.timeEnd < currentTime) {
+      Swal.fire("The test time must the bigger current time . ");
+      isValid = false;
+    }
+    return isValid;
+  };
+  const clickCreateSession = () => {
     const quizIdSelected = quizId.current?.value;
     const quizWithSelectedId = quizzesStore.filter(
       (quiz) => quiz._id === quizIdSelected,
     );
     const quizSelectedCategory = quizWithSelectedId[0]?.category;
-    if (!quizIdSelected || !quizSelectedCategory) {
-      return Swal.fire("Create Session Fail !!!");
-    }
     const { date, timeStart, timeEnd } = values;
     const newSession = {
       ...values,
@@ -74,17 +84,11 @@ function Session() {
       quizId: quizIdSelected,
       participants: [],
     };
-
-    if (getTimeStamp(newSession.date) < getTimeStamp(currentDate)) {
-      return Swal.fire("The test can not a date in the past time .");
+    if (validationCreateSession(newSession)) {
+      return dispatch(postSession(newSession));
     }
-
-    if (newSession.timeEnd < currentTime) {
-      return Swal.fire("The test time must the bigger current time . ");
-    }
-
-    return dispatch(postSession(newSession));
   };
+
 
   return (
     <div className="px-[50px]">
@@ -158,6 +162,10 @@ function Session() {
       </div>
 
       <hr className="w-[80%] my-[30px] mx-auto " />
+      <div className="text-center">
+        <h1 className="text-2xl">Table Session</h1>
+        <h3>( Click id a session to see the list participant )</h3>
+      </div>
       <div className="my-[10px]">
         <button
           className="py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75"
@@ -169,6 +177,7 @@ function Session() {
       <Table
         columns={COLUMNS_SESSION_TABLE}
         dataSource={convertSessionsToView(listSession)}
+        className="cursor-pointer"
       />
     </div>
   );

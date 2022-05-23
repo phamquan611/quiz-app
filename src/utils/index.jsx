@@ -1,4 +1,5 @@
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export const IDEA = [
   "A",
@@ -54,12 +55,15 @@ export const convertHourToTimeStamp = (date, hour) => {
   return +new Date(hourInDate);
 };
 
+export const checkTypeObject = (ob) => {
+  return typeof ob === "object" && ob !== null;
+};
+
 export const url = "https://quiz-app-wind-remake.herokuapp.com";
 
 export const LOCAL_ACCESS_TOKEN = "accessToken";
 
 export const ERROR_SIGN_IN = "Account or password incorrect";
-
 
 // status session
 const WAITING_STATUS = "Waiting";
@@ -76,14 +80,10 @@ const setClassStatus = (text) => {
 // table header session
 export const COLUMNS_SESSION_TABLE = [
   {
-    title: "No.",
-    dataIndex: "index",
-    key: "index",
-  },
-  {
     title: "SESSION ID",
     dataIndex: "id",
     key: "id",
+    render: (id) => <Link key={id} to={`/admin/session/participants/${id}`}>{id}</Link>,
   },
   {
     title: "Category",
@@ -112,6 +112,20 @@ export const COLUMNS_SESSION_TABLE = [
     render: (text) => <div className={`${setClassStatus(text)}`}>{text}</div>,
   },
 ];
+
+export const COLUMNS_PARTICIPANTS_TABLE = [
+  {
+    title: "Username",
+    dataIndex: "username",
+    key: "username",
+  },
+  {
+    title: "Score",
+    dataIndex: "result",
+    key: "result",
+  },
+];
+
 export const convertSessionsToView = (sessions) => {
   if (!Array.isArray(sessions) || sessions.length === 0) {
     return [];
@@ -139,4 +153,5 @@ export const convertSessionsToView = (sessions) => {
     };
   });
 };
+
 // export const covertDataTable

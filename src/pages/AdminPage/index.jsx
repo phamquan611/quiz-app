@@ -5,6 +5,7 @@ import {
 import Session from "@pages/AdminPage/Session";
 import HomeAdmin from "@pages/AdminPage/Home";
 import QuizWithId from "@pages/AdminPage/QuizWithId";
+import Participants from "@pages/AdminPage/Participants";
 
 const AdminPage = () => {
   return (
@@ -42,14 +43,6 @@ const AdminPage = () => {
         </NavLink>
         <NavLink
           exact
-          to="/admin/activity"
-          activeClassName="text-indigo-900"
-          className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
-        >
-          Activity
-        </NavLink>
-        <NavLink
-          exact
           to="/admin/session"
           activeClassName="text-indigo-900"
           className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
@@ -69,8 +62,8 @@ const AdminPage = () => {
       <div>
         <Switch>
           <Route exact path="/admin" component={HomeAdmin} />
-          {/* <Route exact path="/admin/activity" component={Activity} />
-                      <Route exact path="/admin/create-quiz" component={CreateQuiz} /> */}
+          <Route exact path="/admin/session/participants/:sessionId" component={Participants} />
+          {/* <Route exact path="/admin/create-quiz" component={CreateQuiz} /> */}
           <Route
             exact
             path="/admin/quiz/:quizId"
