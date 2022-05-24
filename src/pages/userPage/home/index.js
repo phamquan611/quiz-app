@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-closing-tag-location */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { useHistory } from "react-router-dom";
@@ -12,9 +14,8 @@ function Home({
   const [isError, setIsError] = useState(true);
   const [isErrorID, setIsErrorID] = useState(true);
   const [checkID, setCheckID] = useState();
-  const [mesWrongID, setMesWrongID] = useState(false);
-  const [mesWrongTime, setMesWrongTime] = useState(false);
-  const [duplicate, setDuplicate] = useState(false);
+  const [mesWrong, setMesWrong] = useState(false);
+  const [toastMes, setToastMes] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionsStore = useSelector(selectSessionsID);
@@ -40,7 +41,8 @@ function Home({
     if (!name || !quizzID) {
       setIsError(true);
     } else if (test.length === 0) {
-      setMesWrongID(true);
+      setMesWrong(true);
+      setToastMes("wrong ID");
     } else if (quizzID === test[0]._id) {
       const { timeStart } = test[0];
       const { timeEnd } = test[0];
@@ -53,20 +55,20 @@ function Home({
         }
       );
       if (data.data.error === "Username duplicate.") {
-        setDuplicate(true);
+        setMesWrong(true);
+        setToastMes("duplicate name");
       } else if (timeStart < currentDate && currentDate < timeEnd) {
         history.push(`/quiz/${getQuizID}`);
       } else {
-        setMesWrongTime(true);
+        setMesWrong(true);
+        setToastMes("wrong time");
         history.push(`/quiz/${getQuizID}`);
       }
     }
   };
 
   const handleCheckID = () => {
-    setMesWrongID(false);
-    setMesWrongTime(false);
-    setDuplicate(false);
+    setMesWrong(false);
   };
 
   return (
@@ -119,27 +121,27 @@ function Home({
           </button>
         </div>
       </div>
-      {mesWrongID && (
+      {mesWrong && (
         <div className="fixed inset-0 bg-black w-full flex">
           <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
+            {toastMes === "wrong ID" && (
             <h2 className="m-[auto] text-5xl text-center">
               SessionID bạn điền không tồn tại !!!
             </h2>
-            <button
-              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
-              onClick={handleCheckID}
-            >
-              OKE NHA !
-            </button>
-          </div>
-        </div>
-      )}
-      {mesWrongTime && (
-        <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
+            ) }
+
+            {toastMes === "duplicate name" && (
+            <h2 className="m-[auto] text-5xl text-center">
+              Tên của bạn đã có, nhập tên khác nhé !!!
+            </h2>
+            ) }
+
+            {toastMes === "wrong time" && (
             <h2 className="m-[auto] text-5xl text-center">
               Bạn đang vào sai giờ , kiểm tra lại nha !!!
             </h2>
+            ) }
+
             <button
               className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
               onClick={handleCheckID}
@@ -148,21 +150,6 @@ function Home({
             </button>
           </div>
         </div>
-      )}
-      {duplicate && (
-      <div className="fixed inset-0 bg-black w-full flex">
-        <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col">
-          <h2 className="m-[auto] text-5xl text-center">
-            Tên của bạn đã có, nhập tên khác nhé !!!
-          </h2>
-          <button
-            className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
-            onClick={handleCheckID}
-          >
-            OKE NHA !
-          </button>
-        </div>
-      </div>
       )}
     </div>
   );
