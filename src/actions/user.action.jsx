@@ -1,7 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import axios from "axios";
-import { url } from "@services/http";
-
 export const userActionType = {
   // TODO
   GET_DATA_SESSIONS: "GET_DATA_SESSIONS",

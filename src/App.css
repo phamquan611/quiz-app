@@ -28,4 +28,18 @@
     top: 50%;
     transform: translateY(-50%);
 }
-
+.modal-container{
+    min-height: 200px;
+    animation: modalFadeIn ease 0.7s ;
+}
+@keyframes modalFadeIn{
+    from{
+    opacity: 0;
+    transform: translateY(-200px);
+    
+    }
+    to{
+    opacity: 1;
+    transform: translateY(0);
+    }
+    }

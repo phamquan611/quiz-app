@@ -1,5 +1,6 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-nested-ternary */
+import moment from "moment";
+import { Link } from "react-router-dom";
+
 export const IDEA = [
   "A",
   "B",
@@ -38,20 +39,31 @@ export const currentTime = +new Date();
 
 export const convertTimeStampToDateTime = (timeStamp) => {
   const date = new Date(timeStamp);
-  return `${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${
-    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+  return `${date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}:${
+    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
   }`;
 };
 
 export const convertMillisecondToMinute = (milliseconds) => {
   const minutes = Math.floor(milliseconds / 60000);
   const seconds = ((milliseconds % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+};
+
+export const convertHourToTimeStamp = (date, hour) => {
+  const hourInDate = moment(`${date} ${hour}`).format();
+  return +new Date(hourInDate);
+};
+
+export const checkTypeObject = (ob) => {
+  return typeof ob === "object" && ob !== null;
 };
 
 export const url = "https://quiz-app-wind-remake.herokuapp.com";
 
 export const LOCAL_ACCESS_TOKEN = "accessToken";
+
+export const ERROR_SIGN_IN = "Account or password incorrect";
 
 // status session
 const WAITING_STATUS = "Waiting";
@@ -65,17 +77,13 @@ const setClassStatus = (text) => {
       ? "text-[blue]"
       : "text-[red]";
 };
-  // table header session
+// table header session
 export const COLUMNS_SESSION_TABLE = [
-  {
-    title: "No.",
-    dataIndex: "index",
-    key: "index",
-  },
   {
     title: "SESSION ID",
     dataIndex: "id",
     key: "id",
+    render: (id) => <Link key={id} to={`/admin/session/participants/${id}`}>{id}</Link>,
   },
   {
     title: "Category",
@@ -83,12 +91,41 @@ export const COLUMNS_SESSION_TABLE = [
     key: "category",
   },
   {
-    title: "Status",
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Start",
+    dataIndex: "timeStart",
+    key: "timeStart",
+  },
+  {
+    title: "End",
+    dataIndex: "timeEnd",
+    key: "timeStart",
+  },
+  {
+    title: "status",
     dataIndex: "status",
     key: "status",
     render: (text) => <div className={`${setClassStatus(text)}`}>{text}</div>,
   },
 ];
+
+export const COLUMNS_PARTICIPANTS_TABLE = [
+  {
+    title: "Username",
+    dataIndex: "username",
+    key: "username",
+  },
+  {
+    title: "Score",
+    dataIndex: "result",
+    key: "result",
+  },
+];
+
 export const convertSessionsToView = (sessions) => {
   if (!Array.isArray(sessions) || sessions.length === 0) {
     return [];
@@ -96,7 +133,7 @@ export const convertSessionsToView = (sessions) => {
 
   return sessions.map((session, index) => {
     const {
-      _id, category, timeStart, timeEnd,
+      _id, category, timeStart, timeEnd, date,
     } = session;
     const status = timeEnd < currentTime
       ? EXPIRES_STATUS
@@ -109,8 +146,12 @@ export const convertSessionsToView = (sessions) => {
       index,
       id: _id,
       category,
+      date: moment(date).format("DD-MM-YYYY"),
+      timeStart: convertTimeStampToDateTime(timeStart),
+      timeEnd: convertTimeStampToDateTime(timeEnd),
       status,
     };
   });
 };
-  // export const covertDataTable
+
+// export const covertDataTable

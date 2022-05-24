@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable no-return-assign */
 /* eslint-disable semi */
 /* eslint-disable no-param-reassign */
@@ -19,8 +20,11 @@ function Question({
   setIsCheckTime,
   isOptionAvailable,
   setIsOptionAvailable,
+  view,
+  viewAnswers,
+  answers,
+  setAnswers,
 }) {
-  const [answers, setAnswers] = useState();
   const Ref = useRef(null);
   const history = useHistory();
   const [timer, setTimer] = useState("00:00:00");
@@ -45,19 +49,19 @@ function Question({
   };
   const startTimer = (e) => {
     const {
-      total, hours, minutes, seconds
+      total, hours, minutes, seconds,
     } = getTimeRemaining(e);
     if (total >= 0) {
       setTimer(
         `${hours > 9 ? hours : `0${hours}`}:${
           minutes > 9 ? minutes : `0${minutes}`
-        }:${seconds > 9 ? seconds : `0${seconds}`}`
+        }:${seconds > 9 ? seconds : `0${seconds}`}`,
       );
     }
   };
 
-  const minutes = Math.floor(timeStamp / 60000);
-  const seconds = ((timeStamp % 60000) / 1000).toFixed(0);
+  const minutes = Math.floor(timeStamp / 6000);
+  const seconds = ((timeStamp % 6000) / 100).toFixed(0);
   const timeCountDown = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
   const clearTimer = (e) => {
@@ -74,17 +78,17 @@ function Question({
   const getDeadTime = () => {
     const deadline = new Date();
 
-    deadline.setSeconds(deadline.getSeconds() + timeStamp / 1000);
+    deadline.setSeconds(deadline.getSeconds() + timeStamp / 100);
     return deadline;
   };
   useEffect(() => {
     setAnswers(
-      questions.length > 0 &&
-        handleShuffle([...questions[currentQuestionIndex].answers])
+      questions.length > 0
+        && handleShuffle([...questions[currentQuestionIndex].answers]),
     );
     clearTimer(getDeadTime());
   }, [questions, currentQuestionIndex]);
-  // question = questions[currentQuestion].content;
+
   const handleSelectAnswer = (id) => {
     onSelectAnswer(id);
     setIsCheckTime(true);
@@ -109,24 +113,46 @@ function Question({
         </p>
         <p className="pb-[10px]">{questions[currentQuestionIndex].content}</p>
       </div>
-      <div className="flex justify-between flex-wrap">
-        {answers &&
-          answers.map(({ content, id }, index) => (
-            <button
-              onClick={() => handleSelectAnswer(id)}
-              key={id}
-              disabled={isOptionAvailable === true}
-              className={
-                ` border-2 border-sky-500 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
-                  questions[currentQuestionIndex].selectedAnswer === id &&
-                  "bg-indigo-900"
-                }`
-              }
-            >
-              {content}
-            </button>
-          ))}
-      </div>
+      {view === true ? (
+        <div className="flex justify-between flex-wrap">
+          {answers
+                && answers.map(({ content, id }, index) => (
+                  <button
+                    onClick={() => handleSelectAnswer(id)}
+                    key={id}
+                    disabled={isOptionAvailable === true}
+                    className={
+                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
+                        viewAnswers[currentQuestionIndex].selectedAnswer === id
+                        && "bg-indigo-900"
+                      }`
+                    }
+                  >
+                    {`${index + 1}. ${content} `}
+                  </button>
+                ))}
+        </div>
+      )
+        : (
+          <div className="flex justify-between flex-wrap">
+            {answers
+        && answers.map(({ content, id }, index) => (
+          <button
+            onClick={() => handleSelectAnswer(id)}
+            key={id}
+            disabled={isOptionAvailable === true}
+            className={
+              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
+                questions[currentQuestionIndex].selectedAnswer === id
+                && "bg-indigo-900"
+              }`
+            }
+          >
+            {`${index + 1}. ${content} `}
+          </button>
+        ))}
+          </div>
+        )}
     </div>
   );
 }

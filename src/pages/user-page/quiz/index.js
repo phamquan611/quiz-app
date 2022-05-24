@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Question from "@components/userQuestion";
 import CheckQuestion from "@components/userQuestionCheck";
 import { url } from "@utils";
-import { useHistory } from "react-router-dom";
+// import NotFound from "../404Page";
 
 function Quiz({
   quizzesID,
@@ -16,13 +17,12 @@ function Quiz({
   setViewAnswers,
   viewAnswers,
   view,
-  setView
 }) {
   const [questions, setQuestions] = useState([]);
   const [timeStamp, setTimeStamp] = useState();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const history = useHistory();
   const [answers, setAnswers] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     setTimeStamp(timeStamp);
@@ -38,6 +38,10 @@ function Quiz({
     setQuestions(_questions);
     setViewAnswers(_questions);
   };
+  if (questions === undefined) {
+    console.log("hi");
+    history.push("/home");
+  }
   return (
     // TO DO : prev and next btn
     <div className="bg-quiz">
@@ -53,6 +57,7 @@ function Quiz({
               onSelectAnswer={onSelectAnswer}
               viewAnswers={viewAnswers}
               view={view}
+              setViewAnswers={setViewAnswers}
             />
           )}
           {questions.length > 0 && (
