@@ -33,7 +33,6 @@ export default function QuizWithId() {
     if (quizzesStore.length === 0) {
       dispatch(getQuizzes());
     }
-    console.log(quizzesStore);
   }, []);
 
   const openEditQuestion = (question, index) => {

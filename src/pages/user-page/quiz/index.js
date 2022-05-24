@@ -39,7 +39,6 @@ function Quiz({
     setViewAnswers(_questions);
   };
   if (questions === undefined) {
-    console.log("hi");
     history.push("/home");
   }
   return (

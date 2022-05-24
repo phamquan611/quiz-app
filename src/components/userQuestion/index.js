@@ -103,7 +103,7 @@ function Question({
   // TO DO : pick question
 
     <div className="w-[70%]">
-      <div className="bg-white rounded-lg shadow-2xl pt-5 pb-[37px] text-center text-lg mb-[20px] border-2 border-sky-500">
+      <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500">
         <h2 className="text-rose-600">{timer}</h2>
         <p className="pb-[10px]">
           Question :
@@ -111,7 +111,7 @@ function Question({
           /
           {questions.length}
         </p>
-        <p className="pb-[10px]">{questions[currentQuestionIndex].content}</p>
+        <p className="">{questions[currentQuestionIndex].content}</p>
       </div>
       {view === true ? (
         <div className="flex justify-between flex-wrap">
@@ -124,7 +124,7 @@ function Question({
                     className={
                       ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
                         viewAnswers[currentQuestionIndex].selectedAnswer === id
-                        && "bg-indigo-900"
+                        && "bg-indigo-900 text-white"
                       }`
                     }
                   >
@@ -144,7 +144,7 @@ function Question({
             className={
               ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
                 questions[currentQuestionIndex].selectedAnswer === id
-                && "bg-indigo-900"
+                && "bg-indigo-900 text-white"
               }`
             }
           >

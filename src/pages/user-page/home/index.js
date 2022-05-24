@@ -48,24 +48,22 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
-      history.push(`/quiz/${getQuizID}`);
-
-      // const data = await axios.post(
-      //   `${url}/sessions/${quizzID}`,
-      //   {
-      //     username: name,
-      //   }
-      // );
-      // if (data.data.error === "Username duplicate.") {
-      //   setMesWrong(true);
-      //   setToastMes("duplicate name");
-      // } else if (timeStart < currentDate && currentDate < timeEnd) {
-      //   history.push(`/quiz/${getQuizID}`);
-      // } else {
-      //   setMesWrong(true);
-      //   setToastMes("wrong time");
-      //   history.push(`/quiz/${getQuizID}`);
-      // }
+      const data = await axios.post(
+        `${url}/sessions/${quizzID}`,
+        {
+          username: name,
+        },
+      );
+      if (data.data.error === "Username duplicate.") {
+        setMesWrong(true);
+        setToastMes("duplicate name");
+      } else if (timeStart < currentDate && currentDate < timeEnd) {
+        history.push(`/quiz/${getQuizID}`);
+      } else {
+        setMesWrong(true);
+        setToastMes("wrong time");
+        history.push(`/quiz/${getQuizID}`);
+      }
     }
   };
 

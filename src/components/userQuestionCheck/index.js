@@ -8,7 +8,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { BsLightbulb,  BsLightbulbFill } from "react-icons/bs";
-// import { BsLightbulbFill } from "react-icons/bs";
 
 function CheckQuestion({
   questions,
@@ -58,7 +57,7 @@ function CheckQuestion({
         </button>
       </div>
       {view === false ? (
-        <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] flex justify-center flex-wrap">
+        <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
           {questions
             && questions.map((item, index) => (
               <i
@@ -78,7 +77,7 @@ function CheckQuestion({
         </div>
       )
         : (
-          <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] flex justify-center flex-wrap">
+          <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
             {questions
           && questions.map((item, index) => (
             <i
