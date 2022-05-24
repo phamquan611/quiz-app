@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import { adminActionType } from "@actions/admin.action";
 import { ERROR_SIGN_IN } from "@utils";
 
