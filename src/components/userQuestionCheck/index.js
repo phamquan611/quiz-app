@@ -1,42 +1,101 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-self-compare */
+/* eslint-disable max-len */
+/* eslint-disable no-multi-spaces */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/no-array-index-key */
 import React from "react";
-import { BsLightbulb } from "react-icons/bs";
+import { useHistory } from "react-router-dom";
+import { BsLightbulb,  BsLightbulbFill } from "react-icons/bs";
 
-function CheckQuestion() {
+function CheckQuestion({
+  questions,
+  currentQuestionIndex,
+  setCurrentQuestionIndex,
+  setIsCheckTime,
+  view,
+  viewAnswers,
+  setViewAnswers,
+}) {
+  const history = useHistory();
+  const handleQuestion = (index) => {
+    setCurrentQuestionIndex(index);
+    setIsCheckTime(true);
+  };
+  const nextQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    setIsCheckTime(true);
+    if (currentQuestionIndex === questions.length - 1) {
+      if (viewAnswers === undefined) {
+        setViewAnswers(questions);
+      }
+      history.push("/result");
+    }
+  };
+
+  const prevQuestion = () => {
+    setCurrentQuestionIndex(currentQuestionIndex - 1);
+    setIsCheckTime(true);
+  };
   return (
-    // TO DO : map choose question when click and do prev and next btn question
-    <div className=" w-[49%] h-96 flex flex-col ">
-      <div className="flex justify-evenly rounded-lg shadow-2xl  border-sky-500 border-2 bg-white p-[20px]">
-        <button className="bg-rose-600 py-5 px-10 rounded-xl text-[20px]">
+    // TO DO :  choose question when click and do prev and next btn question
+    <div className=" w-[29%] flex flex-col ">
+      <div className="flex justify-evenly rounded-lg pb-[50px]">
+        <button
+          disabled={currentQuestionIndex === 0}
+          onClick={prevQuestion}
+          className={`bg-rose-600 py-4 px-8 rounded-xl text-[20px] shadow-2xl text-white ${currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"}`}
+        >
           Prev
         </button>
-        <button className="bg-green-600 py-5 px-10 rounded-xl text-[20px]">
-          Next
+        <button
+          onClick={nextQuestion}
+          className="bg-green-600 py-4 px-8 rounded-xl text-[20px] shadow-2xl text-white"
+        >
+          {currentQuestionIndex === questions.length - 1 ? "Submit" : "Next"}
         </button>
       </div>
-      <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white p-[20px] flex justify-center mt-[30px]">
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px] relative" />
-          <p className="not-italic absolute bottom-[475px] ml-[25px]">1</p>
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-        <i>
-          <BsLightbulb className="ml-[10px] w-[40px] h-[40px]" />
-        </i>
-      </div>
+      {view === false ? (
+        <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
+          {questions
+            && questions.map((item, index) => (
+              <i
+                className="flex justify-center items-center ml-[10px] mb-[10px]"
+                onClick={() => handleQuestion(index)}
+                key={index}
+              >
+                {questions[index].selectedAnswer === undefined
+                  ? (
+                    <BsLightbulb className="w-[50px] h-[50px] text-yellow-300 relative" />
+                  ) : (
+                    <BsLightbulbFill className="w-[50px] h-[50px] text-yellow-300 relative" />
+                  )}
+                <p className="ques-item not-italic absolute">{index + 1}</p>
+              </i>
+            ))}
+        </div>
+      )
+        : (
+          <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
+            {questions
+          && questions.map((item, index) => (
+            <i
+              className="flex justify-center items-center ml-[10px] mb-[10px]"
+              onClick={() => handleQuestion(index)}
+              key={index}
+            >
+              {viewAnswers[index].selectedAnswer === undefined
+                ? (
+                  <BsLightbulb className="w-[50px] h-[50px] text-yellow-300 relative" />
+                ) : (
+                  <BsLightbulbFill className="w-[50px] h-[50px] text-yellow-300 relative" />
+                )}
+              <p className="ques-item not-italic absolute">{index + 1}</p>
+            </i>
+          ))}
+          </div>
+        )}
     </div>
   );
 }

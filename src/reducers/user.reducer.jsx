@@ -1,12 +1,18 @@
+import { userActionType } from "@actions/user.action";
+
 const initialState = {
-  // TODO
+  sessions: [],
 };
 
-const User = (state = initialState, action) => {
+const getSessions = (state = initialState, action) => {
   switch (action.type) {
+    case userActionType.GET_DATA_SESSIONS_SUCCESS:
+      return [...action.payload];
+    case userActionType.GET_DATA_SESSIONS_FAIL:
+      return initialState;
     default:
       return state;
   }
 };
 
-export default User;
+export default getSessions;

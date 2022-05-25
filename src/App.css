@@ -1,29 +1,64 @@
-.bg-black{
-    --tw-bg-opacity: 0.8;
+.bg-black {
+  --tw-bg-opacity: 0.8;
 }
-.bg-home{
-    background: url(https://www.abc27.com/wp-content/uploads/sites/55/2022/02/Weekly-News-quiz-02-e1645743057119.png)  center / cover no-repeat ;
-    padding: 245px;
+.bg-home {
+  background: url(https://www.abc27.com/wp-content/uploads/sites/55/2022/02/Weekly-News-quiz-02-e1645743057119.png)
+    center / cover no-repeat;
 }
-.bg-quiz{
-    background: url(https://i.pinimg.com/originals/db/34/d4/db34d40b271fb59477621550bf73ea0b.jpg)  center / cover no-repeat ;
-    padding: 300px 0 ;
+.bg-quiz {
+  background: #e4f9ea;
 }
 
-.bg-result{
-    background: url(https://images.creativemarket.com/0.1.0/ps/6151529/3005/2000/m1/fpnw/wm0/quiz-1-.jpg?1553762089&s=9b9ad3d167a8d446dd625dabd9ef4ea0)  center / cover no-repeat ;
-    padding: 378px 0 ;
+.bg-result {
+  background: #b2d8ed;
 }
+
 .test {
-    position: relative;
+  position: relative;
 }
-.test ::after{
-    position: absolute;
-    content: "";
-    display: block;
-    border-left: 2px solid #ccc;
-    height: 15px;
-    right: -3px;
-    top: 50%;
-    transform: translateY(-50%);
+.test ::after {
+  position: absolute;
+  content: "";
+  display: block;
+  border-left: 2px solid #ccc;
+  height: 15px;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.modal-container {
+  min-height: 200px;
+  animation: modalFadeIn ease 0.7s;
+}
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (min-width : 1024px) {
+    .bg-home{
+        padding: 201px;
+    }
+    .bg-quiz{
+        padding: 251px 0;
+    }
+    .bg-result{
+      padding: 348px 0;
+    }
+}
+@media (min-width : 1530px) {
+    .bg-home{
+        padding: 245px 0 ;
+    }
+    .bg-quiz{
+        padding: 276px 0;
+    }
+    .bg-result{
+      padding: 401px 0;
+    }
 }
