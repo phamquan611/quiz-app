@@ -10,6 +10,7 @@ import { fetchSessions } from "@services/user.sessions";
 
 function* getSessionsWorker() {
   try {
+    debugger;
     const getSessions = yield call(fetchSessions);
     const sessions = getSessions?.data;
     if (sessions?.error) {

@@ -21,6 +21,7 @@ function Home({
   const sessionsStore = useSelector(selectSessionsID);
 
   useEffect(() => {
+    debugger;
     dispatch(getAllDataSessions());
   }, []);
 
