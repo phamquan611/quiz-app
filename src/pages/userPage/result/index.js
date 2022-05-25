@@ -67,14 +67,14 @@ function Result({
         <div className="flex justify-center ">
           <button
             onClick={handleView}
-            className="shadow-inner mr-[40px] lg:w-[10%] 2xl:w-[8%] bg-rose-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
+            className="shadow-inner text-white mr-[40px] lg:w-[10%] 2xl:w-[8%] bg-rose-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
           >
             View
           </button>
-          {hadbeenSubmited && (
+          {hadbeenSubmited === false && (
           <button
             onClick={handleSubmit}
-            className="shadow-inner ml-[40px] lg:w-[10%] 2xl:w-[8%] bg-green-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
+            className="shadow-inner text-white ml-[40px] lg:w-[10%] 2xl:w-[8%] bg-green-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
           >
             Submit
           </button>
@@ -89,13 +89,13 @@ function Result({
             </h2>
             <div className="m-[auto] flex justify-between">
               <button
-                className="p-4 text-[20px] bg-green-500 rounded-xl mr-[20px] px-9 "
+                className="p-4 text-white text-[20px] bg-green-500 rounded-xl mr-[20px] px-9 "
                 onClick={handleCheckdone}
               >
                 Oke
               </button>
               <button
-                className="p-4 text-[20px] bg-red-600 rounded-xl ml-[20px] px-9"
+                className="p-4 text-white text-[20px] bg-red-600 rounded-xl ml-[20px] px-9"
                 onClick={handleChecknone}
               >
                 No
@@ -116,7 +116,7 @@ function Result({
               /100
             </h2>
             <button
-              className="m-[auto] p-4 text-[20px] bg-green-500 rounded-xl px-4 "
+              className="m-[auto] text-white p-4 text-[20px] bg-green-500 rounded-xl px-4 "
               onClick={checkSubmit}
             >
               OKE NHA !

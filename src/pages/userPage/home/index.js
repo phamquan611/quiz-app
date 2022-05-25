@@ -143,7 +143,7 @@ function Home({
             ) }
 
             <button
-              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+              className="m-[auto] text-white p-5 text-[20px] bg-green-500 rounded-xl px-5 "
               onClick={handleCheckID}
             >
               OKE NHA !
