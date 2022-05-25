@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from "react";
-import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "@store";
 import Home from "@pages/userPage/home/index";
@@ -10,6 +10,7 @@ import AdminPage from "@pages/AdminPage";
 import SignInPage from "@pages/SignInPage";
 import "./App.css";
 import "antd/dist/antd.min.css";
+import { history } from "@utils/routing";
 
 const store = configureStore();
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [view, setView] = useState(false);
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Route exact path="/">
           <Home
             quizzesID={quizzesID}
@@ -59,7 +60,6 @@ function App() {
             setView={setView}
           />
         </Route>
-        <Redirect to="/" />
         <Route path="/admin" component={AdminPage} />
         <Route path="/signin" component={SignInPage} />
       </Router>
