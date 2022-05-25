@@ -17,6 +17,8 @@ function Quiz({
   setViewAnswers,
   viewAnswers,
   view,
+  hadbeenSubmited,
+  setHadbeenSubmited,
 }) {
   const [questions, setQuestions] = useState([]);
   const [timeStamp, setTimeStamp] = useState();
@@ -57,6 +59,9 @@ function Quiz({
               viewAnswers={viewAnswers}
               view={view}
               setViewAnswers={setViewAnswers}
+              isOptionAvailable={isOptionAvailable}
+              hadbeenSubmited={hadbeenSubmited}
+              setHadbeenSubmited={setHadbeenSubmited}
             />
           )}
           {questions.length > 0 && (

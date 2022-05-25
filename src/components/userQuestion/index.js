@@ -122,9 +122,9 @@ function Question({
                     key={id}
                     disabled={isOptionAvailable === true}
                     className={
-                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
+                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto]  ${isOptionAvailable === true && "bg-gray-200 text-slate-600"} ${
                         viewAnswers[currentQuestionIndex].selectedAnswer === id
-                        && "bg-indigo-900 text-white"
+                        && "bg-indigo-900 text-white chosse-option"
                       }`
                     }
                   >
@@ -142,9 +142,9 @@ function Question({
             key={id}
             disabled={isOptionAvailable === true}
             className={
-              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-300"} ${
+              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-400"} ${
                 questions[currentQuestionIndex].selectedAnswer === id
-                && "bg-indigo-900 text-white"
+                && "bg-indigo-900 chosse-option"
               }`
             }
           >
