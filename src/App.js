@@ -21,6 +21,7 @@ function App() {
   const [quizzID, setQuizzID] = useState("");
   const [viewAnswers, setViewAnswers] = useState();
   const [view, setView] = useState(false);
+  const [hadbeenSubmited, setHadbeenSubmited] = useState(false);
   return (
     <Provider store={store}>
       <Router>
@@ -47,6 +48,8 @@ function App() {
               setViewAnswers={setViewAnswers}
               view={view}
               setView={setView}
+              hadbeenSubmited={hadbeenSubmited}
+              setHadbeenSubmited={setHadbeenSubmited}
             />
           </Route>
           <Route path="/result">
@@ -59,6 +62,9 @@ function App() {
               viewAnswers={viewAnswers}
               setViewAnswers={setViewAnswers}
               setView={setView}
+              isOptionAvailable={isOptionAvailable}
+              hadbeenSubmited={hadbeenSubmited}
+              setHadbeenSubmited={setHadbeenSubmited}
             />
           </Route>
           <Route path="/admin" component={AdminPage} />

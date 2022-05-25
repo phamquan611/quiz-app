@@ -13,13 +13,16 @@ function Result({
   name,
   quizzID,
   setView,
+  isOptionAvailable,
+  hadbeenSubmited, 
+  setHadbeenSubmited,
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmited, setisSubmitted] = useState(true);
-  const [hadbeenSubmited, setHadbeenSubmited] = useState(false);
   const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
+  console.log(isOptionAvailable);
 
   const handleView = () => {
     history.push(`/quiz/${quizzesID}`);

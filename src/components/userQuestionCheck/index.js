@@ -17,6 +17,8 @@ function CheckQuestion({
   view,
   viewAnswers,
   setViewAnswers,
+  isOptionAvailable,
+  setHadbeenSubmited,
 }) {
   const history = useHistory();
   const handleQuestion = (index) => {
@@ -29,6 +31,10 @@ function CheckQuestion({
     if (currentQuestionIndex === questions.length - 1) {
       if (viewAnswers === undefined) {
         setViewAnswers(questions);
+      }
+      console.log(isOptionAvailable);
+      if (isOptionAvailable === true) {
+        setHadbeenSubmited(true);
       }
       history.push("/result");
     }
@@ -53,7 +59,7 @@ function CheckQuestion({
           onClick={nextQuestion}
           className="bg-green-600 py-4 px-8 rounded-xl text-[20px] shadow-2xl text-white"
         >
-          {currentQuestionIndex === questions.length - 1 ? "Submit" : "Next"}
+          { currentQuestionIndex === questions.length - 1 && isOptionAvailable === false  ? "Submit" : "Next"}
         </button>
       </div>
       {view === false ? (
