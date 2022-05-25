@@ -48,21 +48,22 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
-      const data = await axios.post(
-        `${url}/sessions/${quizzID}`,
-        {
-          username: name,
-        },
-      );
-      if (data.data.error === "Username duplicate.") {
-        setMesWrong(true);
-        setToastMes("duplicate name");
-      } else if (timeStart < currentDate && currentDate < timeEnd) {
-        history.push(`/quiz/${getQuizID}`);
-      } else {
+      if (timeStart > currentDate || currentDate > timeEnd) {
         setMesWrong(true);
         setToastMes("wrong time");
-        history.push(`/quiz/${getQuizID}`);
+      } else {
+        const data = await axios.post(
+          `${url}/sessions/${quizzID}`,
+          {
+            username: name,
+          },
+        );
+        if (data.data.error === "Username duplicate.") {
+          setMesWrong(true);
+          setToastMes("duplicate name");
+        } else {
+          history.push(`/quiz/${getQuizID}`);
+        }
       }
     }
   };
@@ -143,7 +144,7 @@ function Home({
             ) }
 
             <button
-              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+              className="m-[auto] text-white p-5 text-[20px] bg-green-500 rounded-xl px-5 "
               onClick={handleCheckID}
             >
               OKE NHA !
