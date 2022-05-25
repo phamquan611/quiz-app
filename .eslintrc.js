@@ -40,5 +40,7 @@ module.exports = {
     "consistent-return": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "react/prop-types": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-debugger": 0,
   },
 };
