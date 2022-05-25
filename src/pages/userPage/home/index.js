@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import { getAllDataSessions } from "@actions/user.action";
 import { selectSessionsID } from "@store/slice";
 
 function Home({
-  quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID
+  quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID,
 }) {
   const [isError, setIsError] = useState(false);
   const [checkID, setCheckID] = useState();
@@ -47,24 +48,22 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
-      history.push(`/quiz/${getQuizID}`);
-
-      // const data = await axios.post(
-      //   `${url}/sessions/${quizzID}`,
-      //   {
-      //     username: name,
-      //   }
-      // );
-      // if (data.data.error === "Username duplicate.") {
-      //   setMesWrong(true);
-      //   setToastMes("duplicate name");
-      // } else if (timeStart < currentDate && currentDate < timeEnd) {
-      //   history.push(`/quiz/${getQuizID}`);
-      // } else {
-      //   setMesWrong(true);
-      //   setToastMes("wrong time");
-      //   history.push(`/quiz/${getQuizID}`);
-      // }
+      const data = await axios.post(
+        `${url}/sessions/${quizzID}`,
+        {
+          username: name,
+        },
+      );
+      if (data.data.error === "Username duplicate.") {
+        setMesWrong(true);
+        setToastMes("duplicate name");
+      } else if (timeStart < currentDate && currentDate < timeEnd) {
+        history.push(`/quiz/${getQuizID}`);
+      } else {
+        setMesWrong(true);
+        setToastMes("wrong time");
+        history.push(`/quiz/${getQuizID}`);
+      }
     }
   };
 

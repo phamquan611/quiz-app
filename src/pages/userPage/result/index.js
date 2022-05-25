@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -15,6 +16,7 @@ function Result({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmited, setisSubmitted] = useState(true);
+  const [hadbeenSubmited, setHadbeenSubmited] = useState(false);
   const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
@@ -30,6 +32,7 @@ function Result({
       setIsOptionAvailable(true);
     }
   };
+
   const handleCheckdone = async () => {
     setIsSubmitting(false);
     setisSubmitted(true);
@@ -45,7 +48,9 @@ function Result({
       });
     setResult(data.data.result);
     setDone(true);
+    setHadbeenSubmited(true);
   };
+
   const handleChecknone = () => {
     setIsSubmitting(false);
   };
@@ -56,42 +61,41 @@ function Result({
     // TO DO : axios post and view answer , disable option answer when choose submit
     <div className="bg-result">
       <div className="container m-[auto]">
-        <div className="bg-white w-[30%] rounded-lg shadow-2xl m-[auto] py-5 text-center text-[40px] mb-[20px] border-2  border-sky-500 ">
-          <img
-            src="https://thumbs.dreamstime.com/b/completed-rubber-stamp-green-vector-illustration-contains-original-brushes-83716676.jpg"
-            alt="done-img"
-          />
+        <div className=" w-[30%] rounded-lg  m-[auto] py-4 text-center text-[25px] mb-[20px]  ">
+          <h2>Your test is done !!!</h2>
         </div>
-        <div className="flex justify-evenly ">
+        <div className="flex justify-center ">
           <button
             onClick={handleView}
-            className="shadow-inner w-[8%] bg-rose-600 py-5 rounded-xl text-[20px]"
+            className="shadow-inner mr-[40px] lg:w-[10%] 2xl:w-[8%] bg-rose-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
           >
             View
           </button>
+          {hadbeenSubmited && (
           <button
             onClick={handleSubmit}
-            className="shadow-inner w-[8%] bg-green-600 py-5 rounded-xl text-[20px]"
+            className="shadow-inner ml-[40px] lg:w-[10%] 2xl:w-[8%] bg-green-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
           >
             Submit
           </button>
+          )}
         </div>
       </div>
       {isSubmitting === true && (
-        <div className="fixed inset-0 bg-black w-full flex ">
+        <div className="fixed inset-0 bg-black w-full flex">
           <div className="m-[auto] opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
-            <h2 className="m-[auto] text-5xl text-center">
+            <h2 className="m-[auto] text-4xl text-center">
               Gửi bài của bạn nha ?
             </h2>
             <div className="m-[auto] flex justify-between">
               <button
-                className="p-5 text-[24px] bg-green-500 rounded-xl mr-[20px] px-9 "
+                className="p-4 text-[20px] bg-green-500 rounded-xl mr-[20px] px-9 "
                 onClick={handleCheckdone}
               >
                 Oke
               </button>
               <button
-                className="p-5 text-[24px] bg-red-600 rounded-xl ml-[20px] px-9"
+                className="p-4 text-[20px] bg-red-600 rounded-xl ml-[20px] px-9"
                 onClick={handleChecknone}
               >
                 No
@@ -102,16 +106,17 @@ function Result({
       )}
       {isDone && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
-            <h2 className="m-[auto] text-5xl text-center">
+          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[600px] h-[400px] rounded-xl text-[#000] flex flex-col modal-container">
+            <h2 className="m-[auto] text-5xl text-center px-[20px]">
               Câu trả lời của bạn đã được lưu lại !!!
             </h2>
             <h2 className="m-[auto] text-5xl text-center">
-              Điểm của bạn là :
+              Điểm của bạn là : 
               {result}
+              /100
             </h2>
             <button
-              className="m-[auto] p-5 text-[24px] bg-green-500 rounded-xl px-9 "
+              className="m-[auto] p-4 text-[20px] bg-green-500 rounded-xl px-4 "
               onClick={checkSubmit}
             >
               OKE NHA !
