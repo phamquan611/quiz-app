@@ -223,7 +223,7 @@ export default function QuizWithId() {
                   onClick={clickOpenPopupNewQuestion}
                   className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${openPopupNewQuestion ? "bg-[red]" : ""}`}
                 >
-                  {openPopupNewQuestion && "Close"}
+                  {openPopupNewQuestion ? "Close" : "Add question"}
                 </button>
               </div>
               { openPopupNewQuestion
