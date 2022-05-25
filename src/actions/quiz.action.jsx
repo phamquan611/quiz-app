@@ -5,6 +5,7 @@ export const quizActionType = {
   POST_QUIZ: "POST_QUIZ",
   POST_QUIZ_SUCCESS: "POST_QUIZ_SUCCESS",
   POST_QUIZ_FAIL: "POST_QUIZ_FAIL",
+  PUT_QUIZ: "PUT_QUIZ",
 };
 
 export const getQuizzes = () => {
@@ -26,9 +27,10 @@ export const getQuizzesFAil = () => {
   };
 };
 
-export const postQuiz = () => {
+export const postQuiz = (payload) => {
   return {
     type: quizActionType.POST_QUIZ,
+    payload,
   };
 };
 
@@ -42,5 +44,12 @@ export const postQuizSuccess = (payload) => {
 export const postQuizFail = () => {
   return {
     type: quizActionType.POST_QUIZ_FAIL,
+  };
+};
+
+export const putQuiz = (payload) => {
+  return {
+    type: quizActionType.PUT_QUIZ,
+    payload,
   };
 };

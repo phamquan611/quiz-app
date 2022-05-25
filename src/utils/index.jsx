@@ -153,5 +153,26 @@ export const convertSessionsToView = (sessions) => {
     };
   });
 };
+export const checkEmptyString = (string) => {
+  const regexCheckSpaceString = /^\s*$/;
+  const isSpaceString = regexCheckSpaceString.test(string);
+  return isSpaceString;
+};
+
+export const formTimeChallenge = [
+  {
+    value: 5,
+    text: "05:00",
+  },
+  {
+    value: 10,
+    text: "10:00",
+  },
+  {
+    value: 15,
+    text: "15:00",
+  },
+];
+
 
 // export const covertDataTable

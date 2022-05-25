@@ -22,3 +22,14 @@ export const adminPostQuiz = (payload) => {
       return error;
     });
 };
+
+export const adminPutQuiz = (payload) => {
+  return axios
+    .put(`${url}/quizzes/${payload.id}`, payload.data)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+};

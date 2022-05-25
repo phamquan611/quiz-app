@@ -1,13 +1,34 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import {
-  NavLink, Link, Switch, Route,
+  NavLink, Switch, Route, useHistory,
 } from "react-router-dom";
+import Swal from "sweetalert2";
+import { adminSignOut } from "@actions/admin.action";
+import { LOCAL_ACCESS_TOKEN } from "@utils";
 import Session from "@pages/AdminPage/Session";
 import HomeAdmin from "@pages/AdminPage/Home";
 import QuizWithId from "@pages/AdminPage/QuizWithId";
+import CreateQuiz from "@pages/AdminPage/CreateQuiz";
 import Participants from "@pages/AdminPage/Participants";
 
 const AdminPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const clickSignOut = () => {
+    Swal.fire({
+      title: "Are you sure sign out page",
+      showDenyButton: true,
+      confirmButtonText: "YES",
+      denyButtonText: "NO",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(adminSignOut());
+        localStorage.setItem(LOCAL_ACCESS_TOKEN, "");
+        history.push("/signin");
+      }
+    });
+  };
   return (
     <>
       <div className="text-center bg-indigo-500 p-4  flex justify-between">
@@ -17,17 +38,8 @@ const AdminPage = () => {
           </div>
         </div>
         <div className="flex">
-          <Link to="/admin/profile">
-            <div className="mr-2 cursor-pointer">
-              <img
-                src="https://images.unsplash.com/photo-1520209759809-a9bcb6cb3241?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1nfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                alt="img"
-                className="w-[30px] h-[30px] rounded-full"
-              />
-            </div>
-          </Link>
-          <div className="font-bold pt-1 text-[white] cursor-pointer">
-            Admin
+          <div className="font-bold pt-1 text-[white] cursor-pointer" onClick={clickSignOut}>
+            Logout
           </div>
         </div>
       </div>
@@ -63,7 +75,7 @@ const AdminPage = () => {
         <Switch>
           <Route exact path="/admin" component={HomeAdmin} />
           <Route exact path="/admin/session/participants/:sessionId" component={Participants} />
-          {/* <Route exact path="/admin/create-quiz" component={CreateQuiz} /> */}
+          <Route exact path="/admin/create-quiz" component={CreateQuiz} />
           <Route
             exact
             path="/admin/quiz/:quizId"
