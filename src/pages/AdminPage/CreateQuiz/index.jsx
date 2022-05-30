@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import QuestionToEdit from "@pages/AdminPage/QuizWithId/QuestionToEdit";
-import NewQuestion from "@pages/AdminPage/QuizWithId/NewQuestion";
+import QuestionToEdit from "@pages/AdminPage/Quiz/Component/QuestionEditing";
+import NewQuestion from "@pages/AdminPage/Quiz/Component/NewQuestion";
 import { postQuiz } from "@actions/quiz.action";
 import { IDEA, formTimeChallenge, convertMinuteToMilliseconds } from "@utils";
 import {
