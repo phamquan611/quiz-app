@@ -48,6 +48,8 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
+      history.push(`/quiz/${getQuizID}`);
+
       if (timeStart > currentDate || currentDate > timeEnd) {
         setMesWrong(true);
         setToastMes("wrong time");
@@ -75,10 +77,10 @@ function Home({
   return (
     // TO DO : check id is valid, build form if it's not valid
     <div className="bg-home flex">
-      <div className="container 2xl m-[auto] flex flex-col bg-white w-[500px] py-20 shadow-2xl rounded-lg home">
-        <h2 className="text-[30px] m-[auto]">Welcome to my Quiz</h2>
+      <div className="container 2xl m-auto flex flex-col bg-white w-[500px] py-20 shadow-2xl rounded-lg home">
+        <h2 className="text-[30px] m-auto">Welcome to my Quiz</h2>
         <div className="flex flex-col">
-          <label className="block w-4/5 m-[auto] p-5 ">
+          <label className="block w-4/5 m-auto p-5 ">
             <span className="text-lg after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
               Your Username
             </span>
@@ -90,12 +92,12 @@ function Home({
               onChange={handleSubmitUser}
             />
             {isError && (
-              <div className="m-[auto] text-[red]">
+              <div className="m-auto text-[red]">
                 Please fill all the fields
               </div>
             )}
           </label>
-          <label className="block w-4/5 m-[auto] p-5 ">
+          <label className="block w-4/5 m-auto p-5 ">
             <span className="text-lg after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
               Your session ID
             </span>
@@ -107,7 +109,7 @@ function Home({
               onChange={handleSubmitQuizId}
             />
             {isError && (
-              <div className="m-[auto] text-[red]">
+              <div className="m-auto text-[red]">
                 Please fill all the fields
               </div>
             )}
@@ -115,7 +117,7 @@ function Home({
           <button
             type="button"
             onClick={handleSubmit}
-            className="m-[auto] rounded-full text-xl font-bold shadow-lg p-5 bg-[#93d0de]"
+            className="m-auto rounded-full text-xl font-bold shadow-lg p-5 bg-[#93d0de]"
             to="/quiz"
           >
             Let's Start
@@ -124,27 +126,27 @@ function Home({
       </div>
       {mesWrong && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
+          <div className="m-auto opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
             {toastMes === "wrong ID" && (
-            <h2 className="m-[auto] text-5xl text-center">
+            <h2 className="m-auto text-5xl text-center">
               SessionID bạn điền không tồn tại !!!
             </h2>
             ) }
 
             {toastMes === "duplicate name" && (
-            <h2 className="m-[auto] text-5xl text-center">
+            <h2 className="m-auto text-5xl text-center">
               Tên của bạn đã có, nhập tên khác nhé !!!
             </h2>
             ) }
 
             {toastMes === "wrong time" && (
-            <h2 className="m-[auto] text-5xl text-center">
+            <h2 className="m-auto text-5xl text-center">
               Bạn đang vào sai giờ , kiểm tra lại nha !!!
             </h2>
             ) }
 
             <button
-              className="m-[auto] text-white p-5 text-[20px] bg-green-500 rounded-xl px-5 "
+              className="m-auto text-white p-5 text-[20px] bg-green-500 rounded-xl px-5 "
               onClick={handleCheckID}
             >
               OKE NHA !

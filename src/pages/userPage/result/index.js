@@ -63,8 +63,8 @@ function Result({
   return (
     // TO DO : axios post and view answer , disable option answer when choose submit
     <div className="bg-result">
-      <div className="container m-[auto]">
-        <div className=" w-[30%] rounded-lg  m-[auto] py-4 text-center text-[25px] mb-[20px]  ">
+      <div className="container m-auto">
+        <div className=" w-[30%] rounded-lg  m-auto py-4 text-center text-[25px] mb-[20px]  ">
           <h2>Your test is done !!!</h2>
         </div>
         <div className="flex justify-center ">
@@ -86,11 +86,11 @@ function Result({
       </div>
       {isSubmitting === true && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
-            <h2 className="m-[auto] text-4xl text-center">
+          <div className="m-auto opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
+            <h2 className="m-auto text-4xl text-center">
               Gửi bài của bạn nha ?
             </h2>
-            <div className="m-[auto] flex justify-between">
+            <div className="m-auto flex justify-between">
               <button
                 className="p-4 text-white text-[20px] bg-green-500 rounded-xl mr-[20px] px-9 "
                 onClick={handleCheckdone}
@@ -109,17 +109,17 @@ function Result({
       )}
       {isDone && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-[auto] opacity-1 bg-white opacity-100 w-[600px] h-[400px] rounded-xl text-[#000] flex flex-col modal-container">
-            <h2 className="m-[auto] text-5xl text-center px-[20px]">
+          <div className="m-auto opacity-1 bg-white opacity-100 w-[600px] h-[400px] rounded-xl text-[#000] flex flex-col modal-container">
+            <h2 className="m-auto text-5xl text-center px-[20px]">
               Câu trả lời của bạn đã được lưu lại !!!
             </h2>
-            <h2 className="m-[auto] text-5xl text-center">
+            <h2 className="m-auto text-5xl text-center">
               Điểm của bạn là : 
               {result}
               /100
             </h2>
             <button
-              className="m-[auto] text-white p-4 text-[20px] bg-green-500 rounded-xl px-4 "
+              className="m-auto text-white p-4 text-[20px] bg-green-500 rounded-xl px-4 "
               onClick={checkSubmit}
             >
               OKE NHA !

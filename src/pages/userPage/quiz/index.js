@@ -46,8 +46,25 @@ function Quiz({
   return (
     // TO DO : prev and next btn
     <div className="bg-quiz">
-      <div className="container m-[auto]">
-        <div className="flex justify-between">
+      <div className="container m-auto px-[20px]">
+        <div className="flex justify-center">
+          {questions.length > 0 && (
+          <Question
+            questions={questions}
+            timeStamp={timeStamp}
+            currentQuestionIndex={currentQuestionIndex}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            onSelectAnswer={onSelectAnswer}
+            isCheckTime={isCheckTime}
+            setIsCheckTime={setIsCheckTime}
+            isOptionAvailable={isOptionAvailable}
+            setIsOptionAvailable={setIsOptionAvailable}
+            viewAnswers={viewAnswers}
+            view={view}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
+          )}
           {questions.length > 0 && (
             <CheckQuestion
               questions={questions}
@@ -62,23 +79,6 @@ function Quiz({
               isOptionAvailable={isOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
               setHadbeenSubmited={setHadbeenSubmited}
-            />
-          )}
-          {questions.length > 0 && (
-            <Question
-              questions={questions}
-              timeStamp={timeStamp}
-              currentQuestionIndex={currentQuestionIndex}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-              onSelectAnswer={onSelectAnswer}
-              isCheckTime={isCheckTime}
-              setIsCheckTime={setIsCheckTime}
-              isOptionAvailable={isOptionAvailable}
-              setIsOptionAvailable={setIsOptionAvailable}
-              viewAnswers={viewAnswers}
-              view={view}
-              answers={answers}
-              setAnswers={setAnswers}
             />
           )}
         </div>

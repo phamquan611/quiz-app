@@ -46,24 +46,9 @@ function CheckQuestion({
   };
   return (
     // TO DO :  choose question when click and do prev and next btn question
-    <div className=" w-[29%] flex flex-col ">
-      <div className="flex justify-evenly rounded-lg pb-[50px]">
-        <button
-          disabled={currentQuestionIndex === 0}
-          onClick={prevQuestion}
-          className={`bg-rose-600 py-4 px-8 rounded-xl text-[20px] shadow-2xl text-white ${currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"}`}
-        >
-          Prev
-        </button>
-        <button
-          onClick={nextQuestion}
-          className="bg-green-600 py-4 px-8 rounded-xl text-[20px] shadow-2xl text-white"
-        >
-          { currentQuestionIndex === questions.length - 1 && isOptionAvailable === false  ? "Submit" : "Next"}
-        </button>
-      </div>
+    <div className=" w-[25%] flex flex-col ">
       {view === false ? (
-        <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
+        <div className=" rounded-lg shadow-2xl mb-[20px] border-sky-500 border-2 bg-white py-[20px]  px-[50px] lg:px-0 flex justify-center flex-wrap">
           {questions
             && questions.map((item, index) => (
               <i
@@ -73,9 +58,9 @@ function CheckQuestion({
               >
                 {questions[index].selectedAnswer === undefined
                   ? (
-                    <BsLightbulb className="w-[50px] h-[50px] text-yellow-300 relative" />
+                    <BsLightbulb className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
                   ) : (
-                    <BsLightbulbFill className="w-[50px] h-[50px] text-yellow-300 relative" />
+                    <BsLightbulbFill className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
                   )}
                 <p className="ques-item not-italic absolute">{index + 1}</p>
               </i>
@@ -83,7 +68,7 @@ function CheckQuestion({
         </div>
       )
         : (
-          <div className=" rounded-lg shadow-2xl  border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-[30px] flex justify-center flex-wrap">
+          <div className=" rounded-lg shadow-2xl mb-[20px] border-sky-500 border-2 bg-white py-[20px]  px-[50px] lg:px-0 flex justify-center flex-wrap">
             {questions
           && questions.map((item, index) => (
             <i
@@ -93,15 +78,30 @@ function CheckQuestion({
             >
               {viewAnswers[index].selectedAnswer === undefined
                 ? (
-                  <BsLightbulb className="w-[50px] h-[50px] text-yellow-300 relative" />
+                  <BsLightbulb className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
                 ) : (
-                  <BsLightbulbFill className="w-[50px] h-[50px] text-yellow-300 relative" />
+                  <BsLightbulbFill className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
                 )}
               <p className="ques-item not-italic absolute">{index + 1}</p>
             </i>
           ))}
           </div>
         )}
+      <div className="flex justify-evenly rounded-lg pb-[50px]">
+        <button
+          disabled={currentQuestionIndex === 0}
+          onClick={prevQuestion}
+          className={`bg-rose-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl text-white ${currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"}`}
+        >
+          Prev
+        </button>
+        <button
+          onClick={nextQuestion}
+          className="bg-green-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl text-white"
+        >
+          { currentQuestionIndex === questions.length - 1 && isOptionAvailable === false  ? "Submit" : "Next"}
+        </button>
+      </div>
     </div>
   );
 }
