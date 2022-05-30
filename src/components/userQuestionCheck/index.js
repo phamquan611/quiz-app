@@ -8,7 +8,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { BsLightbulb, BsLightbulbFill } from "react-icons/bs";
-import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
+import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 
 function CheckQuestion({
   questions,
@@ -33,7 +33,6 @@ function CheckQuestion({
       if (viewAnswers === undefined) {
         setViewAnswers(questions);
       }
-      console.log(isOptionAvailable);
       if (isOptionAvailable === true) {
         setHadbeenSubmited(true);
       }
@@ -46,17 +45,25 @@ function CheckQuestion({
     setIsCheckTime(true);
   };
   return (
-    // TO DO :  choose question when click and do prev and next btn question
+    // TO DO : do submit btn
     <div className="flex m-auto pb-5">
       <div className="m-auto">
+
+        {/* <button>
+          {currentQuestionIndex === questions.length - 1
+          && isOptionAvailable === false && (
+            "Submit"
+          )}
+
+        </button> */}
         <button
           disabled={currentQuestionIndex === 0}
           onClick={prevQuestion}
-          className={`bg-rose-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
+          className={`bg-rose-600 py-3.5 px-5 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
             currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"
           }`}
         >
-          Prev
+          <TiChevronLeftOutline />
         </button>
       </div>
       {view === false ? (
@@ -99,12 +106,12 @@ function CheckQuestion({
       <div className="m-auto">
         <button
           onClick={nextQuestion}
-          className="bg-green-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl ml-[10px]  text-white"
+          disabled={currentQuestionIndex === questions.length - 1}
+          className={` py-3.5 px-5 rounded-xl text-[20px] shadow-2xl text-white ml-[10px] ${
+            currentQuestionIndex === questions.length - 1 ? "bg-slate-300 text-slate-500" : "bg-green-600"
+          }`}
         >
-          {currentQuestionIndex === questions.length - 1
-          && isOptionAvailable === false
-            ? "Submit"
-            : "Next"}
+          <TiChevronRightOutline />
         </button>
       </div>
     </div>

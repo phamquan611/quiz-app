@@ -3,6 +3,7 @@ import * as adminSaga from "./admin.saga";
 import * as sessionSaga from "./session.saga";
 import * as quizzesSaga from "./quiz.saga";
 import * as userSaga from "./user.saga";
+import * as pointSaga from "./point.saga";
 
 
 export function* RootSaga() {
@@ -14,5 +15,6 @@ export function* RootSaga() {
     quizzesSaga.postQuizWatcher(),
     sessionSaga.postNewSessionWatcher(),
     userSaga.getSessionWatcher(),
+    pointSaga.getSessionWatcher(),
   ]);
 }
