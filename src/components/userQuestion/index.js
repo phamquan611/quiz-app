@@ -10,6 +10,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { IDEA } from "@utils";
 
 function Question({
   questions,
@@ -102,7 +103,7 @@ function Question({
   return (
   // TO DO : pick question
 
-    <div className=" m-auto w-[61%]">
+    <div className=" m-auto w-7/12">
       <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500 m-auto">
         <h2 className="text-rose-600">{timer}</h2>
         <p className="pb-[10px]">
@@ -128,7 +129,7 @@ function Question({
                       }`
                     }
                   >
-                    {`${index + 1}. ${content} `}
+                    {`${IDEA[index]}. ${content} `}
                   </button>
                 ))}
         </div>
@@ -148,7 +149,7 @@ function Question({
               }`
             }
           >
-            {`${index + 1}. ${content} `}
+            {`${IDEA[index]}. ${content} `}
           </button>
         ))}
           </div>

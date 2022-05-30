@@ -60,11 +60,11 @@ function CheckQuestion({
         </button>
       </div>
       {view === false ? (
-        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-0 flex justify-center flex-wrap">
+        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
           {questions
           &&            questions.map((item, index) => (
             <i
-              className="flex justify-center items-center ml-[10px] mb-[10px]"
+              className="flex justify-center items-center"
               onClick={() => handleQuestion(index)}
               key={index}
             >
@@ -78,11 +78,11 @@ function CheckQuestion({
           ))}
         </div>
       ) : (
-        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-0 flex justify-center flex-wrap">
+        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
           {questions
             && questions.map((item, index) => (
               <i
-                className="flex justify-center items-center ml-[10px] mb-[10px]"
+                className="flex justify-center items-center"
                 onClick={() => handleQuestion(index)}
                 key={index}
               >
