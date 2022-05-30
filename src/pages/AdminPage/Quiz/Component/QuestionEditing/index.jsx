@@ -17,7 +17,7 @@ import {
 } from "@utils/constant";
 
 export default function questionEditing(props) {
-  const [idEditAnswer, setIndexAnswerEditing] = useState(null);
+  const [idEditAnswer, setIdEditAnswer] = useState(null);
   const [newContentAnswer, setNewContentAnswer] = useState(null);
   const {
     questionEditing,
@@ -81,7 +81,7 @@ export default function questionEditing(props) {
 
   const editAnswerAQuestion = (idAnswer) => {
     if (idEditAnswer) return;
-    setIndexAnswerEditing(idAnswer);
+    setIdEditAnswer(idAnswer);
   };
 
   const updateToQuiz = () => {
@@ -104,7 +104,7 @@ export default function questionEditing(props) {
   const updateAnswer = () => {
     // const
     changeAnswerQuestionEditing(idEditAnswer, newContentAnswer);
-    setIndexAnswerEditing(null);
+    setIdEditAnswer(null);
     setNewContentAnswer(null);
   };
 
