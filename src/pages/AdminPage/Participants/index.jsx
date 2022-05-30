@@ -69,8 +69,7 @@ export default function Participants() {
           <div>
             <div className="px-[30px] pb-[20px]">
               <h1 className="font-bold text-[20px]">
-                {"Category "}
-                {" : "}
+                {"Category : "}
                 {session.category}
               </h1>
               <div className="font-bold text-[17px]">

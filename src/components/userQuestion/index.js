@@ -63,7 +63,7 @@ function Question({
 
   const minutes = Math.floor(timeStamp / 6000);
   const seconds = ((timeStamp % 6000) / 100).toFixed(0);
-  const timeCountDown = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  const timeCountDown = `${minutes}:${seconds < 10 && "0"}${seconds}`;
 
   const clearTimer = (e) => {
     if (isCheckTime === false) {
