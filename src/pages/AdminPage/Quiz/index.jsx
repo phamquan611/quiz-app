@@ -58,9 +58,9 @@ export default function QuizWithId() {
     return setQuestionEditing({ ...questionEditing, answers });
   };
 
-  const deleteAnswerToQuestion = (idDeleteAnswer) => {
+  const deleteAnswerToQuestion = (id) => {
     const { answers } = questionEditing;
-    const newAnswers = answers.filter((answer) => answer.id !== idDeleteAnswer);
+    const newAnswers = answers.filter((answer) => answer.id !== id);
     setQuestionEditing({ ...questionEditing, answers: newAnswers });
   };
 
@@ -193,7 +193,7 @@ export default function QuizWithId() {
                         return (
                           <div
                             className={`${
-                              isCorrectAnswer ? "text-[red] font-bold" : ""
+                              isCorrectAnswer && "text-[red] font-bold"
                             } w-1/2`}
                             key={answer.id}
                           >
@@ -221,7 +221,7 @@ export default function QuizWithId() {
               <div className="text-right">
                 <button
                   onClick={clickOpenPopupNewQuestion}
-                  className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${toggleNewQuestionPopup ? "bg-[red]" : ""}`}
+                  className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${toggleNewQuestionPopup && "bg-[red]"}`}
                 >
                   {toggleNewQuestionPopup ? "Close" : "Add question"}
                 </button>

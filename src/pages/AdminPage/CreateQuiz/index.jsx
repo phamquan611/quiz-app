@@ -14,7 +14,7 @@ export default function CreateQuiz() {
   const [newQuiz, setNewQuiz] = useState({ category: "", questions: [] });
   const [questionEditing, setQuestionEditing] = useState([]);
   const [indexQuestionEditing, setIndexQuestionEditing] = useState(null);
-  const [togglePopupNewQuestion, setToggleNewPopupQuestion] = useState(false);
+  const [togglePopupNewQuestion, setTogglePopupNewQuestion] = useState(false);
   const timeChallenge = useRef();
 
   // function edit question
@@ -37,9 +37,9 @@ export default function CreateQuiz() {
     return setQuestionEditing({ ...questionEditing, answers });
   };
 
-  const deleteAnswerToEditQuestion = (idDeleteAnswer) => {
+  const deleteAnswerToEditQuestion = (id) => {
     const { answers } = questionEditing;
-    const newAnswers = answers.filter((answer) => answer.id !== idDeleteAnswer);
+    const newAnswers = answers.filter((answer) => answer.id !== id);
     setQuestionEditing({ ...questionEditing, answers: newAnswers });
   };
 
@@ -61,7 +61,7 @@ export default function CreateQuiz() {
   };
 
   const clickOpenPopupNewQuestion = () => {
-    setToggleNewPopupQuestion(!togglePopupNewQuestion);
+    setTogglePopupNewQuestion(!togglePopupNewQuestion);
   };
 
   const changeAnswerQuestionEditing = (idAnswer, newContent) => {
@@ -156,7 +156,7 @@ export default function CreateQuiz() {
           {!togglePopupNewQuestion && (
           <button
             onClick={clickOpenPopupNewQuestion}
-            className={`my-5 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion ? "bg-[red]" : ""}`}
+            className={`my-5 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion && "bg-[red]"}`}
           >
             Create Question
           </button>
@@ -205,7 +205,7 @@ export default function CreateQuiz() {
                     return (
                       <div
                         className={`${
-                          isCorrectAnswer ? "text-[red] font-bold" : ""
+                          isCorrectAnswer && "text-[red] font-bold"
                         } w-1/2`}
                         key={answer.id}
                       >
@@ -234,7 +234,7 @@ export default function CreateQuiz() {
           <div className="text-right">
             <button
               onClick={clickOpenPopupNewQuestion}
-              className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion ? "bg-[red]" : ""}`}
+              className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion && "bg-[red]"}`}
             >
               Close
             </button>

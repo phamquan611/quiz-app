@@ -8,11 +8,11 @@ import {
 import Swal from "sweetalert2";
 import { IDEA } from "@utils";
 import {
-  MAX_ANSWER_A_QUESTION,
-  ALERT_MAX_ANSWER_A_QUESTION,
+  MAX_ANSWER_PER_QUESTION,
+  ALERT_MAX_ANSWER_PER_QUESTION,
   ALERT_DELETE_CORRECT_ANSWER,
-  MIN_ANSWER_A_QUESTION,
-  ALERT_MIN_ANSWER_A_QUESTION,
+  MIN_ANSWER_PER_QUESTION,
+  ALERT_MIN_ANSWER_PER_QUESTION,
   CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
 
@@ -43,8 +43,8 @@ export default function questionEditing(props) {
   const addNewAnswer = () => {
     const { answers } = questionEditing;
     const totalAnswer = answers.length;
-    if (totalAnswer >= MAX_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MAX_ANSWER_A_QUESTION);
+    if (totalAnswer >= MAX_ANSWER_PER_QUESTION) {
+      return Swal.fire(ALERT_MAX_ANSWER_PER_QUESTION);
     }
     const id = nanoid();
     const newAnswer = {
@@ -54,13 +54,13 @@ export default function questionEditing(props) {
     return addNewAnswerToQuestion(newAnswer);
   };
 
-  const deleteAnswer = (idDeleteAnswer, isCorrectAnswer) => {
+  const deleteAnswer = (id, isCorrectAnswer) => {
     const { answers } = questionEditing;
     if (isCorrectAnswer) {
       return Swal.fire(ALERT_DELETE_CORRECT_ANSWER);
     }
-    if (answers.length <= MIN_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MIN_ANSWER_A_QUESTION);
+    if (answers.length <= MIN_ANSWER_PER_QUESTION) {
+      return Swal.fire(ALERT_MIN_ANSWER_PER_QUESTION);
     }
     // delete success
     Swal.fire({
@@ -70,7 +70,7 @@ export default function questionEditing(props) {
       denyButtonText: "NO",
     }).then((result) => {
       if (result.isConfirmed) {
-        return deleteAnswerToQuestion(idDeleteAnswer);
+        return deleteAnswerToQuestion(id);
       }
     });
   };
@@ -144,7 +144,7 @@ export default function questionEditing(props) {
                   key={answer.id}
                 >
                   {idEditAnswer !== id ? (
-                    <div className={`flex answer-default ${isCorrectAnswer ? "text-[red]" : ""}`}>
+                    <div className={`flex answer-default ${isCorrectAnswer && "text-[red]"}`}>
                       <b>{`${IDEA[index]} .`}</b>
                       {` ${answer.content}`}
                     </div>
@@ -182,7 +182,7 @@ export default function questionEditing(props) {
             })}
           </div>
           <div className="flex justify-between font-bold cursor-pointer pt-[20px] text-[#f1f1f1]">
-            {questionEditing.answers.length < MAX_ANSWER_A_QUESTION && (
+            {questionEditing.answers.length < MAX_ANSWER_PER_QUESTION && (
             <div
               onClick={addNewAnswer}
               className="flex bg-[blue]  py-2 px-[10px]"
