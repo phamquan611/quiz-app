@@ -9,15 +9,15 @@ import Swal from "sweetalert2";
 import { IDEA } from "@utils";
 import {
   MAX_ANSWER_PER_QUESTION,
-  ALERT_MAX_ANSWER_PER_QUESTION,
-  ALERT_DELETE_CORRECT_ANSWER,
+  MAX_ANSWER_PER_QUESTION_ALERT,
+  DELETE_CORRECT_ANSWER_ALERT,
   MIN_ANSWER_PER_QUESTION,
-  ALERT_MIN_ANSWER_PER_QUESTION,
+  MIN_ANSWER_PER_QUESTION_ALERT,
   CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
 
 export default function questionEditing(props) {
-  const [idEditAnswer, setIdEditAnswer] = useState(null);
+  const [deleteAnswerId, setDeleteAnswerId] = useState(null);
   const [newContentAnswer, setNewContentAnswer] = useState(null);
   const {
     questionEditing,
@@ -44,7 +44,7 @@ export default function questionEditing(props) {
     const { answers } = questionEditing;
     const totalAnswer = answers.length;
     if (totalAnswer >= MAX_ANSWER_PER_QUESTION) {
-      return Swal.fire(ALERT_MAX_ANSWER_PER_QUESTION);
+      return Swal.fire(MAX_ANSWER_PER_QUESTION_ALERT);
     }
     const id = nanoid();
     const newAnswer = {
@@ -57,10 +57,10 @@ export default function questionEditing(props) {
   const deleteAnswer = (id, isCorrectAnswer) => {
     const { answers } = questionEditing;
     if (isCorrectAnswer) {
-      return Swal.fire(ALERT_DELETE_CORRECT_ANSWER);
+      return Swal.fire(DELETE_CORRECT_ANSWER_ALERT);
     }
     if (answers.length <= MIN_ANSWER_PER_QUESTION) {
-      return Swal.fire(ALERT_MIN_ANSWER_PER_QUESTION);
+      return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT);
     }
     // delete success
     Swal.fire({
@@ -80,8 +80,8 @@ export default function questionEditing(props) {
   };
 
   const editAnswerAQuestion = (idAnswer) => {
-    if (idEditAnswer) return;
-    setIdEditAnswer(idAnswer);
+    if (deleteAnswerId) return;
+    setDeleteAnswerId(idAnswer);
   };
 
   const updateToQuiz = () => {
@@ -103,8 +103,8 @@ export default function questionEditing(props) {
 
   const updateAnswer = () => {
     // const
-    changeAnswerQuestionEditing(idEditAnswer, newContentAnswer);
-    setIdEditAnswer(null);
+    changeAnswerQuestionEditing(deleteAnswerId, newContentAnswer);
+    setDeleteAnswerId(null);
     setNewContentAnswer(null);
   };
 
@@ -143,7 +143,7 @@ export default function questionEditing(props) {
                   className="flex justify-between text-[18px]"
                   key={answer.id}
                 >
-                  {idEditAnswer !== id ? (
+                  {deleteAnswerId !== id ? (
                     <div className={`flex answer-default ${isCorrectAnswer && "text-[red]"}`}>
                       <b>{`${IDEA[index]} .`}</b>
                       {` ${answer.content}`}

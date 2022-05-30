@@ -11,10 +11,10 @@ import {
 import {
 // NUM_MIN_QUESTION_A_QUIZ,
   MAX_ANSWER_PER_QUESTION,
-  ALERT_MAX_ANSWER_PER_QUESTION,
-  ALERT_DELETE_CORRECT_ANSWER,
+  MAX_ANSWER_PER_QUESTION_ALERT,
+  DELETE_CORRECT_ANSWER_ALERT,
   MIN_ANSWER_PER_QUESTION,
-  ALERT_MIN_ANSWER_PER_QUESTION,
+  MIN_ANSWER_PER_QUESTION_ALERT,
   // NUM_CORRECT_ANSWER_A_QUESTION,
   CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
@@ -39,7 +39,7 @@ export default function NewQuestion(props) {
   const clickOpenFormNewAnswer = () => {
     const totalAnswer = answers.length;
     if (totalAnswer >= MAX_ANSWER_PER_QUESTION) {
-      return Swal.fire(ALERT_MAX_ANSWER_PER_QUESTION);
+      return Swal.fire(MAX_ANSWER_PER_QUESTION_ALERT);
     }
     setDisableBtn(true);
     return setIsOpenPopupNewQuestion(true);
@@ -87,10 +87,10 @@ export default function NewQuestion(props) {
 
   const deleteAnswerToNewQuestion = (idAnswer, isCorrectAnswer) => {
     if (isCorrectAnswer) {
-      return Swal.fire(ALERT_DELETE_CORRECT_ANSWER);
+      return Swal.fire(DELETE_CORRECT_ANSWER_ALERT);
     }
     if (answers.length <= MIN_ANSWER_PER_QUESTION) {
-      return Swal.fire(ALERT_MIN_ANSWER_PER_QUESTION);
+      return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT);
     }
 
     // start delete
