@@ -10,11 +10,11 @@ import {
 } from "react-icons/ri";
 import {
 // NUM_MIN_QUESTION_A_QUIZ,
-  MAX_ANSWER_A_QUESTION,
-  ALERT_MAX_ANSWER_A_QUESTION,
-  ALERT_DELETE_CORRECT_ANSWER,
-  MIN_ANSWER_A_QUESTION,
-  ALERT_MIN_ANSWER_A_QUESTION,
+  MAX_ANSWER_PER_QUESTION,
+  MAX_ANSWER_PER_QUESTION_ALERT,
+  DELETE_CORRECT_ANSWER_ALERT,
+  MIN_ANSWER_PER_QUESTION,
+  MIN_ANSWER_PER_QUESTION_ALERT,
   // NUM_CORRECT_ANSWER_A_QUESTION,
   CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
@@ -38,8 +38,8 @@ export default function NewQuestion(props) {
   // };
   const clickOpenFormNewAnswer = () => {
     const totalAnswer = answers.length;
-    if (totalAnswer >= MAX_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MAX_ANSWER_A_QUESTION);
+    if (totalAnswer >= MAX_ANSWER_PER_QUESTION) {
+      return Swal.fire(MAX_ANSWER_PER_QUESTION_ALERT);
     }
     setDisableBtn(true);
     return setIsOpenPopupNewQuestion(true);
@@ -87,10 +87,10 @@ export default function NewQuestion(props) {
 
   const deleteAnswerToNewQuestion = (idAnswer, isCorrectAnswer) => {
     if (isCorrectAnswer) {
-      return Swal.fire(ALERT_DELETE_CORRECT_ANSWER);
+      return Swal.fire(DELETE_CORRECT_ANSWER_ALERT);
     }
-    if (answers.length <= MIN_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MIN_ANSWER_A_QUESTION);
+    if (answers.length <= MIN_ANSWER_PER_QUESTION) {
+      return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT);
     }
 
     // start delete
@@ -159,7 +159,7 @@ export default function NewQuestion(props) {
 
   return (
     <div className="w-full bg-[#f5f5f5] pb-10 pt-5 px-5">
-      {answers.length >= MIN_ANSWER_A_QUESTION && (
+      {answers.length >= MIN_ANSWER_PER_QUESTION && (
       <div className="text-right">
         <button className="my-5 p-3 text-[12px] font-bold bg-[red] rounded-[3px] text-[white]" onClick={insertQuestionToQuiz}>
           Insert question
@@ -180,13 +180,13 @@ export default function NewQuestion(props) {
               key={answer.id}
             >
               {editContentAnswerId !== answer.id ? (
-                <div className={`flex answer-default ${isCorrectAnswer ? "text-[red]" : ""}`}>
+                <div className={`flex answer-default ${isCorrectAnswer && "text-[red]"}`}>
                   <b>{`${IDEA[index]} : ${answer.content}`}</b>
                 </div>
               )
                 : (
                   <div className="flex w-auto">
-                    <label htmlFor="" className={`flex answer-default ${isCorrectAnswer ? "text-[red]" : ""}`}>{`${IDEA[index]} : `}</label>
+                    <label htmlFor="" className={`flex answer-default ${isCorrectAnswer && "text-[red]"}`}>{`${IDEA[index]} : `}</label>
                     <input type="text" value={newContentAnswer || answer.content} className="w-[90%] border rounded-[5px]" onChange={changeAnswer} />
                   </div>
                 )}
@@ -212,8 +212,8 @@ export default function NewQuestion(props) {
         })}
       </div>
       <div className="flex justify-between">
-        {answers.length < MAX_ANSWER_A_QUESTION && (
-        <button className={`my-5 text-[12px] p-2 font-bold bg-[blue] rounded-[3px] text-[white] ${disableBtn ? "opacity-20" : ""}`} onClick={clickOpenFormNewAnswer} disabled={disableBtn}>
+        {answers.length < MAX_ANSWER_PER_QUESTION && (
+        <button className={`my-5 text-[12px] p-2 font-bold bg-[blue] rounded-[3px] text-[white] ${disableBtn && "opacity-20"}`} onClick={clickOpenFormNewAnswer} disabled={disableBtn}>
           Add new answer
         </button>
         )}
