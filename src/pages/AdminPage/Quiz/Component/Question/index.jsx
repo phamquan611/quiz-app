@@ -23,7 +23,7 @@ export default function Question(props) {
         <div className="font-bold">{`Q.${index + 1}`}</div>
         <RiDeleteBin6Line className="mt-[5px] mx-2 text-[red] cursor-pointer" onClick={() => deleteQuestionWithId(question.id, index)} />
       </div>
-      <div className="mx-3">
+      <div className="mx-3 text-left">
         <div className="mb-[10px]">
           {question.content}
         </div>
@@ -42,13 +42,22 @@ export default function Question(props) {
                   {`${IDEA[index]} . ${answer.content}`}
                 </div>
                 <div className="flex mt-2">
-                  <input
-                    type="radio"
-                    name="checkCorrectAnswer"
-                    onChange={selectCorrectAnswer}
-                    className="mt-[2px] mr-2"
-                    checked={isCorrectAnswer}
-                  />
+                  {isCorrectAnswer ? (
+                    <input
+                      type="radio"
+                      name="checkCorrectAnswer"
+                      onChange={() => selectCorrectAnswer(answer.id)}
+                      className="mt-[2px] mr-2 cursor-pointer"
+                      checked
+                    />
+                  ) : (
+                    <input
+                      type="radio"
+                      name="checkCorrectAnswer"
+                      onChange={() => selectCorrectAnswer(answer.id)}
+                      className="mt-[2px] mr-2 cursor-pointer"
+                    />
+                  )}
                   <RiMessage2Line className="text-[#13a7e9] cursor-pointer mr-3" />
                   <RiDeleteBin6Line className=" text-[red] cursor-pointer" />
                 </div>
