@@ -134,15 +134,15 @@ function Question({
         </div>
       )
         : (
-          <div className="flex justify-between flex-wrap w-8/12 m-auto">
+          <div className="flex justify-between flex-wrap w-8/ 12 m-auto">
             {answers
         && answers.map(({ content, id }, index) => (
           <button
             onClick={() => handleSelectAnswer(id)}
             key={id}
-            disabled={isOptionAvailable === true}
+            // disabled={isOptionAvailable === true}
             className={
-              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[35%] m-auto ${isOptionAvailable === true && "bg-gray-200 text-slate-400"} ${
+              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[35%] m-auto ${
                 questions[currentQuestionIndex].selectedAnswer === id
                 && "bg-indigo-900 chosse-option"
               }`

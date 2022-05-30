@@ -13,7 +13,6 @@ function Result({
   name,
   quizzID,
   setView,
-  isOptionAvailable,
   hadbeenSubmited, 
   setHadbeenSubmited,
 }) {
@@ -22,7 +21,6 @@ function Result({
   const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
-  console.log(isOptionAvailable);
 
   const handleView = () => {
     history.push(`/quiz/${quizzesID}`);

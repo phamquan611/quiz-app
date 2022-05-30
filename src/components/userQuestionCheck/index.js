@@ -32,7 +32,6 @@ function CheckQuestion({
       if (viewAnswers === undefined) {
         setViewAnswers(questions);
       }
-      console.log(isOptionAvailable);
       if (isOptionAvailable === true) {
         setHadbeenSubmited(true);
       }
