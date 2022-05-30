@@ -5,9 +5,9 @@ import Swal from "sweetalert2";
 import Loading from "@pages/AdminPage/Loading";
 import QuestionToEdit from "@pages/AdminPage/Quiz/Component/QuestionEditing";
 import NewQuestion from "@pages/AdminPage/Quiz/Component/NewQuestion";
+import Question from "@pages/AdminPage/Quiz/Component/Question";
 import { selectQuizzes } from "@store/slice";
 import { getQuizzes, putQuiz } from "@actions/quiz.action";
-import { IDEA } from "@utils";
 import {
   NUM_MIN_QUESTION_A_QUIZ,
 } from "@utils/constant";
@@ -17,7 +17,7 @@ export default function QuizWithId() {
   const dispatch = useDispatch();
   const history = useHistory();
   const listQuiz = useSelector(selectQuizzes);
-  const [quizWithId, setQuizWithId] = useState(null);
+  const [quiz, setQuiz] = useState(null);
   // state question to edit
   const [questionEditing, setQuestionEditing] = useState([]);
   const [indexQuestionEditing, setIndexQuestionEditing] = useState(null);
@@ -31,7 +31,7 @@ export default function QuizWithId() {
     if (quizMatchId.length === 0) {
       history.push("/admin");
     } else {
-      setQuizWithId(quizMatchId[0]);
+      setQuiz(quizMatchId[0]);
     }
   }, [listQuiz]);
 
@@ -70,14 +70,14 @@ export default function QuizWithId() {
 
   const updateQuestion = (questionUpdated) => {
     const { id } = questionUpdated;
-    const { questions } = quizWithId;
+    const { questions } = quiz;
     const newListQuestion = questions.map((question) => {
       if (question.id === id) {
         return questionUpdated;
       }
       return question;
     });
-    setQuizWithId({ ...quizWithId, questions: newListQuestion });
+    setQuiz({ ...quiz, questions: newListQuestion });
     return setQuestionEditing([]);
   };
 
@@ -105,14 +105,14 @@ export default function QuizWithId() {
 
   // function insert question
   const insertQuestion = (newQuestion) => {
-    const { questions } = quizWithId;
+    const { questions } = quiz;
     questions.push(newQuestion);
-    setQuizWithId({ ...quizWithId, questions });
+    setQuiz({ ...quiz, questions });
   };
 
   // function delete question
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
-    let { questions } = quizWithId;
+    let { questions } = quiz;
     if (questions.length <= NUM_MIN_QUESTION_A_QUIZ) {
       return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
     }
@@ -124,7 +124,7 @@ export default function QuizWithId() {
     }).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
-        return setQuizWithId({ ...quizWithId, questions });
+        return setQuiz({ ...quiz, questions });
       }
     });
   };
@@ -133,7 +133,7 @@ export default function QuizWithId() {
   const upDateQUiz = () => {
     const payload = {
       id: params.quizId,
-      data: quizWithId,
+      data: quiz,
     };
     Swal.fire({
       title: "Are you sure update quiz ?",
@@ -149,17 +149,14 @@ export default function QuizWithId() {
 
   return (
     <div className="p-[50px]">
-      {quizWithId ? (
+      {quiz ? (
         <>
           <div className="text-2xl font-bold">
-            {`Category : ${quizWithId.category}`}
-          </div>
-          <div className="text-[red]">
-            Click to edit question.
+            {`Quiz Name : ${quiz.category}`}
           </div>
           <div className="flex pt-[30px] justify-between">
             <div className="side-bar-question">
-              {quizWithId.questions.map((question, index) => {
+              {quiz.questions.map((question, index) => {
                 return (
                   <div className="w-[150px] mb-[10px] flex justify-between" key={question.id}>
                     <button
@@ -178,31 +175,17 @@ export default function QuizWithId() {
                 );
               })}
             </div>
-            <div className="list-question pl-[20px] text-[18px]">
-              {quizWithId.questions.map((question, index) => {
+            <div className="list-question px-[20px] text-[18px] py-10 bg-[#f1f1f1]">
+              {quiz.questions.map((question, index) => {
                 const correctAnswerId = question.correct_answer;
                 return (
-                  <div className="mb-[30px]" key={question.id}>
-                    <div className="mb-[10px]">
-                      <b className="font-bold">{index + 1}</b>
-                      {` : ${question.content}`}
-                    </div>
-                    <div className="w-1/2 flex justify-between flex-wrap ">
-                      {question.answers.map((answer, index) => {
-                        const isCorrectAnswer = correctAnswerId === answer.id;
-                        return (
-                          <div
-                            className={`${
-                              isCorrectAnswer && "text-[red] font-bold"
-                            } w-1/2`}
-                            key={answer.id}
-                          >
-                            {`${IDEA[index]} . ${answer.content}`}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
+                  <Question
+                    question={question}
+                    correctAnswerId={correctAnswerId}
+                    index={index}
+                    key={question.id}
+                    deleteQuestionWithId={deleteQuestionWithId}
+                  />
                 );
               })}
             </div>
