@@ -117,7 +117,7 @@ function Home({
           <button
             type="button"
             onClick={handleSubmit}
-            className="m-auto rounded-full text-xl font-bold shadow-lg p-5 bg-[#93d0de]"
+            className="m-auto rounded-2xl text-xl font-bold shadow-lg px-4 py-5 bg-[#93d0de]"
             to="/quiz"
           >
             Let's Start
