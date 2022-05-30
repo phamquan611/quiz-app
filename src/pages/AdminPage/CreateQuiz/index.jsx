@@ -1,65 +1,50 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import QuestionToEdit from "@pages/AdminPage/Quiz/Component/QuestionEditing";
+import QuestionEditing from "@pages/AdminPage/Quiz/Component/QuestionEditing";
 import NewQuestion from "@pages/AdminPage/Quiz/Component/NewQuestion";
 import { postQuiz } from "@actions/quiz.action";
 import { IDEA, formTimeChallenge, convertMinuteToMilliseconds } from "@utils";
 import {
   NUM_MIN_QUESTION_A_QUIZ,
-// MAX_ANSWER_A_QUESTION,
-// ALERT_MAX_ANSWER_A_QUESTION,
-// ALERT_DELETE_CORRECT_ANSWER,
-// MIN_ANSWER_A_QUESTION,
-// ALERT_MIN_ANSWER_A_QUESTION,
-// NUM_CORRECT_ANSWER_A_QUESTION,
-// CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
 
 export default function CreateQuiz() {
   const dispatch = useDispatch();
   const [newQuiz, setNewQuiz] = useState({ category: "", questions: [] });
-  const [questionToEdit, setQuestionToEdit] = useState([]);
-  const [indexQuestionToEdit, setIndexQuestionToEdit] = useState(null);
-  const [openPopupNewQuestion, setOpenPopupNewQuestion] = useState(false);
+  const [questionEditing, setQuestionEditing] = useState([]);
+  const [indexQuestionEditing, setIndexQuestionEditing] = useState(null);
+  const [togglePopupNewQuestion, setToggleNewPopupQuestion] = useState(false);
   const timeChallenge = useRef();
-
-  // useEffect(() => {
-  //   Swal.fire("Add quiz success .").then((result) => {
-  //     if (result.isConfirmed) {
-  //       history.push("/admin");
-  //     }
-  //   });
-  // }, [listQuiz.length]);
 
   // function edit question
   const openEditQuestion = (question, index) => {
-    setQuestionToEdit({ ...question, answers: question.answers });
-    setIndexQuestionToEdit(index + 1);
+    setQuestionEditing({ ...question, answers: question.answers });
+    setIndexQuestionEditing(index + 1);
   };
 
   const changeCorrectAnswer = (newCorrectAnswer) => {
     const newCorrectAnswerId = newCorrectAnswer.id;
-    setQuestionToEdit({ ...questionToEdit, correct_answer: newCorrectAnswerId });
+    setQuestionEditing({ ...questionEditing, correct_answer: newCorrectAnswerId });
   };
 
   const handleChangeTimeChallenge = () => {
 
   };
   const addNewAnswerToEditQuestion = (newAnswer) => {
-    const { answers } = questionToEdit;
+    const { answers } = questionEditing;
     answers.push(newAnswer);
-    return setQuestionToEdit({ ...questionToEdit, answers });
+    return setQuestionEditing({ ...questionEditing, answers });
   };
 
   const deleteAnswerToEditQuestion = (idDeleteAnswer) => {
-    const { answers } = questionToEdit;
+    const { answers } = questionEditing;
     const newAnswers = answers.filter((answer) => answer.id !== idDeleteAnswer);
-    setQuestionToEdit({ ...questionToEdit, answers: newAnswers });
+    setQuestionEditing({ ...questionEditing, answers: newAnswers });
   };
 
   const handleContentToEditQuestion = (content) => {
-    setQuestionToEdit({ ...questionToEdit, content });
+    setQuestionEditing({ ...questionEditing, content });
   };
 
   const updateQuestion = (questionUpdated) => {
@@ -72,15 +57,15 @@ export default function CreateQuiz() {
       return question;
     });
     setNewQuiz({ ...newQuiz, questions: newListQuestion });
-    return setQuestionToEdit([]);
+    return setQuestionEditing([]);
   };
 
   const clickOpenPopupNewQuestion = () => {
-    setOpenPopupNewQuestion(!openPopupNewQuestion);
+    setToggleNewPopupQuestion(!togglePopupNewQuestion);
   };
 
-  const changeContentAnswerToEditQuestion = (idAnswer, newContent) => {
-    const { answers } = questionToEdit;
+  const changeAnswerQuestionEditing = (idAnswer, newContent) => {
+    const { answers } = questionEditing;
     const newAnswers = answers.map((answer) => {
       let { content } = answer;
       if (answer.id === idAnswer) {
@@ -89,11 +74,11 @@ export default function CreateQuiz() {
       return { ...answer, content };
     });
 
-    setQuestionToEdit({ ...questionToEdit, answers: newAnswers });
+    setQuestionEditing({ ...questionEditing, answers: newAnswers });
   };
 
-  const closeEditToQuestion = () => {
-    return setQuestionToEdit([]);
+  const closeQuestionEditing = () => {
+    return setQuestionEditing([]);
   };
 
 
@@ -168,10 +153,10 @@ export default function CreateQuiz() {
           </div>
         </div>
         <div>
-          {!openPopupNewQuestion && (
+          {!togglePopupNewQuestion && (
           <button
             onClick={clickOpenPopupNewQuestion}
-            className={`my-5 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${openPopupNewQuestion ? "bg-[red]" : ""}`}
+            className={`my-5 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion ? "bg-[red]" : ""}`}
           >
             Create Question
           </button>
@@ -234,28 +219,28 @@ export default function CreateQuiz() {
           })}
         </div>
         <div className="edit-add-form w-[30%]">
-          <QuestionToEdit
-            questionToEdit={questionToEdit}
-            indexQuestionToEdit={indexQuestionToEdit}
+          <QuestionEditing
+            questionEditing={questionEditing}
+            indexQuestionEditing={indexQuestionEditing}
             updateQuestion={updateQuestion}
             changeCorrectAnswer={changeCorrectAnswer}
             addNewAnswerToEditQuestion={addNewAnswerToEditQuestion}
             deleteAnswerToEditQuestion={deleteAnswerToEditQuestion}
             handleContentToEditQuestion={handleContentToEditQuestion}
-            closeEditToQuestion={closeEditToQuestion}
-            changeContentAnswerToEditQuestion={changeContentAnswerToEditQuestion}
+            closeQuestionEditing={closeQuestionEditing}
+            changeAnswerQuestionEditing={changeAnswerQuestionEditing}
           />
-          {openPopupNewQuestion && (
+          {togglePopupNewQuestion && (
           <div className="text-right">
             <button
               onClick={clickOpenPopupNewQuestion}
-              className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${openPopupNewQuestion ? "bg-[red]" : ""}`}
+              className={`my-10 py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-[5px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75 ${togglePopupNewQuestion ? "bg-[red]" : ""}`}
             >
               Close
             </button>
           </div>
           )}
-          { openPopupNewQuestion
+          { togglePopupNewQuestion
               && (
               <NewQuestion
                 insertQuestion={insertQuestion}
