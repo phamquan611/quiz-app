@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable react/jsx-closing-tag-location */
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { url } from "@utils";

@@ -2,41 +2,32 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 import {
   RiDeleteBin6Line,
-  // RiAddCircleFill,
   RiMessage2Line,
   RiAddLine,
 } from "react-icons/ri";
 import Swal from "sweetalert2";
-// import { FcCheckmark } from "react-icons/fc";
-// import Loading from "@pages/AdminPage/Loading";
-// import Swal from "sweetalert2";
-// import QuestionToEdit from "@pages/AdminPage/QuizWithId/QuestionToEdit";
-// import { selectQuizzes } from "@store/slice";
-// import { getQuizzes } from "@actions/quiz.action";
 import { IDEA } from "@utils";
 import {
-// NUM_MIN_QUESTION_A_QUIZ,
-  MAX_ANSWER_A_QUESTION,
-  ALERT_MAX_ANSWER_A_QUESTION,
-  ALERT_DELETE_CORRECT_ANSWER,
-  MIN_ANSWER_A_QUESTION,
-  ALERT_MIN_ANSWER_A_QUESTION,
-  // NUM_CORRECT_ANSWER_A_QUESTION,
+  MAX_ANSWER_PER_QUESTION,
+  MAX_ANSWER_PER_QUESTION_ALERT,
+  DELETE_CORRECT_ANSWER_ALERT,
+  MIN_ANSWER_PER_QUESTION,
+  MIN_ANSWER_PER_QUESTION_ALERT,
   CHOOSE_CORRECT_ANSWER_INDEX,
 } from "@utils/constant";
 
-export default function QuestionToEdit(props) {
-  const [idEditAnswer, setIdEditAnswer] = useState(null);
+export default function questionEditing(props) {
+  const [deleteAnswerId, setDeleteAnswerId] = useState(null);
   const [newContentAnswer, setNewContentAnswer] = useState(null);
   const {
-    questionToEdit,
+    questionEditing,
     updateQuestion,
-    indexQuestionToEdit,
+    indexQuestionEditing,
     changeCorrectAnswer,
-    addNewAnswerToEditQuestion,
-    deleteAnswerToEditQuestion,
-    handleContentToEditQuestion,
-    changeContentAnswerToEditQuestion,
+    addNewAnswerToQuestion,
+    deleteAnswerToQuestion,
+    handleContentToQuestionEditing,
+    changeAnswerQuestionEditing,
   } = props;
 
 
@@ -44,32 +35,32 @@ export default function QuestionToEdit(props) {
     const idCorrectAnswer = e.target.id;
     const indexNewCorrectAnswer = parseInt(idCorrectAnswer.replace(CHOOSE_CORRECT_ANSWER_INDEX, ""), 10);
     // const
-    const { answers } = questionToEdit;
+    const { answers } = questionEditing;
     const newCorrectAnswer = answers[indexNewCorrectAnswer];
     return changeCorrectAnswer(newCorrectAnswer);
   };
 
   const addNewAnswer = () => {
-    const { answers } = questionToEdit;
+    const { answers } = questionEditing;
     const totalAnswer = answers.length;
-    if (totalAnswer >= MAX_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MAX_ANSWER_A_QUESTION);
+    if (totalAnswer >= MAX_ANSWER_PER_QUESTION) {
+      return Swal.fire(MAX_ANSWER_PER_QUESTION_ALERT);
     }
     const id = nanoid();
     const newAnswer = {
       content: "Edit me",
       id,
     };
-    return addNewAnswerToEditQuestion(newAnswer);
+    return addNewAnswerToQuestion(newAnswer);
   };
 
-  const deleteAnswer = (idDeleteAnswer, isCorrectAnswer) => {
-    const { answers } = questionToEdit;
+  const deleteAnswer = (id, isCorrectAnswer) => {
+    const { answers } = questionEditing;
     if (isCorrectAnswer) {
-      return Swal.fire(ALERT_DELETE_CORRECT_ANSWER);
+      return Swal.fire(DELETE_CORRECT_ANSWER_ALERT);
     }
-    if (answers.length <= MIN_ANSWER_A_QUESTION) {
-      return Swal.fire(ALERT_MIN_ANSWER_A_QUESTION);
+    if (answers.length <= MIN_ANSWER_PER_QUESTION) {
+      return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT);
     }
     // delete success
     Swal.fire({
@@ -79,18 +70,18 @@ export default function QuestionToEdit(props) {
       denyButtonText: "NO",
     }).then((result) => {
       if (result.isConfirmed) {
-        return deleteAnswerToEditQuestion(idDeleteAnswer);
+        return deleteAnswerToQuestion(id);
       }
     });
   };
 
   const handleContentQuestion = (e) => {
-    return handleContentToEditQuestion(e.target.value);
+    return handleContentToQuestionEditing(e.target.value);
   };
 
   const editAnswerAQuestion = (idAnswer) => {
-    if (idEditAnswer) return;
-    setIdEditAnswer(idAnswer);
+    if (deleteAnswerId) return;
+    setDeleteAnswerId(idAnswer);
   };
 
   const updateToQuiz = () => {
@@ -101,7 +92,7 @@ export default function QuestionToEdit(props) {
       denyButtonText: "NO",
     }).then((result) => {
       if (result.isConfirmed) {
-        return updateQuestion(questionToEdit);
+        return updateQuestion(questionEditing);
       }
     });
   };
@@ -110,16 +101,16 @@ export default function QuestionToEdit(props) {
     setNewContentAnswer(e.target.value);
   };
 
-  const saveChangeContentAnswer = () => {
+  const updateAnswer = () => {
     // const
-    changeContentAnswerToEditQuestion(idEditAnswer, newContentAnswer);
-    setIdEditAnswer(null);
+    changeAnswerQuestionEditing(deleteAnswerId, newContentAnswer);
+    setDeleteAnswerId(null);
     setNewContentAnswer(null);
   };
 
   return (
     <div>
-      {Object.keys(questionToEdit).length === 0 ? (
+      {Object.keys(questionEditing).length === 0 ? (
         <div className="empty-edit-question" />
       ) : (
         <div className="question-edit-form bg-[#f5f5f5] p-[20px]">
@@ -133,27 +124,27 @@ export default function QuestionToEdit(props) {
             </button>
           </div>
           <div className="question-edit-index text-[20px]">
-            <label htmlFor="questionEdit">{`Question ${indexQuestionToEdit} :`}</label>
+            <label htmlFor="questionEdit">{`Question ${indexQuestionEditing} :`}</label>
             <input
               type="text"
               id="questionEdit"
               name="questionEdit"
-              value={questionToEdit.content}
+              value={questionEditing.content}
               onChange={handleContentQuestion}
               className="my-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
             />
           </div>
           <div>
-            {questionToEdit.answers.map((answer, index) => {
+            {questionEditing.answers.map((answer, index) => {
               const { id } = answer;
-              const isCorrectAnswer = id === questionToEdit.correct_answer;
+              const isCorrectAnswer = id === questionEditing.correct_answer;
               return (
                 <div
                   className="flex justify-between text-[18px]"
                   key={answer.id}
                 >
-                  {idEditAnswer !== id ? (
-                    <div className={`flex answer-default ${isCorrectAnswer ? "text-[red]" : ""}`}>
+                  {deleteAnswerId !== id ? (
+                    <div className={`flex answer-default ${isCorrectAnswer && "text-[red]"}`}>
                       <b>{`${IDEA[index]} .`}</b>
                       {` ${answer.content}`}
                     </div>
@@ -191,7 +182,7 @@ export default function QuestionToEdit(props) {
             })}
           </div>
           <div className="flex justify-between font-bold cursor-pointer pt-[20px] text-[#f1f1f1]">
-            {questionToEdit.answers.length < MAX_ANSWER_A_QUESTION && (
+            {questionEditing.answers.length < MAX_ANSWER_PER_QUESTION && (
             <div
               onClick={addNewAnswer}
               className="flex bg-[blue]  py-2 px-[10px]"
@@ -202,7 +193,7 @@ export default function QuestionToEdit(props) {
             )}
             {newContentAnswer && (
             <div>
-              <button className="bg-[red] p-2 text-[12px] text-[#f1f1f1]" onClick={saveChangeContentAnswer}>
+              <button className="bg-[red] p-2 text-[12px] text-[#f1f1f1]" onClick={updateAnswer}>
                 Save Change
               </button>
             </div>

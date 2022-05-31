@@ -15,3 +15,11 @@ export const fetchSessions = () => {
     });
 };
 
+export const getPointsQuiz = (payload) => {
+  return axios.post(`${url}/result`, payload).then((response) => {
+    return response;
+  })
+    .catch((error) => {
+      return error;
+    });
+};

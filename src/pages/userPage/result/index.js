@@ -1,9 +1,10 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import { url } from "@utils";
+import { getPointQuizz } from "@actions/user.action";
+import { useDispatch, useSelector } from "react-redux";
+import { getPointUser } from "@store/slice";
 
 function Result({
   quizzesID,
@@ -21,6 +22,8 @@ function Result({
   const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const pointUser = useSelector(getPointUser);
 
   const handleView = () => {
     history.push(`/quiz/${quizzesID}`);
@@ -41,17 +44,25 @@ function Result({
       questionId: quest.id,
       selectedAnswerId: quest.selectedAnswer,
     }));
-    const data = await axios
-      .post(`${url}/result`, {
-        sessionId: quizzID,
-        username: name,
-        questions: body,
-      });
-    setResult(data.data.result);
+    const userPoint = {
+      sessionId: quizzID,
+      username: name,
+      questions: body,
+    };
+    dispatch(getPointQuizz(userPoint));
+    // const data = await axios
+    //   .post(`${url}/result`, {
+    //     sessionId: quizzID,
+    //     username: name,
+    //     questions: body,
+    //   });
+    // setResult(data.data.result);
     setDone(true);
     setHadbeenSubmited(true);
   };
-
+  useEffect(() => {
+    setResult(pointUser);
+  }, [pointUser]);
   const handleChecknone = () => {
     setIsSubmitting(false);
   };
