@@ -49,6 +49,7 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
+      // To do : check name
       dispatch(checkName(quizzID));
       history.push(`/quiz/${getQuizID}`);
       if (timeStart > currentDate || currentDate > timeEnd) {
