@@ -8,7 +8,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { BsLightbulb, BsLightbulbFill } from "react-icons/bs";
-import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
+import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 
 function CheckQuestion({
   questions,
@@ -22,7 +22,7 @@ function CheckQuestion({
   setHadbeenSubmited,
 }) {
   const history = useHistory();
-  const handleQuestion = (index) => {
+  const onQuestionClick = (index) => {
     setCurrentQuestionIndex(index);
     setIsCheckTime(true);
   };
@@ -45,25 +45,17 @@ function CheckQuestion({
     setIsCheckTime(true);
   };
   return (
-    // TO DO : do submit btn
+    // TO DO :  choose question when click and do prev and next btn question
     <div className="flex m-auto pb-5">
       <div className="m-auto">
-
-        {/* <button>
-          {currentQuestionIndex === questions.length - 1
-          && isOptionAvailable === false && (
-            "Submit"
-          )}
-
-        </button> */}
         <button
           disabled={currentQuestionIndex === 0}
           onClick={prevQuestion}
-          className={`bg-rose-600 py-3.5 px-5 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
+          className={`bg-rose-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
             currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"
           }`}
         >
-          <TiChevronLeftOutline />
+          Prev
         </button>
       </div>
       {view === false ? (
@@ -72,7 +64,7 @@ function CheckQuestion({
           &&            questions.map((item, index) => (
             <i
               className="flex justify-center items-center"
-              onClick={() => handleQuestion(index)}
+              onClick={() => onQuestionClick(index)}
               key={index}
             >
               {questions[index].selectedAnswer === undefined ? (
@@ -90,7 +82,7 @@ function CheckQuestion({
             && questions.map((item, index) => (
               <i
                 className="flex justify-center items-center"
-                onClick={() => handleQuestion(index)}
+                onClick={() => onQuestionClick(index)}
                 key={index}
               >
                 {viewAnswers[index].selectedAnswer === undefined ? (
@@ -106,12 +98,12 @@ function CheckQuestion({
       <div className="m-auto">
         <button
           onClick={nextQuestion}
-          disabled={currentQuestionIndex === questions.length - 1}
-          className={` py-3.5 px-5 rounded-xl text-[20px] shadow-2xl text-white ml-[10px] ${
-            currentQuestionIndex === questions.length - 1 ? "bg-slate-300 text-slate-500" : "bg-green-600"
-          }`}
+          className="bg-green-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl ml-[10px]  text-white"
         >
-          <TiChevronRightOutline />
+          {currentQuestionIndex === questions.length - 1
+          && isOptionAvailable === false
+            ? "Submit"
+            : "Next"}
         </button>
       </div>
     </div>

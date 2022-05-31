@@ -23,7 +23,7 @@ function Result({
   const [isDone, setDone] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const pointUser = useSelector(getPointUser);
+  const userResult = useSelector(getPointUser);
 
   const handleView = () => {
     history.push(`/quiz/${quizzesID}`);
@@ -61,8 +61,8 @@ function Result({
     setHadbeenSubmited(true);
   };
   useEffect(() => {
-    setResult(pointUser);
-  }, [pointUser]);
+    setResult(userResult);
+  }, [userResult]);
   const handleChecknone = () => {
     setIsSubmitting(false);
   };
