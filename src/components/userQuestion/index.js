@@ -10,6 +10,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { IDEA } from "@utils";
 
 function Question({
   questions,
@@ -102,8 +103,8 @@ function Question({
   return (
   // TO DO : pick question
 
-    <div className="w-[70%]">
-      <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500">
+    <div className=" m-auto w-7/12">
+      <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500 m-auto">
         <h2 className="text-rose-600">{timer}</h2>
         <p className="pb-[10px]">
           Question :
@@ -111,10 +112,10 @@ function Question({
           /
           {questions.length}
         </p>
-        <p className="">{questions[currentQuestionIndex].content}</p>
+        <p className="px-5">{questions[currentQuestionIndex].content}</p>
       </div>
       {view === true ? (
-        <div className="flex justify-between flex-wrap">
+        <div className="flex justify-between flex-wrap m-auto">
           {answers
                 && answers.map(({ content, id }, index) => (
                   <button
@@ -122,33 +123,33 @@ function Question({
                     key={id}
                     disabled={isOptionAvailable === true}
                     className={
-                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto]  ${isOptionAvailable === true && "bg-gray-200 text-slate-600"} ${
+                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-auto  ${isOptionAvailable === true && "bg-gray-200 text-slate-600"} ${
                         viewAnswers[currentQuestionIndex].selectedAnswer === id
                         && "bg-indigo-900 text-white chosse-option"
                       }`
                     }
                   >
-                    {`${index + 1}. ${content} `}
+                    {`${IDEA[index]}. ${content} `}
                   </button>
                 ))}
         </div>
       )
         : (
-          <div className="flex justify-between flex-wrap">
+          <div className="flex justify-between flex-wrap m-auto">
             {answers
         && answers.map(({ content, id }, index) => (
           <button
             onClick={() => handleSelectAnswer(id)}
             key={id}
-            disabled={isOptionAvailable === true}
+            // disabled={isOptionAvailable === true}
             className={
-              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-[auto] ${isOptionAvailable === true && "bg-gray-200 text-slate-400"} ${
+              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-auto ${isOptionAvailable === true && "bg-gray-200 text-slate-400"} ${
                 questions[currentQuestionIndex].selectedAnswer === id
                 && "bg-indigo-900 chosse-option"
               }`
             }
           >
-            {`${index + 1}. ${content} `}
+            {`${IDEA[index]}. ${content} `}
           </button>
         ))}
           </div>

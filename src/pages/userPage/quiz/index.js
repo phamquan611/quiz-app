@@ -46,40 +46,40 @@ function Quiz({
   return (
     // TO DO : prev and next btn
     <div className="bg-quiz">
-      <div className="container m-[auto]">
-        <div className="flex justify-between">
+      <div className="container m-auto px-[20px]">
+        <div className="flex flex-col">
           {questions.length > 0 && (
-            <CheckQuestion
-              questions={questions}
-              currentQuestionIndex={currentQuestionIndex}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-              isCheckTime={isCheckTime}
-              setIsCheckTime={setIsCheckTime}
-              onSelectAnswer={onSelectAnswer}
-              viewAnswers={viewAnswers}
-              view={view}
-              setViewAnswers={setViewAnswers}
-              isOptionAvailable={isOptionAvailable}
-              hadbeenSubmited={hadbeenSubmited}
-              setHadbeenSubmited={setHadbeenSubmited}
-            />
+          <CheckQuestion
+            questions={questions}
+            currentQuestionIndex={currentQuestionIndex}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            isCheckTime={isCheckTime}
+            setIsCheckTime={setIsCheckTime}
+            onSelectAnswer={onSelectAnswer}
+            viewAnswers={viewAnswers}
+            view={view}
+            setViewAnswers={setViewAnswers}
+            isOptionAvailable={isOptionAvailable}
+            hadbeenSubmited={hadbeenSubmited}
+            setHadbeenSubmited={setHadbeenSubmited}
+          />
           )}
           {questions.length > 0 && (
-            <Question
-              questions={questions}
-              timeStamp={timeStamp}
-              currentQuestionIndex={currentQuestionIndex}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-              onSelectAnswer={onSelectAnswer}
-              isCheckTime={isCheckTime}
-              setIsCheckTime={setIsCheckTime}
-              isOptionAvailable={isOptionAvailable}
-              setIsOptionAvailable={setIsOptionAvailable}
-              viewAnswers={viewAnswers}
-              view={view}
-              answers={answers}
-              setAnswers={setAnswers}
-            />
+          <Question
+            questions={questions}
+            timeStamp={timeStamp}
+            currentQuestionIndex={currentQuestionIndex}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            onSelectAnswer={onSelectAnswer}
+            isCheckTime={isCheckTime}
+            setIsCheckTime={setIsCheckTime}
+            isOptionAvailable={isOptionAvailable}
+            setIsOptionAvailable={setIsOptionAvailable}
+            viewAnswers={viewAnswers}
+            view={view}
+            answers={answers}
+            setAnswers={setAnswers}
+          />
           )}
         </div>
       </div>
