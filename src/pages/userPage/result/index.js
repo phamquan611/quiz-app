@@ -20,7 +20,6 @@ function Result({
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmited, setisSubmitted] = useState(true);
-  const [result, setResult] = useState();
   const [isDone, setDone] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -61,9 +60,7 @@ function Result({
     setDone(true);
     setHadbeenSubmited(true);
   };
-  useEffect(() => {
-    setResult(userResult);
-  }, [userResult]);
+
   const handleChecknone = () => {
     setIsSubmitting(false);
   };
