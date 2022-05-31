@@ -6,8 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { url } from "@utils";
-import { getAllDataSessions } from "@actions/user.action";
+import { getAllDataSessions, checkName } from "@actions/user.action";
 import { selectSessionsID } from "@store/slice";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 function Home({
   quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID,
@@ -48,8 +49,8 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
+      dispatch(checkName(quizzID));
       history.push(`/quiz/${getQuizID}`);
-
       if (timeStart > currentDate || currentDate > timeEnd) {
         setMesWrong(true);
         setToastMes("wrong time");
@@ -117,7 +118,7 @@ function Home({
           <button
             type="button"
             onClick={handleSubmit}
-            className="m-auto rounded-2xl text-xl font-bold shadow-lg px-4 py-5 bg-[#93d0de]"
+            className="m-auto rounded-2xl text-base font-bold shadow-lg px-3 py-3.5 bg-[#93d0de]"
             to="/quiz"
           >
             Let's Start
@@ -125,34 +126,35 @@ function Home({
         </div>
       </div>
       {mesWrong && (
-        <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-auto opacity-1 bg-white opacity-100 w-[500px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
-            {toastMes === "wrong ID" && (
-            <h2 className="m-auto text-5xl text-center">
-              SessionID bạn điền không tồn tại !!!
+      <div className="fixed inset-0 bg-black w-full flex bg-[#779eca]">
+        <div className="m-auto opacity-1 bg-white opacity-100 w-[350px] h-[300px] rounded-xl text-[#000] flex  flex-col modal-container">
+          <RiErrorWarningLine className="text-6xl m-auto mb-6 mt-9 text-rose-700" />
+          {toastMes === "wrong ID" && (
+          <h2 className="m-auto my-0 text-xl px-5 text-center">
+            Your Sessions ID is not exist. Please try different Sessions ID!!!
             </h2>
-            ) }
+          ) }
 
-            {toastMes === "duplicate name" && (
-            <h2 className="m-auto text-5xl text-center">
-              Tên của bạn đã có, nhập tên khác nhé !!!
+          {toastMes === "duplicate name" && (
+          <h2 className="m-auto mb-0 text-2xl text-center">
+            Your name had been exist. Please try different name !!!
             </h2>
-            ) }
+          ) }
 
-            {toastMes === "wrong time" && (
-            <h2 className="m-auto text-5xl text-center">
-              Bạn đang vào sai giờ , kiểm tra lại nha !!!
+          {toastMes === "wrong time" && (
+          <h2 className="m-auto mb-0 text-2xl text-center">
+            You are connected wrong time. Please try different time !!!
             </h2>
-            ) }
+          ) }
 
-            <button
-              className="m-auto text-white p-5 text-[20px] bg-green-500 rounded-xl px-5 "
-              onClick={handleCheckID}
-            >
-              OKE NHA !
-            </button>
-          </div>
+          <button
+            className="m-auto mt-6 text-white p-3 text-[16px] bg-green-500 rounded-xl "
+            onClick={handleCheckID}
+          >
+            OKE !!!
+          </button>
         </div>
+      </div>
       )}
     </div>
   );
