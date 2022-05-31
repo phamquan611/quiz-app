@@ -24,7 +24,7 @@ function Result({
   const history = useHistory();
   const dispatch = useDispatch();
   const userResult = useSelector(getPointUser);
-
+  
   const handleView = () => {
     history.push(`/quiz/${quizzesID}`);
     setView(true);
