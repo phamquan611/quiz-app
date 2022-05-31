@@ -8,7 +8,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { BsLightbulb, BsLightbulbFill } from "react-icons/bs";
-import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
+import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
 
 function CheckQuestion({
   questions,

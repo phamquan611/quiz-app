@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from "react";
@@ -124,7 +125,7 @@ function Result({
             </h2>
             <h2 className="m-auto text-5xl text-center">
               Điểm của bạn là : 
-              {result}
+              {userResult}
               /100
             </h2>
             <button
