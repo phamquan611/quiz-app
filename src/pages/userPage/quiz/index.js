@@ -47,7 +47,23 @@ function Quiz({
     // TO DO : prev and next btn
     <div className="bg-quiz">
       <div className="container m-auto px-[20px]">
-        <div className="flex justify-center">
+        <div className="flex flex-col">
+          {questions.length > 0 && (
+          <CheckQuestion
+            questions={questions}
+            currentQuestionIndex={currentQuestionIndex}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+            isCheckTime={isCheckTime}
+            setIsCheckTime={setIsCheckTime}
+            onSelectAnswer={onSelectAnswer}
+            viewAnswers={viewAnswers}
+            view={view}
+            setViewAnswers={setViewAnswers}
+            isOptionAvailable={isOptionAvailable}
+            hadbeenSubmited={hadbeenSubmited}
+            setHadbeenSubmited={setHadbeenSubmited}
+          />
+          )}
           {questions.length > 0 && (
           <Question
             questions={questions}
@@ -64,22 +80,6 @@ function Quiz({
             answers={answers}
             setAnswers={setAnswers}
           />
-          )}
-          {questions.length > 0 && (
-            <CheckQuestion
-              questions={questions}
-              currentQuestionIndex={currentQuestionIndex}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
-              isCheckTime={isCheckTime}
-              setIsCheckTime={setIsCheckTime}
-              onSelectAnswer={onSelectAnswer}
-              viewAnswers={viewAnswers}
-              view={view}
-              setViewAnswers={setViewAnswers}
-              isOptionAvailable={isOptionAvailable}
-              hadbeenSubmited={hadbeenSubmited}
-              setHadbeenSubmited={setHadbeenSubmited}
-            />
           )}
         </div>
       </div>

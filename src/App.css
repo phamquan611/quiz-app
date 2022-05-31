@@ -42,13 +42,13 @@
 }
 @media (min-width : 1024px) {
     .bg-home{
-        padding: 201px;
+        padding: 134px 0;
     }
     .bg-quiz{
-        padding: 251px 0;
+        padding: 117px 0;
     }
     .bg-result{
-      padding: 348px 0;
+      padding: 290px 0;
     }
 }
 @media (min-width : 1530px) {
