@@ -1,10 +1,11 @@
 // TODO
 /* eslint-disable import/prefer-default-export */
 import { call, put, takeEvery } from "redux-saga/effects";
+import Swal from "sweetalert2";
 import {
   getPointQuizzSuccess,
   userActionType,
-  getPointQuizzFAil,
+  getPointQuizzFail,
 } from "@actions/user.action";
 import { getPointsQuiz } from "@services/user.sessions";
 
@@ -15,10 +16,16 @@ function* getPointsWorker(action) {
     if (points) {
       yield put(getPointQuizzSuccess(points));
     } else {
-      yield put(getPointQuizzFAil());
+      yield put(getPointQuizzFail());
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: "<a href=''>Why do I have this issue?</a>",
+      });
     }
   } catch {
-    yield put(getPointQuizzFAil());
+    yield put(getPointQuizzFail());
   }
 }
 

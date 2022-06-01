@@ -6,10 +6,9 @@ const initialState = {
 
 const checkNameUser = (state = initialState, action) => {
   switch (action.type) {
-    case userActionType.CHECK_NAME_USER_SUCCESS:
+    case userActionType.CHECK_NAME_USER_EXIST_SUCCESS:
       return action.payload;
-    case userActionType.CHECK_NAME_USER_FAIL:
-      return initialState;
+
     default:
       return state;
   }

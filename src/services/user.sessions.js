@@ -24,20 +24,10 @@ export const getPointsQuiz = (payload) => {
     });
 };
 
-export const checkNameUser = (payload) => {
-  return axios.post(`${url}/sessions/${payload}`).then((response) => {
-    return response;
-  })
-    .catch((error) => {
-      return error;
-    });
+export const checkNameUserExist = (payload) => {
+  return axios.post(`${url}/sessions/${payload.id}`, payload);
 };
 
 export const getQuizData = (payload) => {
-  return axios.get(`${url}/quizzes/${payload}`).then((response) => {
-    return response;
-  })
-    .catch((error) => {
-      return error;
-    });
+  return axios.get(`${url}/quizzes/${payload}`);
 };

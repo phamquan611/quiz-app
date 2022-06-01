@@ -13,8 +13,6 @@ const getPointsUser = (state = initialState, action) => {
         points: action.payload,
         error: null,
       };
-    case userActionType.GET_POINT_QUIZZ_FAIL:
-      return initialState;
     default:
       return initialState;
   }

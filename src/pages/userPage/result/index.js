@@ -47,12 +47,12 @@ function Result({
       questionId: quest.id,
       selectedAnswerId: quest.selectedAnswer,
     }));
-    const userPoint = {
+    const userAnswers = {
       sessionId: quizzID,
       username: name,
       questions: body,
     };
-    dispatch(getPointQuizz(userPoint));
+    dispatch(getPointQuizz(userAnswers));
     setHadbeenSubmited(true);
     setDone(true);
   };

@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { url } from "@utils";
-import { getAllDataSessions, checkName } from "@actions/user.action";
-import { selectSessionsID } from "@store/slice";
+import { getAllDataSessions, checkNameExist } from "@actions/user.action";
+import { selectSessionsID, nameExist } from "@store/slice";
 import { RiErrorWarningLine } from "react-icons/ri";
 
 function Home({
@@ -20,6 +20,8 @@ function Home({
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionsStore = useSelector(selectSessionsID);
+  const nameUserExist = useSelector(nameExist);
+
 
   useEffect(() => {
     dispatch(getAllDataSessions());
@@ -49,28 +51,30 @@ function Home({
       const { timeEnd } = test[0];
       const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
-      // To do : check name
-      dispatch(checkName(quizzID));
-      history.push(`/quiz/${getQuizID}`);
-      if (timeStart > currentDate || currentDate > timeEnd) {
-        setMesWrong(true);
-        setToastMes("wrong time");
-      } else {
-        const data = await axios.post(
-          `${url}/sessions/${quizzID}`,
-          {
-            username: name,
-          },
-        );
-        if (data.data.error === "Username duplicate.") {
-          setMesWrong(true);
-          setToastMes("duplicate name");
-        } else {
-          history.push(`/quiz/${getQuizID}`);
-        }
-      }
+      const loginDetails = {
+        id: quizzID,
+        username: name,
+      };
+
+      dispatch(checkNameExist(loginDetails));
+      // if (timeStart > currentDate || currentDate > timeEnd) {
+      //   setMesWrong(true);
+      //   setToastMes("wrong time");
+      // } else {
+      //   const data = await axios.post(
+      //     `${url}/sessions/${quizzID}`,
+      //     {
+      //       username: name,
+      //     },
+      //   );
+      // }
     }
   };
+  useEffect(() => {
+    if (typeof nameUserExist !== "object") {
+      history.push(`/quiz/${nameUserExist}`);
+    }
+  }, [nameUserExist]);
 
   const handleCheckID = () => {
     setMesWrong(false);
@@ -135,13 +139,6 @@ function Home({
             Your Sessions ID is not exist. Please try different Sessions ID!!!
             </h2>
           ) }
-
-          {toastMes === "duplicate name" && (
-          <h2 className="m-auto mb-0 text-2xl text-center">
-            Your name had been exist. Please try different name !!!
-            </h2>
-          ) }
-
           {toastMes === "wrong time" && (
           <h2 className="m-auto mb-0 text-2xl text-center">
             You are connected wrong time. Please try different time !!!

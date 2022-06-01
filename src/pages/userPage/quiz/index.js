@@ -26,17 +26,16 @@ function Quiz({
   const [answers, setAnswers] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setTimeStamp(timeStamp);
-    dispatch(getDataQuizID(quizzesID));
-  }, []);
   const allquestions = useSelector(getQuestionforUser);
   const getTimeChallenge = useSelector(getTimeChallengeForUser);
+
+  useEffect(() => {
+    dispatch(getDataQuizID(quizzesID));
+  }, [quizzesID]);
   useEffect(() => {
     setQuestions(allquestions);
     setTimeStamp(getTimeChallenge);
-  });
+  }, [allquestions, getTimeChallenge]);
 
   const onSelectAnswer = (answerId) => {
     const _questions = [...questions];

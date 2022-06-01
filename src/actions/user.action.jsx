@@ -11,9 +11,9 @@ export const userActionType = {
   GET_POINT_QUIZZ_FAIL: "GET_POINT_QUIZZ_FAIL",
 
   // CHECK NAME IS AVAILABLE
-  CHECK_NAME_USER: "CHECK_NAME_USER",
-  CHECK_NAME_USER_SUCCESS: "CHECK_NAME_USER_SUCCESS",
-  CHECK_NAME_USER_FAIL: "CHECK_NAME_USER_FAIL",
+  CHECK_NAME_USER_EXIST: "CHECK_NAME_USER_EXIST",
+  CHECK_NAME_USER_EXIST_SUCCESS: "CHECK_NAME_USER_EXIST_SUCCESS",
+  CHECK_NAME_USER_EXIST_FAIL: "CHECK_NAME_USER_EXIST_FAIL",
 
   // GET DATA QUIZ ID QUESION
   GET_QUIZID_DATA: "GET_QUIZID_DATA",
@@ -57,7 +57,7 @@ export const getPointQuizzSuccess = (payload) => {
   };
 };
 
-export const getPointQuizzFAil = () => {
+export const getPointQuizzFail = () => {
   return {
     type: userActionType.GET_POINT_QUIZZ_FAIL,
   };
@@ -65,27 +65,27 @@ export const getPointQuizzFAil = () => {
 
 // CHECK NAME USER IS AVAILABLE
 
-export const checkName = (payload) => {
+export const checkNameExist = (payload) => {
   return {
-    type: userActionType.CHECK_NAME_USER,
+    type: userActionType.CHECK_NAME_USER_EXIST,
     payload,
   };
 };
 
-export const CheckNameSuccess = (payload) => {
+export const CheckNameExistSuccess = (payload) => {
   return {
-    type: userActionType.CHECK_NAME_USER_SUCCESS,
+    type: userActionType.CHECK_NAME_USER_EXIST_SUCCESS,
     payload,
   };
 };
 
-export const checkNameFail = () => {
+export const checkNameExistFail = () => {
   return {
-    type: userActionType.CHECK_NAME_USER_FAIL,
+    type: userActionType.CHECK_NAME_USER_EXIST_FAIL,
   };
 };
 
-// GET DATA FROM QUIZ ID
+// GET DATA BY QUIZ ID
 export const getDataQuizID = (payload) => {
   return {
     type: userActionType.GET_QUIZID_DATA,

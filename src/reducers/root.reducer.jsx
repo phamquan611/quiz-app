@@ -4,8 +4,8 @@ import Point from "./pointUser.reducer";
 import Admin from "./admin.reducer";
 import Sessions from "./session.reducer";
 import Quizzes from "./quiz.reducer";
-import Name from "./checkNameUser.reduce";
-import QuizData from "./quizData.reduce";
+import ID from "./checkNamExist.reducer";
+import QuizData from "./quizData.reducer";
 
 
 
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   quizzes: Quizzes,
   sessions: Sessions,
   point: Point,
-  name: Name,
+  id: ID,
   quizData: QuizData,
 });
 
