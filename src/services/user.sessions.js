@@ -23,3 +23,11 @@ export const getPointsQuiz = (payload) => {
       return error;
     });
 };
+
+export const checkNameUserExist = (payload) => {
+  return axios.post(`${url}/sessions/${payload.id}`, payload);
+};
+
+export const getQuizData = (payload) => {
+  return axios.get(`${url}/quizzes/${payload}`);
+};

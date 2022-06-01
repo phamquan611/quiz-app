@@ -29,13 +29,17 @@ function CheckQuestion({
   const nextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     setIsCheckTime(true);
+  };
+
+  const handleSubmit = () => {
+    history.push("/result");
+    if (viewAnswers === undefined) {
+      setViewAnswers(questions);
+    }
+    if (isOptionAvailable === true) {
+      setHadbeenSubmited(true);
+    }
     if (currentQuestionIndex === questions.length - 1) {
-      if (viewAnswers === undefined) {
-        setViewAnswers(questions);
-      }
-      if (isOptionAvailable === true) {
-        setHadbeenSubmited(true);
-      }
       history.push("/result");
     }
   };
@@ -46,21 +50,31 @@ function CheckQuestion({
   };
   return (
     // TO DO :  choose question when click and do prev and next btn question
-    <div className="flex m-auto pb-5">
-      <div className="m-auto">
-        <button
-          disabled={currentQuestionIndex === 0}
-          onClick={prevQuestion}
-          className={`bg-rose-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
-            currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"
-          }`}
-        >
-          Prev
-        </button>
-      </div>
-      {view === false ? (
-        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
-          {questions
+    <div className="flex m-auto pb-10 flex-col">
+
+      <button
+        className="m-auto bg-green-600 py-3 px-4 rounded-xl text-[20px] shadow-2xl text-white mb-[10px]"
+        onClick={handleSubmit}
+      >
+        {isOptionAvailable === false ? "Submit" : "Next"}
+      </button>
+
+
+      <div className="flex">
+        <div className="m-auto">
+          <button
+            disabled={currentQuestionIndex === 0}
+            onClick={prevQuestion}
+            className={`bg-rose-600 py-3 px-4 rounded-xl text-[20px] shadow-2xl text-white mr-[10px] ${
+              currentQuestionIndex === 0 && "bg-slate-300 text-slate-500"
+            }`}
+          >
+            <TiChevronLeftOutline />
+          </button>
+        </div>
+        {view === false ? (
+          <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
+            {questions
           &&            questions.map((item, index) => (
             <i
               className="flex justify-center items-center"
@@ -68,17 +82,17 @@ function CheckQuestion({
               key={index}
             >
               {questions[index].selectedAnswer === undefined ? (
-                <BsLightbulb className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
+                <BsLightbulb className="w-[40px] h-[40px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative " />
               ) : (
-                <BsLightbulbFill className="w-[50px] h-[50px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative" />
+                <BsLightbulbFill className="w-[40px] h-[40px] lg:w-[45px] lg:h-[45px] text-yellow-300 relative " />
               )}
-              <p className="ques-item not-italic absolute">{index + 1}</p>
+              <p className="ques-item not-italic absolute cursor-pointer">{index + 1}</p>
             </i>
           ))}
-        </div>
-      ) : (
-        <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
-          {questions
+          </div>
+        ) : (
+          <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
+            {questions
             && questions.map((item, index) => (
               <i
                 className="flex justify-center items-center"
@@ -86,25 +100,26 @@ function CheckQuestion({
                 key={index}
               >
                 {viewAnswers[index].selectedAnswer === undefined ? (
-                  <BsLightbulb className="w-[50px] h-[50px] lg:w-[42px] lg:h-[42px] text-yellow-300 relative" />
+                  <BsLightbulb className="w-[40px] h-[40px] lg:w-[42px] lg:h-[42px] text-yellow-300 relative " />
                 ) : (
-                  <BsLightbulbFill className="w-[50px] h-[50px] lg:w-[42px] lg:h-[42px] text-yellow-300 relative" />
+                  <BsLightbulbFill className="w-[40px] h-[40px] lg:w-[42px] lg:h-[42px] text-yellow-300 relative " />
                 )}
-                <p className="ques-item not-italic absolute">{index + 1}</p>
+                <p className="ques-item not-italic absolute cursor-pointer">{index + 1}</p>
               </i>
             ))}
+          </div>
+        )}
+        <div className="m-auto">
+          <button
+            onClick={nextQuestion}
+            disabled={currentQuestionIndex === questions.length - 1}
+            className={`py-3 px-4 rounded-xl text-[20px] shadow-2xl text-white ml-[10px] ${
+              currentQuestionIndex === questions.length - 1 ? "bg-slate-300 text-slate-500" : "bg-green-600"
+            }`}
+          >
+            <TiChevronRightOutline />
+          </button>
         </div>
-      )}
-      <div className="m-auto">
-        <button
-          onClick={nextQuestion}
-          className="bg-green-600 py-3.5 px-7 rounded-xl text-[20px] shadow-2xl ml-[10px]  text-white"
-        >
-          {currentQuestionIndex === questions.length - 1
-          && isOptionAvailable === false
-            ? "Submit"
-            : "Next"}
-        </button>
       </div>
     </div>
   );

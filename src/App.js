@@ -57,7 +57,6 @@ function App() {
           <Route path="/result">
             <Result
               quizzesID={quizzesID}
-              setIsOptionAvailable={setIsOptionAvailable}
               setIsCheckTime={setIsCheckTime}
               name={name}
               quizzID={quizzID}
@@ -65,6 +64,7 @@ function App() {
               setViewAnswers={setViewAnswers}
               setView={setView}
               isOptionAvailable={isOptionAvailable}
+              setIsOptionAvailable={setIsOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
               setHadbeenSubmited={setHadbeenSubmited}
             />

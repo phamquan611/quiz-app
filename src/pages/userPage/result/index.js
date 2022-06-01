@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable max-len */
@@ -6,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { getPointQuizz } from "@actions/user.action";
 import { useDispatch, useSelector } from "react-redux";
 import { getPointUser } from "@store/slice";
+import { BsCheckCircle } from "react-icons/bs";
 
 function Result({
   quizzesID,
@@ -30,6 +32,7 @@ function Result({
     setView(true);
     setIsCheckTime(true);
   };
+
   const handleSubmit = () => {
     setIsSubmitting(true);
     if (isSubmited === true) {
@@ -37,32 +40,26 @@ function Result({
     }
   };
 
-  const handleCheckdone = async () => {
+  const handleCheckdone = () => {
     setIsSubmitting(false);
     setisSubmitted(true);
     const body = viewAnswers.map((quest) => ({
       questionId: quest.id,
       selectedAnswerId: quest.selectedAnswer,
     }));
-    const userPoint = {
+    const userAnswers = {
       sessionId: quizzID,
       username: name,
       questions: body,
     };
-    dispatch(getPointQuizz(userPoint));
-    // const data = await axios
-    //   .post(`${url}/result`, {
-    //     sessionId: quizzID,
-    //     username: name,
-    //     questions: body,
-    //   });
-    // setResult(data.data.result);
-    setDone(true);
+    dispatch(getPointQuizz(userAnswers));
     setHadbeenSubmited(true);
+    setDone(true);
   };
 
   const handleChecknone = () => {
     setIsSubmitting(false);
+    setIsOptionAvailable(false);
   };
   const checkSubmit = () => {
     setDone(false);
@@ -77,14 +74,14 @@ function Result({
         <div className="flex justify-center ">
           <button
             onClick={handleView}
-            className="shadow-inner text-white mr-[40px] lg:w-[10%] 2xl:w-[8%] bg-rose-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
+            className="shadow-inner text-white mr-[20px] lg:w-[9%] 2xl:w-[6%] bg-rose-600 py-3 rounded-xl text-[18px] xl:w-[9%]"
           >
             View
           </button>
           {hadbeenSubmited === false && (
           <button
             onClick={handleSubmit}
-            className="shadow-inner text-white ml-[40px] lg:w-[10%] 2xl:w-[8%] bg-green-600 py-4 rounded-xl text-[20px] xl:w-[9%]"
+            className="shadow-inner text-white ml-[20px] lg:w-[9%] 2xl:w-[6%] bg-green-600 py-3 rounded-xl text-[18px] xl:w-[9%]"
           >
             Submit
           </button>
@@ -93,19 +90,19 @@ function Result({
       </div>
       {isSubmitting === true && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-auto opacity-1 bg-white opacity-100 w-[400px] h-[400px] rounded-xl text-[#000] flex  flex-col modal-container">
-            <h2 className="m-auto text-4xl text-center">
-              Gửi bài của bạn nha ?
+          <div className="m-auto opacity-1 bg-white opacity-100 w-[300px] h-[300px] rounded-xl text-[#000] flex  flex-col modal-container">
+            <h2 className="m-auto mb-0 text-3xl text-center">
+              Send your answer ?
             </h2>
             <div className="m-auto flex justify-between">
               <button
-                className="p-4 text-white text-[20px] bg-green-500 rounded-xl mr-[20px] px-9 "
+                className="p-3 text-white text-[18px] bg-green-500 rounded-xl mr-[20px] px-7 "
                 onClick={handleCheckdone}
               >
                 Oke
               </button>
               <button
-                className="p-4 text-white text-[20px] bg-red-600 rounded-xl ml-[20px] px-9"
+                className="p-3 text-white text-[18px] bg-red-600 rounded-xl ml-[20px] px-7"
                 onClick={handleChecknone}
               >
                 No
@@ -114,22 +111,26 @@ function Result({
           </div>
         </div>
       )}
-      {isDone && (
+      {isDone && userResult !== undefined && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-auto opacity-1 bg-white opacity-100 w-[600px] h-[400px] rounded-xl text-[#000] flex flex-col modal-container">
-            <h2 className="m-auto text-5xl text-center px-[20px]">
-              Câu trả lời của bạn đã được lưu lại !!!
+          <div className="m-auto opacity-1 bg-white opacity-100 w-[450px] h-[350px] rounded-xl text-[#000] flex flex-col modal-container">
+            <BsCheckCircle className="text-6xl m-auto mb-0 text-green-500" />
+            <h2 className="text-3xl text-center mt-4 mb-0 ">
+              Success !
             </h2>
-            <h2 className="m-auto text-5xl text-center">
-              Điểm của bạn là : 
+            <h2 className="text-xl text-center mt-4 mb-0">
+              Your answer have been save. 
+            </h2>
+            <h2 className="mt-4 mb-0 text-2xl text-center">
+              Your result is : 
               {userResult}
               /100
             </h2>
             <button
-              className="m-auto text-white p-4 text-[20px] bg-green-500 rounded-xl px-4 "
+              className="m-auto mt-6 text-white py-3.5 text-[16px] bg-green-500 rounded-xl px-2.5 "
               onClick={checkSubmit}
             >
-              OKE NHA !
+              OKE THANKS!
             </button>
           </div>
         </div>

@@ -7,3 +7,9 @@ export const selectAdmin = (state) => state.admin;
 export const selectSessionsID = (state) => state.user;
 
 export const getPointUser = (state) => state.point.points.result;
+
+export const getQuestionforUser = (state) => state.quizData.questions;
+
+export const getTimeChallengeForUser = (state) => state.quizData.timeChangllenge;
+
+export const nameExist = (state) => state.id;

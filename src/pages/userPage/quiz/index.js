@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Question from "@components/userQuestion";
 import CheckQuestion from "@components/userQuestionCheck";
-import { url } from "@utils";
+import { getDataQuizID } from "@actions/user.action";
+import { getQuestionforUser, getTimeChallengeForUser } from "@store/slice";
 // import NotFound from "../404Page";
 
 function Quiz({
@@ -25,14 +25,17 @@ function Quiz({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const allquestions = useSelector(getQuestionforUser);
+  const getTimeChallenge = useSelector(getTimeChallengeForUser);
 
   useEffect(() => {
-    setTimeStamp(timeStamp);
-    axios.get(`${url}/quizzes/${quizzesID}`).then((res) => {
-      setQuestions(res.data?.questions);
-      setTimeStamp(res.data?.timeChangllenge);
-    });
-  }, []);
+    dispatch(getDataQuizID(quizzesID));
+  }, [quizzesID]);
+  useEffect(() => {
+    setQuestions(allquestions);
+    setTimeStamp(getTimeChallenge);
+  }, [allquestions, getTimeChallenge]);
 
   const onSelectAnswer = (answerId) => {
     const _questions = [...questions];

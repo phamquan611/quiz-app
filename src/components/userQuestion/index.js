@@ -103,8 +103,8 @@ function Question({
   return (
   // TO DO : pick question
 
-    <div className=" m-auto w-7/12">
-      <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500 m-auto">
+    <div className=" m-auto 2xl:w-7/12 lg:w-[66.33%]">
+      <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500 m-auto w-11/12">
         <h2 className="text-rose-600">{timer}</h2>
         <p className="pb-[10px]">
           Question :
@@ -123,7 +123,7 @@ function Question({
                     key={id}
                     disabled={isOptionAvailable === true}
                     className={
-                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-auto  ${isOptionAvailable === true && "bg-gray-200 text-slate-600"} ${
+                      ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-5/12 m-auto  ${isOptionAvailable && "bg-gray-200 text-slate-600"} ${
                         viewAnswers[currentQuestionIndex].selectedAnswer === id
                         && "bg-indigo-900 text-white chosse-option"
                       }`
@@ -143,7 +143,7 @@ function Question({
             key={id}
             // disabled={isOptionAvailable === true}
             className={
-              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-[48%] m-auto ${isOptionAvailable === true && "bg-gray-200 text-slate-400"} ${
+              ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-5/12 m-auto ${isOptionAvailable && "bg-gray-200 text-slate-400"} ${
                 questions[currentQuestionIndex].selectedAnswer === id
                 && "bg-indigo-900 chosse-option"
               }`
