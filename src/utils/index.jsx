@@ -55,8 +55,11 @@ export const convertHourToTimeStamp = (date, hour) => {
   return +new Date(hourInDate);
 };
 
-export const checkTypeObject = (ob) => {
-  return typeof ob === "object" && ob !== null;
+export const checkObject = (ob) => {
+  if (typeof ob === "object" && Object.keys(ob).length !== 0) {
+    return ob;
+  }
+  return false;
 };
 
 export const url = "https://quiz-app-wind-remake.herokuapp.com";
@@ -173,6 +176,19 @@ export const formTimeChallenge = [
     text: "15:00",
   },
 ];
+
+export const checkDuplicateAnswer = (answers) => {
+  const listAnswers = answers.map((answer) => answer.content);
+  const findDuplicate = (arr) => arr.filter((item, index) => {
+    console.log(arr.indexOf(item));
+    return arr.indexOf(item) !== index;
+  });
+  // return array element duplicate
+  if (findDuplicate(listAnswers).length === 0) {
+    return false;
+  }
+  return true;
+};
 
 
 // export const covertDataTable
