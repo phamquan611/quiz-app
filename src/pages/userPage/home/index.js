@@ -129,12 +129,12 @@ function Home({
       <div className="fixed inset-0 bg-black w-full flex bg-[#779eca]">
         <div className="m-auto opacity-1 bg-white opacity-100 w-[350px] h-[300px] rounded-xl text-[#000] flex  flex-col modal-container">
           <IoIosCloseCircle className="text-6xl m-auto mb-6 mt-9 text-rose-700" />
-          {toastMes === "wrong ID" && (
+          {toastMes === WRONG_ID_MSG && (
           <h2 className="m-auto my-0 text-xl px-5 text-center">
             Your Sessions ID is not exist. Please try different Sessions ID!!!
             </h2>
           ) }
-          {toastMes === "wrong time" && (
+          {toastMes === WRONG_TIME_MSG && (
           <h2 className="m-auto my-0 text-xl px-2.5 text-center">
             You are connected wrong time. Please try different time !!!
             </h2>

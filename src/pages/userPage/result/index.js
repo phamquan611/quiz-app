@@ -59,7 +59,7 @@ function Result({
     dispatch(getPointQuizz(userAnswers));
     setHadbeenSubmited(true);
     setDone(true);
-    if (isDone) {
+    if (isDone === true) {
       setIsLoading(false);
     }
   };

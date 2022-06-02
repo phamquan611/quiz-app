@@ -90,7 +90,7 @@ function Question({
         && handleShuffle([...questions[currentQuestionIndex].answers]),
     );
     clearTimer(getDeadTime());
-  }, [answers]);
+  }, [currentQuestionIndex]);
   const handleSelectAnswer = (id) => {
     onSelectAnswer(id);
     setIsCheckTime(true);
