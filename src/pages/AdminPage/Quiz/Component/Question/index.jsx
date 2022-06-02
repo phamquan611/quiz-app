@@ -26,10 +26,8 @@ export default function Question(props) {
     question,
     index,
     newQuestion,
-    totalQuestionEditing,
     deleteQuestionWithId,
     updateQuestionToQuiz,
-    setTotalQuestionEditing,
   } = props;
 
   const [defaultQuestion, setDefaultQuestion] = useState(
@@ -40,9 +38,6 @@ export default function Question(props) {
   const [isNewQuestion, setNewQuestion] = useState(newQuestion);
 
   const selectCorrectAnswer = (id) => {
-    if (!isChange || !isNewQuestion) {
-      setTotalQuestionEditing(totalQuestionEditing + 1);
-    }
     setIsChange(true);
     setDefaultQuestion({ ...defaultQuestion, correct_answer: id });
   };
@@ -81,7 +76,6 @@ export default function Question(props) {
       setIsChange(null);
       setIsEditQuestion(false);
       setNewQuestion(false);
-      setTotalQuestionEditing(totalQuestionEditing - 1);
     }
   };
 
@@ -96,7 +90,6 @@ export default function Question(props) {
       });
       setIsEditQuestion(false);
       setNewQuestion(false);
-      setTotalQuestionEditing(totalQuestionEditing - 1);
     }
   };
 
@@ -124,9 +117,6 @@ export default function Question(props) {
   };
 
   const editQuestion = () => {
-    if (!isChange || !isNewQuestion) {
-      setTotalQuestionEditing(totalQuestionEditing + 1);
-    }
     setIsChange(true);
     setIsEditQuestion(true);
   };

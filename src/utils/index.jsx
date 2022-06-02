@@ -1,5 +1,7 @@
 import moment from "moment";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { nanoid } from "nanoid";
 
 export const IDEA = [
   "A",
@@ -202,5 +204,33 @@ export const checkDuplicateAnswer = (answers) => {
   return true;
 };
 
+export const createNewQuestion = (newId) => {
+  return {
+    id: newId,
+    content: "",
+    answers: [
+      {
+        id: nanoid(),
+        content: "",
+      },
+      {
+        id: nanoid(),
+        content: "",
+      },
+    ],
+    correct_answer: null,
+    isNewQuestion: true,
+    editing: true,
+  };
+};
+
+export const triggerAlert = (message) => {
+  return Swal.fire(({
+    title: message,
+    showDenyButton: true,
+    confirmButtonText: "YES",
+    denyButtonText: "NO",
+  }));
+};
 
 // export const covertDataTable

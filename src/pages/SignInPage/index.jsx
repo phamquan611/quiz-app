@@ -88,7 +88,7 @@ const SignInPage = () => {
       <form className="w-full h-full mt-20" onSubmit={formik.handleSubmit}>
         <div className="mx-auto text-center font-bold text-2xl">
           Sign in with
-          <b className="text-[#50d71e]">PQ Quizz!!!</b>
+          <span className="text-[#50d71e]">PQ Quizz!!!</span>
         </div>
         {/* alert message error account or password */}
         {alertValidation(errors, touched)}

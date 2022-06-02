@@ -96,7 +96,7 @@ function Session() {
       <div>
         <div className="w-[500px] flex mb-[20px]">
           <label htmlFor="time-start" className="mr-[20px]  min-w-[130px]">
-            <b className="font-bold">Quiz Category : </b>
+            <span className="font-bold">Quiz Category : </span>
           </label>
           <select
             className="appearance-none font-bold px-[10px] py-[7px] flex-1 border border-2 border-[black] rounded-[5px]"
@@ -113,7 +113,7 @@ function Session() {
         </div>
         <div className="w-[500px] flex mb-[20px]">
           <label htmlFor="date" className="mr-[20px] min-w-[130px]">
-            <b className="font-bold ">Date : </b>
+            <span className="font-bold ">Date : </span>
           </label>
           <input
             type="date"
@@ -126,7 +126,7 @@ function Session() {
         </div>
         <div className="w-[500px] flex mb-[20px]">
           <label htmlFor="timeStart" className="mr-[20px] min-w-[130px]">
-            <b className="font-bold ">Time start : </b>
+            <span className="font-bold ">Time start : </span>
           </label>
           <input
             type="time"
@@ -139,7 +139,7 @@ function Session() {
         </div>
         <div className="w-[500px] flex mb-[20px]">
           <label htmlFor="timeEnd" className="mr-[20px] min-w-[130px]">
-            <b className="font-bold ">Time end : </b>
+            <span className="font-bold ">Time end : </span>
           </label>
           <input
             type="time"

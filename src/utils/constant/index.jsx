@@ -1,4 +1,4 @@
-export const NUM_MIN_QUESTION_A_QUIZ = 3;
+export const MIN_QUESTION_PER_QUIZ = 3;
 export const NUM_CORRECT_ANSWER_A_QUESTION = 1;
 export const MIN_ANSWER_PER_QUESTION = 2;
 export const MAX_ANSWER_PER_QUESTION = 4;

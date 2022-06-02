@@ -7,9 +7,9 @@ import Question from "@pages/AdminPage/Quiz/Component/Question";
 import { selectQuizzes } from "@store/slice";
 import { getQuizzes, putQuiz } from "@actions/quiz.action";
 import {
-  NUM_MIN_QUESTION_A_QUIZ,
+  MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
-import { formTimeChallenge } from "@utils";
+import { formTimeChallenge, createNewQuestion, triggerAlert } from "@utils";
 
 import { nanoid } from "nanoid";
 
@@ -18,7 +18,6 @@ export default function Quiz() {
   const dispatch = useDispatch();
   const history = useHistory();
   const listQuiz = useSelector(selectQuizzes);
-  const [totalQuestionEditing, setTotalQuestionEditing] = useState(0);
   const [quiz, setQuiz] = useState(null);
   const timeChallenge = useRef();
 
@@ -42,15 +41,10 @@ export default function Quiz() {
   // function delete question
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
     let { questions } = quiz;
-    if (questions.length <= NUM_MIN_QUESTION_A_QUIZ) {
+    if (questions.length <= MIN_QUESTION_PER_QUIZ) {
       return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
     }
-    Swal.fire({
-      title: `Are you sure delete question ${indexQuestion + 1}`,
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
         return setQuiz({ ...quiz, questions });
@@ -65,12 +59,7 @@ export default function Quiz() {
       data: quiz,
     };
 
-    Swal.fire({
-      title: "Are you sure update quiz ?",
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert("Are you sure update quiz ?").then((result) => {
       if (result.isConfirmed) {
         dispatch(putQuiz(payload));
       }
@@ -90,29 +79,11 @@ export default function Quiz() {
   };
 
   const addQuestion = () => {
-    const id = nanoid();
-
-    const newQuestion = {
-      id,
-      content: "",
-      answers: [
-        {
-          id: nanoid(),
-          content: "",
-        },
-        {
-          id: nanoid(),
-          content: "",
-        },
-      ],
-      correct_answer: null,
-      isNewQuestion: true,
-    };
-    setTotalQuestionEditing(totalQuestionEditing + 1);
     const { questions } = quiz;
-    questions.push(newQuestion);
+    questions.push(createNewQuestion(nanoid()));
     setQuiz({ ...quiz, questions });
   };
+
   const handleChangeQuizName = (e) => {
     setQuiz({ ...quiz, category: e.target.value });
   };
@@ -134,7 +105,7 @@ export default function Quiz() {
               </div>
               <div className="my-5 flex">
                 <label htmlFor="timeChallenge" className="w-label mt-2">
-                  <b className="font-bold">Time challenge : </b>
+                  <span className="font-bold">Time challenge : </span>
                 </label>
                 <select
                   name="timeChallenge"
@@ -168,8 +139,6 @@ export default function Quiz() {
                       deleteQuestionWithId={deleteQuestionWithId}
                       updateQuestionToQuiz={updateQuestionToQuiz}
                       newQuestion={question.isNewQuestion}
-                      setTotalQuestionEditing={setTotalQuestionEditing}
-                      totalQuestionEditing={totalQuestionEditing}
                     />
                   );
                 })}
@@ -182,7 +151,7 @@ export default function Quiz() {
             </div>
           </div>
           <div className="text-center my-7">
-            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${totalQuestionEditing !== 0 && "bg-danger-color"}`} onClick={upDateQUiz} disabled={totalQuestionEditing !== 0}>
+            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${false !== 0 && "bg-danger-color"}`} onClick={upDateQUiz} disabled={false}>
               Update Quiz
             </button>
           </div>

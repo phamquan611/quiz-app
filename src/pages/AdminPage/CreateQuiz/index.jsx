@@ -5,30 +5,24 @@ import Loading from "@pages/AdminPage/Loading";
 import Question from "@pages/AdminPage/Quiz/Component/Question";
 import { postQuiz } from "@actions/quiz.action";
 import {
-  NUM_MIN_QUESTION_A_QUIZ,
+  MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
-import { formTimeChallenge } from "@utils";
+import { formTimeChallenge, triggerAlert } from "@utils";
 
 import { nanoid } from "nanoid";
 
 export default function CreateQuiz() {
   const dispatch = useDispatch();
-  const [totalQuestionEditing, setTotalQuestionEditing] = useState(0);
   const [quiz, setQuiz] = useState({ category: "", questions: [], timeChangllenge: 0 });
   const timeChallenge = useRef();
 
   // function delete question
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
     let { questions } = quiz;
-    if (questions.length <= NUM_MIN_QUESTION_A_QUIZ) {
+    if (questions.length <= MIN_QUESTION_PER_QUIZ) {
       return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
     }
-    Swal.fire({
-      title: `Are you sure delete question ${indexQuestion + 1}`,
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
         return setQuiz({ ...quiz, questions });
@@ -38,12 +32,7 @@ export default function CreateQuiz() {
 
   // function update quiz
   const createQuiz = () => {
-    Swal.fire({
-      title: "Are you sure create quiz ?",
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert("Are you sure, you want create quiz ?").then((result) => {
       if (result.isConfirmed) {
         dispatch(postQuiz(quiz));
       }
@@ -81,7 +70,6 @@ export default function CreateQuiz() {
       correct_answer: null,
       isNewQuestion: true,
     };
-    setTotalQuestionEditing(totalQuestionEditing + 1);
     const { questions } = quiz;
     questions.push(newQuestion);
     setQuiz({ ...quiz, questions });
@@ -94,7 +82,6 @@ export default function CreateQuiz() {
     const currentTimeChallenge = timeChallenge.current;
     setQuiz({ ...quiz, timeChangllenge: currentTimeChallenge.value });
   };
-  console.log(totalQuestionEditing);
   return (
     <div className="p-[50px]">
       {quiz ? (
@@ -107,7 +94,7 @@ export default function CreateQuiz() {
               </div>
               <div className="my-5 flex">
                 <label htmlFor="timeChallenge" className="w-label mt-2">
-                  <b className="font-bold">Time challenge : </b>
+                  <span className="font-bold">Time challenge : </span>
                 </label>
                 <select
                   name="timeChallenge"
@@ -141,8 +128,6 @@ export default function CreateQuiz() {
                       deleteQuestionWithId={deleteQuestionWithId}
                       updateQuestionToQuiz={updateQuestionToQuiz}
                       newQuestion={question.isNewQuestion}
-                      setTotalQuestionEditing={setTotalQuestionEditing}
-                      totalQuestionEditing={totalQuestionEditing}
                     />
                   );
                 })}
@@ -154,9 +139,9 @@ export default function CreateQuiz() {
               </div>
             </div>
           </div>
-          {quiz.questions.length >= NUM_MIN_QUESTION_A_QUIZ && (
+          {quiz.questions.length >= MIN_QUESTION_PER_QUIZ && (
           <div className="text-center my-7">
-            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${totalQuestionEditing !== 0 && "bg-danger-color"}`} onClick={createQuiz}>
+            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${false !== 0 && "bg-danger-color"}`} onClick={createQuiz}>
               Create Quiz
             </button>
           </div>
