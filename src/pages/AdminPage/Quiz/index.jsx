@@ -9,6 +9,7 @@ import { getQuizzes, putQuiz } from "@actions/quiz.action";
 import {
   NUM_MIN_QUESTION_A_QUIZ,
 } from "@utils/constant";
+import { nanoid } from "nanoid";
 
 export default function QuizWithId() {
   const params = useParams();
@@ -73,27 +74,68 @@ export default function QuizWithId() {
     });
   };
 
+  const updateQuestionToQuiz = (questionUpdated) => {
+    const { id } = questionUpdated;
+    const { questions } = quiz;
+    const newListQuestion = questions.map((question) => {
+      if (question.id === id) {
+        return questionUpdated;
+      }
+      return question;
+    });
+    setQuiz({ ...quiz, questions: newListQuestion });
+  };
+
+  const addQuestion = () => {
+    const id = nanoid();
+
+    const newQuestion = {
+      id,
+      content: "I'm question, please edit me .",
+      answers: [
+        {
+          id: nanoid(),
+          content: "Edit me.",
+        },
+        {
+          id: nanoid(),
+          content: "Edit me.",
+        },
+      ],
+      correct_answer: null,
+      isNewQuestion: true,
+    };
+    const { questions } = quiz;
+    questions.push(newQuestion);
+    setQuiz({ ...quiz, questions });
+  };
+
   return (
     <div className="p-[50px]">
       {quiz ? (
         <>
-          <div className="text-2xl font-bold">
+          <div className="text-2xl font-bold text-center">
             {`Quiz Name : ${quiz.category}`}
           </div>
           <div className="flex pt-[30px] justify-center">
             <div className="list-question text-center px-[20px] text-[18px] py-10 bg-[#f1f1f1]">
               {quiz.questions.map((question, index) => {
-                const correctAnswerId = question.correct_answer;
                 return (
                   <Question
                     question={question}
-                    correctAnswerId={correctAnswerId}
                     index={index}
                     key={question.id}
                     deleteQuestionWithId={deleteQuestionWithId}
+                    updateQuestionToQuiz={updateQuestionToQuiz}
+                    newQuestion={question.isNewQuestion}
                   />
                 );
               })}
+              <div className="text-left">
+                <button className="bg-[#13a7e9] p-2 text-[17px] text-[#f1f1f1] rounded-[4px]" onClick={addQuestion}>
+                  Add question
+                </button>
+              </div>
             </div>
           </div>
           <div className="text-center my-7">

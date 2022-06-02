@@ -6,3 +6,4 @@ export const MAX_ANSWER_PER_QUESTION_ALERT = "A Question has a maximum of 4 answ
 export const MIN_ANSWER_PER_QUESTION_ALERT = "AQuestion has a minimum of 2 answers";
 export const DELETE_CORRECT_ANSWER_ALERT = "You cant delete correct answer .";
 export const CHOOSE_CORRECT_ANSWER_INDEX = "CHOOSE_CORRECT_ANSWER_INDEX";
+export const DUPLICATE_ANSWER_ALERT = "A question can't have the same answer";
