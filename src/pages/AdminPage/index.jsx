@@ -8,7 +8,7 @@ import { adminSignOut } from "@actions/admin.action";
 import { LOCAL_ACCESS_TOKEN } from "@utils";
 import Session from "@pages/AdminPage/Session";
 import HomeAdmin from "@pages/AdminPage/Home";
-import QuizWithId from "@pages/AdminPage/Quiz";
+import Quiz from "@pages/AdminPage/Quiz";
 import CreateQuiz from "@pages/AdminPage/CreateQuiz";
 import Participants from "@pages/AdminPage/Participants";
 
@@ -79,7 +79,7 @@ const AdminPage = () => {
           <Route
             exact
             path="/admin/quiz/:quizId"
-            component={QuizWithId}
+            component={Quiz}
           />
           <Route exact path="/admin/session" component={Session} />
         </Switch>

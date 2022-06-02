@@ -25,7 +25,7 @@ export const validationEmail = (email) => {
 };
 
 export const displayErrorMessage = (errorMessage) => {
-  return <div className="text-[red] text-center mt-2">{errorMessage}</div>;
+  return <div className="text-danger-color text-center mt-2">{errorMessage}</div>;
 };
 
 export const getTimeStamp = (time) => {
@@ -75,10 +75,10 @@ const EXPIRES_STATUS = "Expires";
 
 const setClassStatus = (text) => {
   return text === WAITING_STATUS
-    ? "text-[green]"
+    ? "text-main-color"
     : text === HAPPENING_STATUS
       ? "text-[blue]"
-      : "text-[red]";
+      : "text-danger-color";
 };
 // table header session
 export const COLUMNS_SESSION_TABLE = [
@@ -156,23 +156,36 @@ export const convertSessionsToView = (sessions) => {
     };
   });
 };
-export const checkEmptyString = (string) => {
+export const isBlank = (str) => {
   const regexCheckSpaceString = /^\s*$/;
-  const isSpaceString = regexCheckSpaceString.test(string);
+  const isSpaceString = regexCheckSpaceString.test(str);
   return isSpaceString;
+};
+
+export const checkElementEmpty = (arr) => {
+  let isEmpty = false;
+  if (!Array.isArray(arr)) {
+    isEmpty = true;
+  } else {
+    const listEmptyOfArray = arr.filter((el) => isBlank(el.content));
+    if (listEmptyOfArray.length !== 0) {
+      isEmpty = true;
+    }
+  }
+  return isEmpty;
 };
 
 export const formTimeChallenge = [
   {
-    value: 5,
+    value: 30000,
     text: "05:00",
   },
   {
-    value: 10,
+    value: 60000,
     text: "10:00",
   },
   {
-    value: 15,
+    value: 90000,
     text: "15:00",
   },
 ];
@@ -180,7 +193,6 @@ export const formTimeChallenge = [
 export const checkDuplicateAnswer = (answers) => {
   const listAnswers = answers.map((answer) => answer.content);
   const findDuplicate = (arr) => arr.filter((item, index) => {
-    console.log(arr.indexOf(item));
     return arr.indexOf(item) !== index;
   });
   // return array element duplicate
