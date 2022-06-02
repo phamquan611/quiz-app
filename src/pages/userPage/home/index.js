@@ -8,10 +8,10 @@ import axios from "axios";
 import { url } from "@utils";
 import { getAllDataSessions, checkNameExist } from "@actions/user.action";
 import { selectSessionsID, nameExist } from "@store/slice";
-import { RiErrorWarningLine } from "react-icons/ri";
+import { IoIosCloseCircle } from "react-icons/io";
 
 function Home({
-  quizzesID, setQuizzesID, name, setName, quizzID, setQuizzID,
+  setQuizzesID, name, setName, quizzID, setQuizzID,
 }) {
   const [isError, setIsError] = useState(false);
   const [checkID, setCheckID] = useState();
@@ -49,25 +49,18 @@ function Home({
     } else if (quizzID === test[0]._id) {
       const { timeStart } = test[0];
       const { timeEnd } = test[0];
-      const getQuizID = test[0].quizId;
       setQuizzesID(test[0].quizId);
       const loginDetails = {
         id: quizzID,
         username: name,
       };
 
-      dispatch(checkNameExist(loginDetails));
-      // if (timeStart > currentDate || currentDate > timeEnd) {
-      //   setMesWrong(true);
-      //   setToastMes("wrong time");
-      // } else {
-      //   const data = await axios.post(
-      //     `${url}/sessions/${quizzID}`,
-      //     {
-      //       username: name,
-      //     },
-      //   );
-      // }
+      if (timeStart > currentDate || currentDate > timeEnd) {
+        setMesWrong(true);
+        setToastMes("wrong time");
+      } else {
+        dispatch(checkNameExist(loginDetails));
+      }
     }
   };
   useEffect(() => {
@@ -85,7 +78,7 @@ function Home({
     <div className="bg-home flex">
       <div className="container 2xl m-auto flex flex-col bg-white w-[500px] py-20 shadow-2xl rounded-lg home">
         <h2 className="text-[30px] m-auto">Welcome to my Quiz</h2>
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <label className="block w-4/5 m-auto p-5 ">
             <span className="text-lg after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
               Your Username
@@ -123,7 +116,7 @@ function Home({
           <button
             type="button"
             onClick={handleSubmit}
-            className="m-auto rounded-2xl text-base font-bold shadow-lg px-3 py-3.5 bg-[#93d0de]"
+            className="m-auto rounded-2xl text-base font-bold shadow-lg px-5 py-3 bg-[#93d0de]"
             to="/quiz"
           >
             Let's Start
@@ -133,23 +126,23 @@ function Home({
       {mesWrong && (
       <div className="fixed inset-0 bg-black w-full flex bg-[#779eca]">
         <div className="m-auto opacity-1 bg-white opacity-100 w-[350px] h-[300px] rounded-xl text-[#000] flex  flex-col modal-container">
-          <RiErrorWarningLine className="text-6xl m-auto mb-6 mt-9 text-rose-700" />
+          <IoIosCloseCircle className="text-6xl m-auto mb-6 mt-9 text-rose-700" />
           {toastMes === "wrong ID" && (
           <h2 className="m-auto my-0 text-xl px-5 text-center">
             Your Sessions ID is not exist. Please try different Sessions ID!!!
             </h2>
           ) }
           {toastMes === "wrong time" && (
-          <h2 className="m-auto mb-0 text-2xl text-center">
+          <h2 className="m-auto my-0 text-xl px-2.5 text-center">
             You are connected wrong time. Please try different time !!!
             </h2>
           ) }
 
           <button
-            className="m-auto mt-6 text-white p-3 text-[16px] bg-green-500 rounded-xl "
+            className="m-auto mt-6 text-white py-2.5 px-5 text-[16px] bg-green-500 rounded-lg "
             onClick={handleCheckID}
           >
-            OKE !!!
+            OK
           </button>
         </div>
       </div>

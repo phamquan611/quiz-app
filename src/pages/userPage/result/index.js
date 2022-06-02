@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/jsx-indent */
 /* eslint-disable no-const-assign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-trailing-spaces */
@@ -23,6 +25,7 @@ function Result({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmited, setisSubmitted] = useState(true);
   const [isDone, setDone] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const userResult = useSelector(getPointUser);
@@ -43,6 +46,7 @@ function Result({
   const handleCheckdone = () => {
     setIsSubmitting(false);
     setisSubmitted(true);
+    setIsLoading(true);
     const body = viewAnswers.map((quest) => ({
       questionId: quest.id,
       selectedAnswerId: quest.selectedAnswer,
@@ -55,6 +59,9 @@ function Result({
     dispatch(getPointQuizz(userAnswers));
     setHadbeenSubmited(true);
     setDone(true);
+    if (isDone === true) {
+      setIsLoading(false);
+    }
   };
 
   const handleChecknone = () => {
@@ -66,22 +73,23 @@ function Result({
   };
   return (
     // TO DO : axios post and view answer , disable option answer when choose submit
+    <>
     <div className="bg-result">
       <div className="container m-auto">
         <div className=" w-[30%] rounded-lg  m-auto py-4 text-center text-[25px] mb-[20px]  ">
-          <h2>Your test is done !!!</h2>
+          <h2 className="text-white">Your test is done !!!</h2>
         </div>
         <div className="flex justify-center ">
           <button
             onClick={handleView}
-            className="shadow-inner text-white mr-[20px] lg:w-[9%] 2xl:w-[6%] bg-rose-600 py-3 rounded-xl text-[18px] xl:w-[9%]"
+            className="shadow-inner text-white mr-[20px] lg:w-[9%] 2xl:w-[6%] bg-rose-600 py-3 rounded-xl text-[18px] xl:w-[7%] btn"
           >
             View
           </button>
           {hadbeenSubmited === false && (
           <button
             onClick={handleSubmit}
-            className="shadow-inner text-white ml-[20px] lg:w-[9%] 2xl:w-[6%] bg-green-600 py-3 rounded-xl text-[18px] xl:w-[9%]"
+            className="shadow-inner text-white ml-[20px] lg:w-[9%] 2xl:w-[6%] bg-green-600 py-3 rounded-xl text-[18px] xl:w-[7%] btn"
           >
             Submit
           </button>
@@ -96,13 +104,13 @@ function Result({
             </h2>
             <div className="m-auto flex justify-between">
               <button
-                className="p-3 text-white text-[18px] bg-green-500 rounded-xl mr-[20px] px-7 "
+                className="p-3 text-white text-[18px] bg-green-500 rounded-lg mr-[20px] px-5 "
                 onClick={handleCheckdone}
               >
                 Oke
               </button>
               <button
-                className="p-3 text-white text-[18px] bg-red-600 rounded-xl ml-[20px] px-7"
+                className="p-3 text-white text-[18px] bg-red-600 rounded-lg ml-[20px] px-5"
                 onClick={handleChecknone}
               >
                 No
@@ -136,6 +144,21 @@ function Result({
         </div>
       )}
     </div>
+    <div className="area">
+            <ul className="circles">
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+                    <li />
+            </ul>
+    </div>
+    </>
   );
 }
 export default Result;

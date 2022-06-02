@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/jsx-indent */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable no-return-assign */
 /* eslint-disable semi */
@@ -88,21 +90,13 @@ function Question({
         && handleShuffle([...questions[currentQuestionIndex].answers]),
     );
     clearTimer(getDeadTime());
-  }, [questions, currentQuestionIndex]);
-
+  }, [answers]);
   const handleSelectAnswer = (id) => {
     onSelectAnswer(id);
     setIsCheckTime(true);
-    // const SELECT = answers.filter(
-    //   (answer) => answer.id === id
-    // );
-    // setSelectedAnswer(SELECT[0].id);
-    // questions[currentQuestion].answers = index;
-    // setUserSelected(answers[questions[currentPick].answers].id);
   };
   return (
   // TO DO : pick question
-
     <div className=" m-auto 2xl:w-7/12 lg:w-[66.33%]">
       <div className="bg-white rounded-lg shadow-2xl py-5 text-center text-lg mb-[20px] border-2 border-sky-500 m-auto w-11/12">
         <h2 className="text-rose-600">{timer}</h2>
@@ -141,7 +135,6 @@ function Question({
           <button
             onClick={() => handleSelectAnswer(id)}
             key={id}
-            // disabled={isOptionAvailable === true}
             className={
               ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-5/12 m-auto ${isOptionAvailable && "bg-gray-200 text-slate-400"} ${
                 questions[currentQuestionIndex].selectedAnswer === id
