@@ -7,3 +7,5 @@ export const MIN_ANSWER_PER_QUESTION_ALERT = "AQuestion has a minimum of 2 answe
 export const DELETE_CORRECT_ANSWER_ALERT = "You cant delete correct answer .";
 export const CHOOSE_CORRECT_ANSWER_INDEX = "CHOOSE_CORRECT_ANSWER_INDEX";
 export const DUPLICATE_ANSWER_ALERT = "A question can't have the same answer";
+export const WRONG_TIME_MSG = "Wrong Time";
+export const WRONG_ID_MSG = "Wrong ID";

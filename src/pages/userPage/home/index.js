@@ -9,6 +9,7 @@ import { url } from "@utils";
 import { getAllDataSessions, checkNameExist } from "@actions/user.action";
 import { selectSessionsID, nameExist } from "@store/slice";
 import { IoIosCloseCircle } from "react-icons/io";
+import { WRONG_TIME_MSG, WRONG_ID_MSG } from "@utils/constant";
 
 function Home({
   setQuizzesID, name, setName, quizzID, setQuizzID,
@@ -45,8 +46,9 @@ function Home({
       setIsError(true);
     } else if (test.length === 0) {
       setMesWrong(true);
-      setToastMes("wrong ID");
+      setToastMes(WRONG_ID_MSG);
     } else if (quizzID === test[0]._id) {
+      // test to check if id user use is value or not
       const { timeStart } = test[0];
       const { timeEnd } = test[0];
       setQuizzesID(test[0].quizId);
@@ -57,7 +59,7 @@ function Home({
 
       if (timeStart > currentDate || currentDate > timeEnd) {
         setMesWrong(true);
-        setToastMes("wrong time");
+        setToastMes(WRONG_TIME_MSG);
       } else {
         dispatch(checkNameExist(loginDetails));
       }

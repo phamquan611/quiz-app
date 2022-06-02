@@ -18,7 +18,7 @@ function Quiz({
   setIsOptionAvailable,
   setViewAnswers,
   viewAnswers,
-  view,
+  isView,
   hadbeenSubmited,
   setHadbeenSubmited,
 }) {
@@ -40,7 +40,7 @@ function Quiz({
   });
 
   const onSelectAnswer = (answerId) => {
-    if (view === true) {
+    if (isView) {
       const _answer = [...viewAnswers];
       _answer[currentQuestionIndex].selectedAnswer = answerId;
       setViewAnswers(_answer);
@@ -57,7 +57,7 @@ function Quiz({
   return (
     // TO DO : prev and next btn
     <>
-    {questions.length === 0 ? <LoadingQuiz />
+    {!questions.length ? <LoadingQuiz />
       : (
 <div className="bg-quiz">
       <div className="container m-auto px-[20px]">
@@ -70,7 +70,7 @@ function Quiz({
               setIsCheckTime={setIsCheckTime}
               onSelectAnswer={onSelectAnswer}
               viewAnswers={viewAnswers}
-              view={view}
+              isView={isView}
               setViewAnswers={setViewAnswers}
               isOptionAvailable={isOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
@@ -87,7 +87,7 @@ function Quiz({
               isOptionAvailable={isOptionAvailable}
               setIsOptionAvailable={setIsOptionAvailable}
               viewAnswers={viewAnswers}
-              view={view}
+              isView={isView}
               answers={answers}
               setAnswers={setAnswers}
             />
