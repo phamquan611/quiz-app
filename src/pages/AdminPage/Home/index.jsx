@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getListSession } from "@actions/session.action";
@@ -10,28 +10,47 @@ export default function HomeAdmin() {
   const quizzesStore = useSelector(selectQuizzes);
   const dispatch = useDispatch();
   const history = useHistory();
+  const quizId = useRef();
 
   useEffect(() => {
     dispatch(getQuizzes());
     getListSession(getListSession());
   }, []);
 
-  const clickGetQuizWithId = (quizId) => {
-    history.push(`admin/quiz/${quizId}`);
+  const clickGetQuizWithId = () => {
+    history.push(`admin/quiz/${quizId.current.value}`);
   };
   return (
     <div>
-      <h1 className="text-3xl px-10">List Quiz : </h1>
-      <div className="flex justify-between flex-wrap mx-auto container">
+      <div className="w-1/2 px-5 ">
         {quizzesStore.length === 0
           ? <Loading />
-          : quizzesStore.map((quiz) => {
-            return (
-              <div className="w-[47%] p-5 my-5" key={quiz._id}>
-                <button className="py-2 h-full my-5 w-full text-[20px] px-4 bg-main-color text-white font-semibold opacity-75 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75" onClick={() => clickGetQuizWithId(quiz._id)}>{quiz.category}</button>
+          : (
+            <div className="w-[500px] mb-[20px]">
+              <div className="flex">
+                <label htmlFor="time-start" className="mr-[20px] mt-2">
+                  <span className="font-bold">Quiz Name : </span>
+                </label>
+                <select
+                  className="appearance-none font-bold px-[10px] py-[7px] flex-1 border border-2 border-[black] rounded-[5px]"
+                  ref={quizId}
+                >
+                  {quizzesStore.map((quiz) => {
+                    return (
+                      <option key={quiz._id} value={quiz._id} className="font-bold">
+                        {quiz.category}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
-            );
-          })}
+              <div>
+                <button className="mt-5 py-2 px-4 bg-main-color text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75" onClick={clickGetQuizWithId}>
+                  View Quiz
+                </button>
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

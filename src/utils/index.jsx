@@ -83,17 +83,34 @@ const setClassStatus = (text) => {
       : "text-danger-color";
 };
 // table header session
+
+export const listTeacher = [
+  "Thanh Phong",
+  "Hong Quan",
+];
+
 export const COLUMNS_SESSION_TABLE = [
   {
-    title: "SESSION ID",
-    dataIndex: "id",
-    key: "id",
-    render: (id) => <Link key={id} to={`/admin/session/participants/${id}`}>{id}</Link>,
+    title: "Teacher",
+    dataIndex: "teacher",
+    key: "teacher",
+    filters: listTeacher.map((teacher) => {
+      return { text: teacher, value: teacher };
+    }),
+    onFilter: (value, record) => record.teacher.indexOf(value) === 0,
+    sortDirections: ["descend"],
   },
   {
-    title: "Category",
+    title: "Participant",
+    dataIndex: "id",
+    key: "id",
+    render: (id) => <Link key={id} to={`/admin/session/participants/${id}`}>Participant</Link>,
+  },
+  {
+    title: "Quiz Name",
     dataIndex: "category",
     key: "category",
+    render: (category, record) => <Link key={record.quizId} to={`/admin/quiz/${record.quizId}`}>{category}</Link>,
   },
   {
     title: "Date",
@@ -115,6 +132,34 @@ export const COLUMNS_SESSION_TABLE = [
     dataIndex: "status",
     key: "status",
     render: (text) => <div className={`${setClassStatus(text)}`}>{text}</div>,
+    filters:
+      [
+        {
+          text: WAITING_STATUS,
+          value: WAITING_STATUS,
+        },
+        {
+          text: HAPPENING_STATUS,
+          value: HAPPENING_STATUS,
+        },
+        {
+          text: EXPIRES_STATUS,
+          value: EXPIRES_STATUS,
+        },
+      ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
+    sortDirections: ["descend"],
+  },
+  {
+    title: "Session id",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Action",
+    dataIndex: "none",
+    key: "none",
+    render: () => <Link to="/">Take the test.</Link>,
   },
 ];
 
@@ -128,17 +173,14 @@ export const COLUMNS_PARTICIPANTS_TABLE = [
     title: "Score",
     dataIndex: "result",
     key: "result",
+    sorter: (a, b) => a.result - b.result,
   },
 ];
 
 export const convertSessionsToView = (sessions) => {
-  if (!Array.isArray(sessions) || sessions.length === 0) {
-    return [];
-  }
-
   return sessions.map((session, index) => {
     const {
-      _id, category, timeStart, timeEnd, date,
+      _id, category, timeStart, timeEnd, date, teacher, quizId,
     } = session;
     const status = timeEnd < currentTime
       ? EXPIRES_STATUS
@@ -148,6 +190,8 @@ export const convertSessionsToView = (sessions) => {
 
     return {
       key: index,
+      quizId,
+      teacher,
       index,
       id: _id,
       category,
@@ -202,6 +246,21 @@ export const checkDuplicateAnswer = (answers) => {
   return true;
 };
 
+export const sortByTimeStart = (sessionA, sessionB) => {
+  return sessionB.timeStart - sessionA.timeStart;
+};
+
+export const convertSession = (sessions) => {
+  if (!Array.isArray(sessions) || sessions.length === 0) return [];
+  const sessionsHappening = sessions
+    .filter((session) => session.timeStart < currentTime && session.timeEnd > currentTime);
+  const sessionsFill = sessions.filter((session) => {
+    return session.timeEnd < currentTime || session.timeStart > currentTime;
+  }).sort(sortByTimeStart);
+
+  return [...sessionsHappening, ...sessionsFill];
+};
+
 export const createNewQuestion = (newId) => {
   return {
     id: newId,
@@ -223,7 +282,7 @@ export const createNewQuestion = (newId) => {
   };
 };
 
-export const triggerAlert = (message) => {
+export const triggerAlertConfirm = (message) => {
   return Swal.fire(({
     title: message,
     showDenyButton: true,
@@ -232,9 +291,15 @@ export const triggerAlert = (message) => {
   }));
 };
 
+export const triggerAlertOnlyMessage = (message) => {
+  return Swal.fire(message);
+};
+
 export const isExistQuestionEditing = (questions) => {
   if (!Array.isArray(questions)) return false;
   return questions.filter((question) => question.isQuestionEditing).length !== 0;
 };
+
+
 
 // export const covertDataTable
