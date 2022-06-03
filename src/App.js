@@ -11,6 +11,7 @@ import AdminPage from "@pages/AdminPage";
 import SignInPage from "@pages/SignInPage";
 import NotFound from "@pages/userPage/404Page";
 import "./App.css";
+import "./scss.css";
 import "antd/dist/antd.min.css";
 import { history } from "@utils/routing";
 
