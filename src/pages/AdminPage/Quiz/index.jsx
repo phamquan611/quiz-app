@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
 import Loading from "@pages/AdminPage/Loading";
 import Question from "@pages/AdminPage/Quiz/Component/Question";
 import { selectQuizzes } from "@store/slice";
@@ -11,7 +10,8 @@ import {
 } from "@utils/constant";
 import {
   formTimeChallenge, createNewQuestion,
-  triggerAlert, isExistQuestionEditing,
+  triggerAlertConfirm, isExistQuestionEditing,
+  triggerAlertOnlyMessage,
 } from "@utils";
 
 import { nanoid } from "nanoid";
@@ -45,9 +45,9 @@ export default function Quiz() {
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
     let { questions } = quiz;
     if (questions.length <= MIN_QUESTION_PER_QUIZ) {
-      return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
+      return triggerAlertOnlyMessage("Can't delete question, A quiz have a minimum 10 question");
     }
-    triggerAlert(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
+    triggerAlertConfirm(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
         return setQuiz({ ...quiz, questions });
@@ -62,7 +62,7 @@ export default function Quiz() {
       data: quiz,
     };
 
-    triggerAlert("Are you sure update quiz ?").then((result) => {
+    triggerAlertConfirm("Are you sure update quiz ?").then((result) => {
       if (result.isConfirmed) {
         dispatch(putQuiz(payload));
       }
