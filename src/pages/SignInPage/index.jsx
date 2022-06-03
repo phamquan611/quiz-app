@@ -88,7 +88,7 @@ const SignInPage = () => {
       <form className="w-full h-full mt-20" onSubmit={formik.handleSubmit}>
         <div className="mx-auto text-center font-bold text-2xl">
           Sign in with
-          <b className="text-[#50d71e]">PQ Quizz!!!</b>
+          <span className="text-[#50d71e]">PQ Quizz!!!</span>
         </div>
         {/* alert message error account or password */}
         {alertValidation(errors, touched)}
@@ -126,7 +126,7 @@ const SignInPage = () => {
         </div>
         <div className="text-center mt-10">
           <button
-            className="py-2 px-4 bg-[#51ad32] text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75"
+            className="py-2 px-4 bg-main-color text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75"
             type="submit"
           >
             Sign In

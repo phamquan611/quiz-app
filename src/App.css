@@ -26,6 +26,9 @@
   min-height: 200px;
   animation: modalFadeIn ease 0.7s;
 }
+.w-label{
+  width: 130px;
+}
 @keyframes modalFadeIn {
   from {
     opacity: 0;

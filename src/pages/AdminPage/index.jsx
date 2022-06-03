@@ -3,12 +3,11 @@ import { useDispatch } from "react-redux";
 import {
   NavLink, Switch, Route, useHistory,
 } from "react-router-dom";
-import Swal from "sweetalert2";
 import { adminSignOut } from "@actions/admin.action";
-import { LOCAL_ACCESS_TOKEN } from "@utils";
+import { LOCAL_ACCESS_TOKEN, triggerAlert } from "@utils";
 import Session from "@pages/AdminPage/Session";
 import HomeAdmin from "@pages/AdminPage/Home";
-import QuizWithId from "@pages/AdminPage/Quiz";
+import Quiz from "@pages/AdminPage/Quiz";
 import CreateQuiz from "@pages/AdminPage/CreateQuiz";
 import Participants from "@pages/AdminPage/Participants";
 
@@ -16,12 +15,7 @@ const AdminPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const clickSignOut = () => {
-    Swal.fire({
-      title: "Are you sure sign out page",
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert("Are you sure sign out page").then((result) => {
       if (result.isConfirmed) {
         dispatch(adminSignOut());
         localStorage.setItem(LOCAL_ACCESS_TOKEN, "");
@@ -79,7 +73,7 @@ const AdminPage = () => {
           <Route
             exact
             path="/admin/quiz/:quizId"
-            component={QuizWithId}
+            component={Quiz}
           />
           <Route exact path="/admin/session" component={Session} />
         </Switch>

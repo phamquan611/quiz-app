@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,18 +7,22 @@ import Question from "@pages/AdminPage/Quiz/Component/Question";
 import { selectQuizzes } from "@store/slice";
 import { getQuizzes, putQuiz } from "@actions/quiz.action";
 import {
-  NUM_MIN_QUESTION_A_QUIZ,
+  MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
+import {
+  formTimeChallenge, createNewQuestion,
+  triggerAlert, isExistQuestionEditing,
+} from "@utils";
+
 import { nanoid } from "nanoid";
 
-export default function QuizWithId() {
+export default function Quiz() {
   const params = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
   const listQuiz = useSelector(selectQuizzes);
   const [quiz, setQuiz] = useState(null);
-  // state question to edit
-  // state create newQuestion
+  const timeChallenge = useRef();
 
   useEffect(() => {
     const quizMatchId = listQuiz.filter(
@@ -40,15 +44,10 @@ export default function QuizWithId() {
   // function delete question
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
     let { questions } = quiz;
-    if (questions.length <= NUM_MIN_QUESTION_A_QUIZ) {
+    if (questions.length <= MIN_QUESTION_PER_QUIZ) {
       return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
     }
-    Swal.fire({
-      title: `Are you sure delete question ${indexQuestion + 1}`,
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    triggerAlert(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
         return setQuiz({ ...quiz, questions });
@@ -62,12 +61,8 @@ export default function QuizWithId() {
       id: params.quizId,
       data: quiz,
     };
-    Swal.fire({
-      title: "Are you sure update quiz ?",
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+
+    triggerAlert("Are you sure update quiz ?").then((result) => {
       if (result.isConfirmed) {
         dispatch(putQuiz(payload));
       }
@@ -87,59 +82,94 @@ export default function QuizWithId() {
   };
 
   const addQuestion = () => {
-    const id = nanoid();
-
-    const newQuestion = {
-      id,
-      content: "I'm question, please edit me .",
-      answers: [
-        {
-          id: nanoid(),
-          content: "Edit me.",
-        },
-        {
-          id: nanoid(),
-          content: "Edit me.",
-        },
-      ],
-      correct_answer: null,
-      isNewQuestion: true,
-    };
     const { questions } = quiz;
-    questions.push(newQuestion);
+    questions.push(createNewQuestion(nanoid()));
     setQuiz({ ...quiz, questions });
+  };
+
+  const handleChangeQuizName = (e) => {
+    setQuiz({ ...quiz, category: e.target.value });
+  };
+
+  const handleChangeTimeChallenge = () => {
+    const currentTimeChallenge = timeChallenge.current;
+    setQuiz({ ...quiz, timeChangllenge: currentTimeChallenge.value });
+  };
+
+  const toggleEditQuestion = (id, options) => {
+    const { questions } = quiz;
+    const newQuestions = questions.map((question) => {
+      let { isQuestionEditing } = question;
+      if (question.id === id) {
+        isQuestionEditing = options;
+      }
+      return { ...question, isQuestionEditing };
+    });
+
+    setQuiz({ ...quiz, questions: newQuestions });
   };
 
   return (
     <div className="p-[50px]">
       {quiz ? (
         <>
-          <div className="text-2xl font-bold text-center">
-            {`Quiz Name : ${quiz.category}`}
-          </div>
-          <div className="flex pt-[30px] justify-center">
-            <div className="list-question text-center px-[20px] text-[18px] py-10 bg-[#f1f1f1]">
-              {quiz.questions.map((question, index) => {
-                return (
-                  <Question
-                    question={question}
-                    index={index}
-                    key={question.id}
-                    deleteQuestionWithId={deleteQuestionWithId}
-                    updateQuestionToQuiz={updateQuestionToQuiz}
-                    newQuestion={question.isNewQuestion}
-                  />
-                );
-              })}
-              <div className="text-left">
-                <button className="bg-[#13a7e9] p-2 text-[17px] text-[#f1f1f1] rounded-[4px]" onClick={addQuestion}>
-                  Add question
-                </button>
+          <div>
+            <div className="text-left mx-auto container w-1/2">
+              <div className="font-bold flex">
+                <label htmlFor="quizName" className="w-label mt-2 ">Quiz name : </label>
+                <input type="text" name="quizName" id="quizName" value={quiz.category} onChange={handleChangeQuizName} className="rounded-[5px] p-2 flex-1 border border border-2 border-[black]" />
+              </div>
+              <div className="my-5 flex">
+                <label htmlFor="timeChallenge" className="w-label mt-2">
+                  <span className="font-bold">Time challenge : </span>
+                </label>
+                <select
+                  name="timeChallenge"
+                  id="timeChallenge"
+                  className="flex-1 border border-2 border-[black] rounded-[5px] p-2 appearance-none"
+                  ref={timeChallenge}
+                  onChange={handleChangeTimeChallenge}
+                  value={quiz.timeChangllenge}
+                >
+                  {formTimeChallenge.map((option) => {
+                    return (
+                      <option
+                        value={option.value}
+                        key={option.value}
+                      >
+                        {option.text}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="flex pt-[30px] justify-center">
+              <div className="list-question text-center px-[20px] text-[18px] py-10 bg-main-white w-1/2">
+                {quiz.questions.map((question, index) => {
+                  const cloneQuestion = { ...question, isQuestionEditing: false };
+                  return (
+                    <Question
+                      question={cloneQuestion}
+                      index={index}
+                      key={question.id}
+                      newQuestion={question.isNewQuestion}
+                      deleteQuestionWithId={deleteQuestionWithId}
+                      updateQuestionToQuiz={updateQuestionToQuiz}
+                      toggleEditQuestion={toggleEditQuestion}
+                    />
+                  );
+                })}
+                <div className="text-left">
+                  <button className="bg-main-color p-2 text-[17px] text-main-white rounded-[4px]" onClick={addQuestion}>
+                    Add question
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <div className="text-center my-7">
-            <button className="bg-[#13a7e9] p-2 text-[17px] text-[#f1f1f1] rounded-[4px]" onClick={upDateQUiz}>
+            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${isExistQuestionEditing(quiz?.questions) && "bg-danger-color"}`} onClick={upDateQUiz} disabled={isExistQuestionEditing(quiz?.questions)}>
               Update Quiz
             </button>
           </div>

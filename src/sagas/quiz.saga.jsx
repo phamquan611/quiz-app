@@ -4,6 +4,7 @@ import {
   getQuizzesSuccess,
   quizActionType,
   getQuizzesFAil,
+  getQuizzes,
 } from "@actions/quiz.action";
 import { fetchQuizzes, adminPutQuiz, adminPostQuiz } from "@services/quiz.service";
 import { redirectTo } from "@utils/routing";
@@ -28,7 +29,7 @@ function* putUpdateQuizWorker(action) {
     const { data } = response;
     if (data.success) {
       Swal.fire("Update quiz success");
-      yield put(fetchQuizzes());
+      yield put(getQuizzes());
     }
   } catch (error) {
     // Swal.fire("Quiz update failed .");
