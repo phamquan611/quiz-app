@@ -22,7 +22,7 @@ function App() {
   const [name, setName] = useState("");
   const [quizzID, setQuizzID] = useState("");
   const [viewAnswers, setViewAnswers] = useState();
-  const [view, setView] = useState(false);
+  const [isView, setIsView] = useState(false);
   const [hadbeenSubmited, setHadbeenSubmited] = useState(false);
   return (
     <Provider store={store}>
@@ -48,8 +48,8 @@ function App() {
               setIsCheckTime={setIsCheckTime}
               viewAnswers={viewAnswers}
               setViewAnswers={setViewAnswers}
-              view={view}
-              setView={setView}
+              isView={isView}
+              setIsView={setIsView}
               hadbeenSubmited={hadbeenSubmited}
               setHadbeenSubmited={setHadbeenSubmited}
             />
@@ -62,7 +62,7 @@ function App() {
               quizzID={quizzID}
               viewAnswers={viewAnswers}
               setViewAnswers={setViewAnswers}
-              setView={setView}
+              setIsView={setIsView}
               isOptionAvailable={isOptionAvailable}
               setIsOptionAvailable={setIsOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
