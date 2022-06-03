@@ -28,7 +28,6 @@ export default function Quiz() {
   const validateCreateQuiz = () => {
     let isValid = true;
     const { category } = quiz;
-    debugger;
     if (isBlank(category)) {
       isValid = false;
       triggerAlertOnlyMessage("You cannot blank quiz name.");
