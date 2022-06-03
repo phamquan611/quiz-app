@@ -13,11 +13,11 @@ function Home({
   name, setName, isUserBack,
 }) {
   const [sessionID, setSessionID] = useState("");
-  const [quizzesID, setQuizzesID] = useState();
+  const [quizzesID, setQuizzesID] = useState("");
   const [isError, setIsError] = useState(false);
   const [checkID, setCheckID] = useState();
   const [mesWrong, setMesWrong] = useState(false);
-  const [toastMes, setToastMes] = useState("");
+  const [toastMes, setToastMes] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionsStore = useSelector(selectSessionsID);

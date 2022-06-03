@@ -108,14 +108,14 @@ function Question({
         </p>
         <p className="px-5">{questions[currentQuestionIndex].content}</p>
       </div>
-      {isView === true ? (
+      {isView ? (
         <div className="flex justify-between flex-wrap m-auto">
           {answers
                 && answers.map(({ content, id }, index) => (
                   <button
                     onClick={() => handleSelectAnswer(id)}
                     key={id}
-                    disabled={isOptionAvailable === true}
+                    disabled={isOptionAvailable}
                     className={
                       ` border-2 border-indigo-700 bg-white rounded-lg shadow-2xl text-base mb-[20px] py-[20px] w-5/12 m-auto  ${isOptionAvailable && "bg-gray-200 text-slate-600"} ${
                         viewAnswers[currentQuestionIndex].selectedAnswer === id

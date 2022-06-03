@@ -6,10 +6,14 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { getPointQuizz } from "@actions/user.action";
+import {
+  getPointQuizz, resetCheckNameExist, resetGetPointQuizz, resetGetDataQuizID, 
+} from "@actions/user.action";
 import { useDispatch, useSelector } from "react-redux";
 import { getPointUser, quizId, sessionId } from "@store/slice";
 import { BsCheckCircle } from "react-icons/bs";
+
+import Celebration from "@components/celebration";
 
 function Result({
   setIsOptionAvailable,
@@ -70,6 +74,10 @@ function Result({
   const handleBackHome = () => {
     setIsUserBack(true);
     history.push("/");
+    window.location.reload(false);
+    // dispatch(resetCheckNameExist());
+    // dispatch(resetGetPointQuizz());
+    // dispatch(resetGetDataQuizID());
   };
   return (
     // TO DO : axios post and view answer , disable option answer when choose submit
@@ -77,7 +85,7 @@ function Result({
     <div className="bg-result">
       <div className="container m-auto">
         <div className=" w-[30%] rounded-lg  m-auto py-4 text-center text-[25px] mb-[20px]  ">
-          <h2 className="text-white">Your test is done !!!</h2>
+          <h2 className="text-black">Your test is done !!!</h2>
         </div>
         <div className="flex justify-center ">
           <button
@@ -105,7 +113,7 @@ function Result({
                         ${hadbeenSubmited ? "xl:w-[12%] px-2.5 py-4" : "xl:w-[7%]"}`
                       }
                     >
-            Back To Home
+            Play Again ?
                     </button>
           )}
         </div>
@@ -135,7 +143,8 @@ function Result({
       )}
       {isDone && userResult !== undefined && (
         <div className="fixed inset-0 bg-black w-full flex">
-          <div className="m-auto opacity-1 bg-white opacity-100 w-[450px] h-[350px] rounded-xl text-[#000] flex flex-col modal-container">
+          <div className="m-auto opacity-1 relative bg-white opacity-100 w-[450px] h-[350px] rounded-xl text-[#000] flex flex-col modal-container">
+          <Celebration />
             <BsCheckCircle className="text-6xl m-auto mb-0 text-green-500" />
             <h2 className="text-3xl text-center mt-4 mb-0 ">
               Success !
