@@ -12,4 +12,6 @@ export const getQuestionforUser = (state) => state.quizData.questions;
 
 export const getTimeChallengeForUser = (state) => state.quizData.timeChangllenge;
 
-export const nameExist = (state) => state.id;
+export const quizId = (state) => state.id.quizId;
+
+export const sessionId = (state) => state.id._id;

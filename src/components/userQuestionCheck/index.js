@@ -15,7 +15,7 @@ function CheckQuestion({
   currentQuestionIndex,
   setCurrentQuestionIndex,
   setIsCheckTime,
-  view,
+  isView,
   viewAnswers,
   setViewAnswers,
   isOptionAvailable,
@@ -36,7 +36,7 @@ function CheckQuestion({
     if (viewAnswers === undefined) {
       setViewAnswers(questions);
     }
-    if (isOptionAvailable === true) {
+    if (isOptionAvailable) {
       setHadbeenSubmited(true);
     }
     if (currentQuestionIndex === questions.length - 1) {
@@ -56,7 +56,7 @@ function CheckQuestion({
         className="m-auto bg-green-600 py-3 px-4 rounded-xl text-[20px] shadow-2xl text-white mb-[10px]"
         onClick={handleSubmit}
       >
-        {isOptionAvailable === false ? "Submit" : "Next"}
+        {!isOptionAvailable ? "Submit" : "Next"}
       </button>
 
 
@@ -72,7 +72,7 @@ function CheckQuestion({
             <TiChevronLeftOutline />
           </button>
         </div>
-        {view === false ? (
+        {!isView ? (
           <div className=" rounded-lg m-auto shadow-2xl border-sky-500 border-2 bg-white py-[20px] px-[50px] lg:px-2.5 flex justify-center flex-wrap">
             {questions
           &&            questions.map((item, index) => (

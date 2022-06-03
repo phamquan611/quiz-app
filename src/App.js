@@ -16,56 +16,51 @@ import { history } from "@utils/routing";
 
 const store = configureStore();
 function App() {
-  const [quizzesID, setQuizzesID] = useState();
   const [isOptionAvailable, setIsOptionAvailable] = useState(false);
   const [isCheckTime, setIsCheckTime] = useState(false);
   const [name, setName] = useState("");
-  const [quizzID, setQuizzID] = useState("");
   const [viewAnswers, setViewAnswers] = useState();
-  const [view, setView] = useState(false);
+  const [isView, setIsView] = useState(false);
   const [hadbeenSubmited, setHadbeenSubmited] = useState(false);
+  // const [isBackHome, setIsBackHome] = useState(false);
+  const [isUserBack, setIsUserBack] = useState(false);
   return (
     <Provider store={store}>
       <Router>
         <Switch>
           <Route exact path="/">
             <Home
-              quizzesID={quizzesID}
-              setQuizzesID={setQuizzesID}
               name={name}
-              quizzID={quizzID}
               setName={setName}
-              setQuizzID={setQuizzID}
+              isUserBack={isUserBack}
             />
           </Route>
           <Route path="/quiz">
             <Quiz
-              quizzesID={quizzesID}
-              setQuizzesID={setQuizzesID}
               isOptionAvailable={isOptionAvailable}
               setIsOptionAvailable={setIsOptionAvailable}
               isCheckTime={isCheckTime}
               setIsCheckTime={setIsCheckTime}
               viewAnswers={viewAnswers}
               setViewAnswers={setViewAnswers}
-              view={view}
-              setView={setView}
+              isView={isView}
+              setIsView={setIsView}
               hadbeenSubmited={hadbeenSubmited}
               setHadbeenSubmited={setHadbeenSubmited}
+
             />
           </Route>
           <Route path="/result">
             <Result
-              quizzesID={quizzesID}
               setIsCheckTime={setIsCheckTime}
               name={name}
-              quizzID={quizzID}
               viewAnswers={viewAnswers}
               setViewAnswers={setViewAnswers}
-              setView={setView}
+              setIsView={setIsView}
               isOptionAvailable={isOptionAvailable}
               setIsOptionAvailable={setIsOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
+              setIsUserBack={setIsUserBack}
               setHadbeenSubmited={setHadbeenSubmited}
             />
           </Route>

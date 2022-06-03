@@ -4,16 +4,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import { url } from "@utils";
 import { getAllDataSessions, checkNameExist } from "@actions/user.action";
-import { selectSessionsID, nameExist } from "@store/slice";
+import { selectSessionsID, quizId } from "@store/slice";
 import { IoIosCloseCircle } from "react-icons/io";
 import { WRONG_TIME_MSG, WRONG_ID_MSG } from "@utils/constant";
 
 function Home({
-  setQuizzesID, name, setName, quizzID, setQuizzID,
+  name, setName, isUserBack,
 }) {
+  const [sessionID, setSessionID] = useState("");
+  const [quizzesID, setQuizzesID] = useState();
   const [isError, setIsError] = useState(false);
   const [checkID, setCheckID] = useState();
   const [mesWrong, setMesWrong] = useState(false);
@@ -21,9 +21,7 @@ function Home({
   const history = useHistory();
   const dispatch = useDispatch();
   const sessionsStore = useSelector(selectSessionsID);
-  const nameUserExist = useSelector(nameExist);
-
-
+  const quizID = useSelector(quizId);
   useEffect(() => {
     dispatch(getAllDataSessions());
   }, []);
@@ -36,24 +34,24 @@ function Home({
     setIsError(false);
   };
   const handleSubmitQuizId = (e) => {
-    setQuizzID(e.target.value);
+    setSessionID(e.target.value);
     setIsError(false);
   };
   const handleSubmit = async () => {
     const currentDate = +new Date();
-    const test = checkID.filter((id) => id._id === quizzID);
-    if (!name || !quizzID) {
+    const test = checkID.filter((id) => id._id === sessionID);
+    if (!name || !sessionID) {
       setIsError(true);
     } else if (test.length === 0) {
       setMesWrong(true);
       setToastMes(WRONG_ID_MSG);
-    } else if (quizzID === test[0]._id) {
+    } else if (sessionID === test[0]._id) {
       // test to check if id user use is value or not
       const { timeStart } = test[0];
       const { timeEnd } = test[0];
       setQuizzesID(test[0].quizId);
       const loginDetails = {
-        id: quizzID,
+        id: sessionID,
         username: name,
       };
 
@@ -66,10 +64,10 @@ function Home({
     }
   };
   useEffect(() => {
-    if (typeof nameUserExist !== "object") {
-      history.push(`/quiz/${nameUserExist}`);
+    if (typeof quizID !== "object" && quizID && !isUserBack) {
+      history.push(`/quiz/${quizID}`);
     }
-  }, [nameUserExist]);
+  }, [quizID]);
 
   const handleCheckID = () => {
     setMesWrong(false);

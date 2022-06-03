@@ -23,7 +23,7 @@ function Question({
   setIsCheckTime,
   isOptionAvailable,
   setIsOptionAvailable,
-  view,
+  isView,
   viewAnswers,
   answers,
   setAnswers,
@@ -68,7 +68,7 @@ function Question({
   const timeCountDown = `${minutes}:${seconds < 10 && "0"}${seconds}`;
 
   const clearTimer = (e) => {
-    if (isCheckTime === false) {
+    if (!isCheckTime) {
       setTimer(timeCountDown);
       if (Ref.current) clearInterval(Ref.current);
       const id = setInterval(() => {
@@ -108,7 +108,7 @@ function Question({
         </p>
         <p className="px-5">{questions[currentQuestionIndex].content}</p>
       </div>
-      {view === true ? (
+      {isView === true ? (
         <div className="flex justify-between flex-wrap m-auto">
           {answers
                 && answers.map(({ content, id }, index) => (

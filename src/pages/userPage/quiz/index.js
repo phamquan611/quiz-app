@@ -7,18 +7,17 @@ import { useHistory } from "react-router-dom";
 import Question from "@components/userQuestion";
 import CheckQuestion from "@components/userQuestionCheck";
 import { getDataQuizID } from "@actions/user.action";
-import { getQuestionforUser, getTimeChallengeForUser } from "@store/slice";
+import { getQuestionforUser, getTimeChallengeForUser, quizId } from "@store/slice";
 import LoadingQuiz from "@components/Loading";
 
 function Quiz({
-  quizzesID,
   isOptionAvailable,
   setIsCheckTime,
   isCheckTime,
   setIsOptionAvailable,
   setViewAnswers,
   viewAnswers,
-  view,
+  isView,
   hadbeenSubmited,
   setHadbeenSubmited,
 }) {
@@ -28,19 +27,20 @@ function Quiz({
   const [answers, setAnswers] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
+  const quizUserID = useSelector(quizId);
   const allquestions = useSelector(getQuestionforUser);
   const getTimeChallenge = useSelector(getTimeChallengeForUser);
 
   useEffect(() => {
-    dispatch(getDataQuizID(quizzesID));
-  }, [quizzesID]);
+    dispatch(getDataQuizID(quizUserID));
+  }, [quizUserID]);
   useEffect(() => {
     setQuestions(allquestions);
     setTimeStamp(getTimeChallenge);
   });
 
   const onSelectAnswer = (answerId) => {
-    if (view === true) {
+    if (isView) {
       const _answer = [...viewAnswers];
       _answer[currentQuestionIndex].selectedAnswer = answerId;
       setViewAnswers(_answer);
@@ -71,7 +71,7 @@ function Quiz({
               setIsCheckTime={setIsCheckTime}
               onSelectAnswer={onSelectAnswer}
               viewAnswers={viewAnswers}
-              view={view}
+              isView={isView}
               setViewAnswers={setViewAnswers}
               isOptionAvailable={isOptionAvailable}
               hadbeenSubmited={hadbeenSubmited}
@@ -88,7 +88,7 @@ function Quiz({
               isOptionAvailable={isOptionAvailable}
               setIsOptionAvailable={setIsOptionAvailable}
               viewAnswers={viewAnswers}
-              view={view}
+              isView={isView}
               answers={answers}
               setAnswers={setAnswers}
             />
