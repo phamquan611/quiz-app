@@ -9,7 +9,7 @@ import { nanoid } from "nanoid";
 import Answer from "@pages/AdminPage/Quiz/Component/Question/Answer";
 import {
   IDEA, checkDuplicateAnswer, isBlank,
-  checkElementEmpty,
+  checkElementEmpty, triggerAlert,
 } from "@utils";
 import {
   DELETE_CORRECT_ANSWER_ALERT_MESSAGE,
@@ -28,6 +28,7 @@ export default function Question(props) {
     newQuestion,
     deleteQuestionWithId,
     updateQuestionToQuiz,
+    toggleEditQuestion,
   } = props;
 
   const [defaultQuestion, setDefaultQuestion] = useState(
@@ -38,6 +39,7 @@ export default function Question(props) {
   const [isNewQuestion, setNewQuestion] = useState(newQuestion);
 
   const selectCorrectAnswer = (id) => {
+    toggleEditQuestion(question.id, true);
     setIsChange(true);
     setDefaultQuestion({ ...defaultQuestion, correct_answer: id });
   };
@@ -73,6 +75,7 @@ export default function Question(props) {
       updateQuestionToQuiz({
         id, answers, correct_answer, content,
       });
+      toggleEditQuestion(question.id, false);
       setIsChange(null);
       setIsEditQuestion(false);
       setNewQuestion(false);
@@ -88,6 +91,7 @@ export default function Question(props) {
       setDefaultQuestion({
         id, answers, correct_answer, content,
       });
+      toggleEditQuestion(question.id, false);
       setIsEditQuestion(false);
       setNewQuestion(false);
     }
@@ -102,12 +106,8 @@ export default function Question(props) {
       return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT_MESSAGE);
     }
     // delete success
-    Swal.fire({
-      title: "Do you want to delete answer ?",
-      showDenyButton: true,
-      confirmButtonText: "YES",
-      denyButtonText: "NO",
-    }).then((result) => {
+    toggleEditQuestion(question.id, true);
+    triggerAlert("Do you want to delete answer ?").then((result) => {
       if (result.isConfirmed) {
         setIsChange(true);
         const newAnswers = answers.filter((answer) => answer.id !== id);
@@ -117,6 +117,7 @@ export default function Question(props) {
   };
 
   const editQuestion = () => {
+    toggleEditQuestion(question.id, true);
     setIsChange(true);
     setIsEditQuestion(true);
   };

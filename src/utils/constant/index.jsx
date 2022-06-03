@@ -1,9 +1,9 @@
-export const MIN_QUESTION_PER_QUIZ = 3;
+export const MIN_QUESTION_PER_QUIZ = 5;
 export const NUM_CORRECT_ANSWER_A_QUESTION = 1;
 export const MIN_ANSWER_PER_QUESTION = 2;
 export const MAX_ANSWER_PER_QUESTION = 4;
-export const MAX_ANSWER_PER_QUESTION_ALERT_MESSAGE = "A Question has a maximum of 4 answers.";
-export const MIN_ANSWER_PER_QUESTION_ALERT_MESSAGE = "AQuestion has a minimum of 2 answers.";
+export const MAX_ANSWER_PER_QUESTION_ALERT_MESSAGE = "A question has a maximum of 4 answers.";
+export const MIN_ANSWER_PER_QUESTION_ALERT_MESSAGE = "A question has a minimum of 2 answers.";
 export const DELETE_CORRECT_ANSWER_ALERT_MESSAGE = "You cant delete correct answer.";
 export const DUPLICATE_ANSWER_ALERT_MESSAGE = "A question can't have the same answer.";
 export const BLANK_CONTENT_ALERT_MESSAGE = "Question or answer cannot be left blank.";

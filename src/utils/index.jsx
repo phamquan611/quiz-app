@@ -170,9 +170,7 @@ export const checkElementEmpty = (arr) => {
     isEmpty = true;
   } else {
     const listEmptyOfArray = arr.filter((el) => isBlank(el.content));
-    if (listEmptyOfArray.length !== 0) {
-      isEmpty = true;
-    }
+    isEmpty = listEmptyOfArray.length !== 0;
   }
   return isEmpty;
 };
@@ -221,6 +219,7 @@ export const createNewQuestion = (newId) => {
     correct_answer: null,
     isNewQuestion: true,
     editing: true,
+    isQuestionEditing: true,
   };
 };
 
@@ -231,6 +230,11 @@ export const triggerAlert = (message) => {
     confirmButtonText: "YES",
     denyButtonText: "NO",
   }));
+};
+
+export const isExistQuestionEditing = (questions) => {
+  if (!Array.isArray(questions)) return false;
+  return questions.filter((question) => question.isQuestionEditing).length !== 0;
 };
 
 // export const covertDataTable

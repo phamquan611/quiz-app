@@ -9,7 +9,10 @@ import { getQuizzes, putQuiz } from "@actions/quiz.action";
 import {
   MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
-import { formTimeChallenge, createNewQuestion, triggerAlert } from "@utils";
+import {
+  formTimeChallenge, createNewQuestion,
+  triggerAlert, isExistQuestionEditing,
+} from "@utils";
 
 import { nanoid } from "nanoid";
 
@@ -93,6 +96,19 @@ export default function Quiz() {
     setQuiz({ ...quiz, timeChangllenge: currentTimeChallenge.value });
   };
 
+  const toggleEditQuestion = (id, options) => {
+    const { questions } = quiz;
+    const newQuestions = questions.map((question) => {
+      let { isQuestionEditing } = question;
+      if (question.id === id) {
+        isQuestionEditing = options;
+      }
+      return { ...question, isQuestionEditing };
+    });
+
+    setQuiz({ ...quiz, questions: newQuestions });
+  };
+
   return (
     <div className="p-[50px]">
       {quiz ? (
@@ -101,7 +117,7 @@ export default function Quiz() {
             <div className="text-left mx-auto container w-1/2">
               <div className="font-bold flex">
                 <label htmlFor="quizName" className="w-label mt-2 ">Quiz name : </label>
-                <input type="text" name="quizName" id="quizName" value={quiz.category} onChange={handleChangeQuizName} className="font-bold rounded-[5px] p-2 flex-1 border border border-2 border-[black]" />
+                <input type="text" name="quizName" id="quizName" value={quiz.category} onChange={handleChangeQuizName} className="rounded-[5px] p-2 flex-1 border border border-2 border-[black]" />
               </div>
               <div className="my-5 flex">
                 <label htmlFor="timeChallenge" className="w-label mt-2">
@@ -131,14 +147,16 @@ export default function Quiz() {
             <div className="flex pt-[30px] justify-center">
               <div className="list-question text-center px-[20px] text-[18px] py-10 bg-main-white w-1/2">
                 {quiz.questions.map((question, index) => {
+                  const cloneQuestion = { ...question, isQuestionEditing: false };
                   return (
                     <Question
-                      question={question}
+                      question={cloneQuestion}
                       index={index}
                       key={question.id}
+                      newQuestion={question.isNewQuestion}
                       deleteQuestionWithId={deleteQuestionWithId}
                       updateQuestionToQuiz={updateQuestionToQuiz}
-                      newQuestion={question.isNewQuestion}
+                      toggleEditQuestion={toggleEditQuestion}
                     />
                   );
                 })}
@@ -151,7 +169,7 @@ export default function Quiz() {
             </div>
           </div>
           <div className="text-center my-7">
-            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${false !== 0 && "bg-danger-color"}`} onClick={upDateQUiz} disabled={false}>
+            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${isExistQuestionEditing(quiz?.questions) && "bg-danger-color"}`} onClick={upDateQUiz} disabled={isExistQuestionEditing(quiz?.questions)}>
               Update Quiz
             </button>
           </div>

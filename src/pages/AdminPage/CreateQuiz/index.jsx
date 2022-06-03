@@ -7,14 +7,18 @@ import { postQuiz } from "@actions/quiz.action";
 import {
   MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
-import { formTimeChallenge, triggerAlert } from "@utils";
-
+import {
+  formTimeChallenge, createNewQuestion,
+  triggerAlert, isExistQuestionEditing, isBlank,
+} from "@utils";
 import { nanoid } from "nanoid";
 
-export default function CreateQuiz() {
+
+export default function Quiz() {
   const dispatch = useDispatch();
   const [quiz, setQuiz] = useState({ category: "", questions: [], timeChangllenge: 0 });
   const timeChallenge = useRef();
+
 
   // function delete question
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
@@ -32,6 +36,9 @@ export default function CreateQuiz() {
 
   // function update quiz
   const createQuiz = () => {
+    if (isBlank(quiz.category)) {
+      return Swal.fire("You cannot blank quiz name.");
+    }
     triggerAlert("Are you sure, you want create quiz ?").then((result) => {
       if (result.isConfirmed) {
         dispatch(postQuiz(quiz));
@@ -52,28 +59,11 @@ export default function CreateQuiz() {
   };
 
   const addQuestion = () => {
-    const id = nanoid();
-
-    const newQuestion = {
-      id,
-      content: "",
-      answers: [
-        {
-          id: nanoid(),
-          content: "",
-        },
-        {
-          id: nanoid(),
-          content: "",
-        },
-      ],
-      correct_answer: null,
-      isNewQuestion: true,
-    };
     const { questions } = quiz;
-    questions.push(newQuestion);
+    questions.push(createNewQuestion(nanoid()));
     setQuiz({ ...quiz, questions });
   };
+
   const handleChangeQuizName = (e) => {
     setQuiz({ ...quiz, category: e.target.value });
   };
@@ -82,6 +72,20 @@ export default function CreateQuiz() {
     const currentTimeChallenge = timeChallenge.current;
     setQuiz({ ...quiz, timeChangllenge: currentTimeChallenge.value });
   };
+
+  const toggleEditQuestion = (id, options) => {
+    const { questions } = quiz;
+    const newQuestions = questions.map((question) => {
+      let { isQuestionEditing } = question;
+      if (question.id === id) {
+        isQuestionEditing = options;
+      }
+      return { ...question, isQuestionEditing };
+    });
+
+    setQuiz({ ...quiz, questions: newQuestions });
+  };
+
   return (
     <div className="p-[50px]">
       {quiz ? (
@@ -90,7 +94,7 @@ export default function CreateQuiz() {
             <div className="text-left mx-auto container w-1/2">
               <div className="font-bold flex">
                 <label htmlFor="quizName" className="w-label mt-2 ">Quiz name : </label>
-                <input type="text" name="quizName" id="quizName" value={quiz.category} onChange={handleChangeQuizName} className="font-bold rounded-[5px] p-2 flex-1 border border border-2 border-[black]" />
+                <input type="text" name="quizName" id="quizName" value={quiz.category} onChange={handleChangeQuizName} className="rounded-[5px] p-2 flex-1 border border border-2 border-[black]" />
               </div>
               <div className="my-5 flex">
                 <label htmlFor="timeChallenge" className="w-label mt-2">
@@ -120,14 +124,16 @@ export default function CreateQuiz() {
             <div className="flex pt-[30px] justify-center">
               <div className="list-question text-center px-[20px] text-[18px] py-10 bg-main-white w-1/2">
                 {quiz.questions.map((question, index) => {
+                  const cloneQuestion = { ...question, isQuestionEditing: false };
                   return (
                     <Question
-                      question={question}
+                      question={cloneQuestion}
                       index={index}
                       key={question.id}
+                      newQuestion={question.isNewQuestion}
                       deleteQuestionWithId={deleteQuestionWithId}
                       updateQuestionToQuiz={updateQuestionToQuiz}
-                      newQuestion={question.isNewQuestion}
+                      toggleEditQuestion={toggleEditQuestion}
                     />
                   );
                 })}
@@ -141,7 +147,7 @@ export default function CreateQuiz() {
           </div>
           {quiz.questions.length >= MIN_QUESTION_PER_QUIZ && (
           <div className="text-center my-7">
-            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${false !== 0 && "bg-danger-color"}`} onClick={createQuiz}>
+            <button className={`bg-main-color p-2 text-[17px] text-main-white rounded-[4px] ${isExistQuestionEditing(quiz?.questions) && "bg-danger-color"}`} onClick={createQuiz} disabled={isExistQuestionEditing(quiz?.questions)}>
               Create Quiz
             </button>
           </div>
