@@ -14,7 +14,7 @@ const getPointsUser = (state = initialState, action) => {
         error: null,
       };
     case userActionType.RESET_POINT_QUIZ:
-      return state;
+      return initialState;
     default:
       return initialState;
   }

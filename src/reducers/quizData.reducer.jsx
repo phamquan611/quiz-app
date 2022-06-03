@@ -9,7 +9,7 @@ const getQuizData = (state = initialState, action) => {
     case userActionType.GET_QUIZID_DATA_SUCCESS:
       return action.payload;
     case userActionType.RESET_QUIZID_DATA:
-      return state;
+      return initialState;
     default:
       return state;
   }
