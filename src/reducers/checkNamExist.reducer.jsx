@@ -2,6 +2,7 @@ import { userActionType } from "@actions/user.action";
 
 const initialState = {
   id: "",
+  sessionID: "",
 };
 
 const checkNameUser = (state = initialState, action) => {

@@ -7,11 +7,10 @@ import { useHistory } from "react-router-dom";
 import Question from "@components/userQuestion";
 import CheckQuestion from "@components/userQuestionCheck";
 import { getDataQuizID } from "@actions/user.action";
-import { getQuestionforUser, getTimeChallengeForUser } from "@store/slice";
+import { getQuestionforUser, getTimeChallengeForUser, quizId } from "@store/slice";
 import LoadingQuiz from "@components/Loading";
 
 function Quiz({
-  quizzesID,
   isOptionAvailable,
   setIsCheckTime,
   isCheckTime,
@@ -28,12 +27,13 @@ function Quiz({
   const [answers, setAnswers] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
+  const quizUserID = useSelector(quizId);
   const allquestions = useSelector(getQuestionforUser);
   const getTimeChallenge = useSelector(getTimeChallengeForUser);
 
   useEffect(() => {
-    dispatch(getDataQuizID(quizzesID));
-  }, [quizzesID]);
+    dispatch(getDataQuizID(quizUserID));
+  }, [quizUserID]);
   useEffect(() => {
     setQuestions(allquestions);
     setTimeStamp(getTimeChallenge);
@@ -57,11 +57,12 @@ function Quiz({
   return (
     // TO DO : prev and next btn
     <>
-    {!questions.length ? <LoadingQuiz />
+    {questions.length === 0 ? <LoadingQuiz />
       : (
 <div className="bg-quiz">
       <div className="container m-auto px-[20px]">
         <div className="flex flex-col">
+
             <CheckQuestion
               questions={questions}
               currentQuestionIndex={currentQuestionIndex}

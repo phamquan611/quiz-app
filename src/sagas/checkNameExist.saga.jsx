@@ -12,7 +12,8 @@ import { checkNameUserExist } from "@services/user.sessions";
 function* checkNameUserWorker(action) {
   try {
     const getSessions = yield call(checkNameUserExist, action.payload);
-    const { error, quizId } = getSessions.data;
+    const { error, quizId, _id } = getSessions.data;
+    const data = { quizId, _id };
     if (error) {
       yield put(checkNameExistFail(error));
       Swal.fire({
@@ -21,8 +22,8 @@ function* checkNameUserWorker(action) {
         text: "Your name had been exist. Please try different name !!!",
         footer: "<a href=''>Why do I have this issue?</a>",
       });
-    } else if (quizId) {
-      yield put(CheckNameExistSuccess(quizId));
+    } else if (data) {
+      yield put(CheckNameExistSuccess(data));
     }
   } catch {
     yield put(checkNameExistFail());
