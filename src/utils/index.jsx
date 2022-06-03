@@ -178,10 +178,6 @@ export const COLUMNS_PARTICIPANTS_TABLE = [
 ];
 
 export const convertSessionsToView = (sessions) => {
-  if (!Array.isArray(sessions) || sessions.length === 0) {
-    return [];
-  }
-
   return sessions.map((session, index) => {
     const {
       _id, category, timeStart, timeEnd, date, teacher, quizId,
@@ -255,7 +251,7 @@ export const sortByTimeStart = (sessionA, sessionB) => {
 };
 
 export const convertSession = (sessions) => {
-  if (!Array.isArray(sessions) || sessions.length === 0) return;
+  if (!Array.isArray(sessions) || sessions.length === 0) return [];
   const sessionsHappening = sessions
     .filter((session) => session.timeStart < currentTime && session.timeEnd > currentTime);
   const sessionsFill = sessions.filter((session) => {

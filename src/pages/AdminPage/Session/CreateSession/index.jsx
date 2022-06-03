@@ -9,14 +9,20 @@ import {
   listTeacher,
   triggerAlertOnlyMessage,
 } from "@utils";
+import {
+  TIMER_UNDEFINE_ALERT_MESSAGE,
+  WRONG_DATE_MESSAGE,
+  TIME_NOT_VALID_ALERT_MESSAGE,
+  TIME_START_GREATER_THAN_TIME_END_MSG,
+} from "@utils/constant";
 import { selectQuizzes } from "@store/slice";
 
 function FormCreateSession() {
   const quizzesStore = useSelector(selectQuizzes);
   const [values, setValues] = useState({
     date: moment(new Date()).format("YYYY-MM-DD"),
-    timeStart: "14:00",
-    timeEnd: "16:00",
+    timeStart: undefined,
+    timeEnd: undefined,
   });
   const quizId = useRef({});
   const teacher = useRef();
@@ -35,18 +41,24 @@ function FormCreateSession() {
     let isValid = true;
     const currentDate = moment(new Date()).format("YYYY-MM-DD");
     const { timeStart, timeEnd, date } = session;
+
+    if (!timeStart || !timeEnd) {
+      triggerAlertOnlyMessage(TIMER_UNDEFINE_ALERT_MESSAGE);
+      isValid = false;
+    }
+
     if (getTimeStamp(date) < getTimeStamp(currentDate)) {
-      triggerAlertOnlyMessage("The test can not a date in the past time .");
+      triggerAlertOnlyMessage(WRONG_DATE_MESSAGE);
       isValid = false;
     }
 
     if (timeEnd < currentTime) {
-      triggerAlertOnlyMessage("The test time must the bigger current time . ");
+      triggerAlertOnlyMessage(TIME_NOT_VALID_ALERT_MESSAGE);
       isValid = false;
     }
 
     if (timeEnd < timeStart) {
-      triggerAlertOnlyMessage("Time start of session must less than time end .");
+      triggerAlertOnlyMessage(TIME_START_GREATER_THAN_TIME_END_MSG);
       isValid = false;
     }
 

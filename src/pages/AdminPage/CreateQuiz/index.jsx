@@ -6,6 +6,7 @@ import { postQuiz, getQuizzes } from "@actions/quiz.action";
 import { selectQuizzes } from "@store/slice";
 import {
   MIN_QUESTION_PER_QUIZ,
+  BLANK_QUIZ_NAME_MESSAGE,
 } from "@utils/constant";
 import {
   formTimeChallenge, createNewQuestion,
@@ -30,7 +31,7 @@ export default function Quiz() {
     const { category } = quiz;
     if (isBlank(category)) {
       isValid = false;
-      triggerAlertOnlyMessage("You cannot blank quiz name.");
+      triggerAlertOnlyMessage(BLANK_QUIZ_NAME_MESSAGE);
     }
     if (listQuiz.filter((quizz) => quizz.category === category).length !== 0) {
       isValid = false;
@@ -103,7 +104,8 @@ export default function Quiz() {
   };
 
   return (
-    <div className="p-[50px]">
+    <div className="px-10 py-8">
+      <h1 className="text-2xl font-bold text-center my-5 py-4">Create quiz form</h1>
       {quiz ? (
         <>
           <div>
