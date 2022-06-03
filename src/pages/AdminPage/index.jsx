@@ -4,9 +4,8 @@ import {
   NavLink, Switch, Route, useHistory,
 } from "react-router-dom";
 import { adminSignOut } from "@actions/admin.action";
-import { LOCAL_ACCESS_TOKEN, triggerAlert } from "@utils";
+import { LOCAL_ACCESS_TOKEN, triggerAlertConfirm } from "@utils";
 import Session from "@pages/AdminPage/Session";
-import HomeAdmin from "@pages/AdminPage/Home";
 import Quiz from "@pages/AdminPage/Quiz";
 import CreateQuiz from "@pages/AdminPage/CreateQuiz";
 import Participants from "@pages/AdminPage/Participants";
@@ -15,7 +14,7 @@ const AdminPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const clickSignOut = () => {
-    triggerAlert("Are you sure sign out page").then((result) => {
+    triggerAlertConfirm("Are you sure sign out page").then((result) => {
       if (result.isConfirmed) {
         dispatch(adminSignOut());
         localStorage.setItem(LOCAL_ACCESS_TOKEN, "");
@@ -41,14 +40,6 @@ const AdminPage = () => {
       <div className="flex justify-left bg-[#f5f5f5] px-4 py-5 mb-5">
         <NavLink
           exact
-          to="/admin"
-          activeClassName="text-indigo-900"
-          className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
-        >
-          Home
-        </NavLink>
-        <NavLink
-          exact
           to="/admin/session"
           activeClassName="text-indigo-900"
           className="pt-1 font-bold flex mr-3 cursor-pointer hover:opacity-75"
@@ -67,7 +58,6 @@ const AdminPage = () => {
 
       <div>
         <Switch>
-          <Route exact path="/admin" component={HomeAdmin} />
           <Route exact path="/admin/session/participants/:sessionId" component={Participants} />
           <Route exact path="/admin/create-quiz" component={CreateQuiz} />
           <Route

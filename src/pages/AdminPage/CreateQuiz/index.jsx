@@ -1,15 +1,15 @@
-import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Loading from "@pages/AdminPage/Loading";
 import Question from "@pages/AdminPage/Quiz/Component/Question";
-import { postQuiz } from "@actions/quiz.action";
+import { postQuiz, getQuizzes } from "@actions/quiz.action";
+import { selectQuizzes } from "@store/slice";
 import {
   MIN_QUESTION_PER_QUIZ,
 } from "@utils/constant";
 import {
   formTimeChallenge, createNewQuestion,
-  triggerAlert, isExistQuestionEditing, isBlank,
+  triggerAlertConfirm, isExistQuestionEditing, isBlank, triggerAlertOnlyMessage,
 } from "@utils";
 import { nanoid } from "nanoid";
 
@@ -17,16 +17,34 @@ import { nanoid } from "nanoid";
 export default function Quiz() {
   const dispatch = useDispatch();
   const [quiz, setQuiz] = useState({ category: "", questions: [], timeChangllenge: 0 });
+  const listQuiz = useSelector(selectQuizzes);
   const timeChallenge = useRef();
 
+  useEffect(() => {
+    dispatch(getQuizzes());
+  }, []);
 
   // function delete question
+  const validateCreateQuiz = () => {
+    let isValid = true;
+    const { category } = quiz;
+    debugger;
+    if (isBlank(category)) {
+      isValid = false;
+      triggerAlertOnlyMessage("You cannot blank quiz name.");
+    }
+    if (listQuiz.filter((quizz) => quizz.category === category).length !== 0) {
+      isValid = false;
+      triggerAlertOnlyMessage(`Quiz name : ${category} has been existed`);
+    }
+    return isValid;
+  };
   const deleteQuestionWithId = (idQuestion, indexQuestion) => {
     let { questions } = quiz;
     if (questions.length <= MIN_QUESTION_PER_QUIZ) {
-      return Swal.fire("Can't delete question, A quiz have a minimum 10 question");
+      return triggerAlertOnlyMessage("Can't delete question, A quiz have a minimum 10 question");
     }
-    triggerAlert(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
+    triggerAlertConfirm(`Are you sure delete question ${indexQuestion + 1}`).then((result) => {
       if (result.isConfirmed) {
         questions = questions.filter((question) => question.id !== idQuestion);
         return setQuiz({ ...quiz, questions });
@@ -36,14 +54,13 @@ export default function Quiz() {
 
   // function update quiz
   const createQuiz = () => {
-    if (isBlank(quiz.category)) {
-      return Swal.fire("You cannot blank quiz name.");
+    if (validateCreateQuiz()) {
+      triggerAlertConfirm("Are you sure, you want create quiz ?").then((result) => {
+        if (result.isConfirmed) {
+          dispatch(postQuiz(quiz));
+        }
+      });
     }
-    triggerAlert("Are you sure, you want create quiz ?").then((result) => {
-      if (result.isConfirmed) {
-        dispatch(postQuiz(quiz));
-      }
-    });
   };
 
   const updateQuestionToQuiz = (questionUpdated) => {

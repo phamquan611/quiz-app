@@ -4,12 +4,12 @@ import {
   RiEdit2Fill,
   RiAddBoxLine,
 } from "react-icons/ri";
-import Swal from "sweetalert2";
 import { nanoid } from "nanoid";
 import Answer from "@pages/AdminPage/Quiz/Component/Question/Answer";
 import {
   IDEA, checkDuplicateAnswer, isBlank,
-  checkElementEmpty, triggerAlert,
+  checkElementEmpty, triggerAlertConfirm,
+  triggerAlertOnlyMessage,
 } from "@utils";
 import {
   DELETE_CORRECT_ANSWER_ALERT_MESSAGE,
@@ -50,18 +50,18 @@ export default function Question(props) {
     const { content, answers, correct_answer } = question;
 
     if (isBlank(content) || checkElementEmpty(defaultQuestion.answers)) {
-      Swal.fire(BLANK_CONTENT_ALERT_MESSAGE);
+      triggerAlertOnlyMessage(BLANK_CONTENT_ALERT_MESSAGE);
       isValid = false;
     }
 
     if (checkDuplicateAnswer(answers)) {
       isValid = false;
-      Swal.fire(DUPLICATE_ANSWER_ALERT_MESSAGE);
+      triggerAlertOnlyMessage(DUPLICATE_ANSWER_ALERT_MESSAGE);
     }
 
     if (!correct_answer) {
       isValid = false;
-      Swal.fire(REQUIRE_CORRECT_ANSWER_ALERT_MESSAGE);
+      triggerAlertOnlyMessage(REQUIRE_CORRECT_ANSWER_ALERT_MESSAGE);
     }
 
     return isValid;
@@ -83,7 +83,7 @@ export default function Question(props) {
   };
 
   const cancelUpdateQuestion = () => {
-    if (validationQuestion(defaultQuestion)) {
+    if (validationQuestion(question)) {
       setIsChange(null);
       const {
         id, answers, correct_answer, content,
@@ -100,14 +100,14 @@ export default function Question(props) {
   const deleteAnswer = (id, isCorrectAnswer) => {
     const { answers } = defaultQuestion;
     if (isCorrectAnswer) {
-      return Swal.fire(DELETE_CORRECT_ANSWER_ALERT_MESSAGE);
+      return triggerAlertOnlyMessage(DELETE_CORRECT_ANSWER_ALERT_MESSAGE);
     }
     if (answers.length <= MIN_ANSWER_PER_QUESTION) {
-      return Swal.fire(MIN_ANSWER_PER_QUESTION_ALERT_MESSAGE);
+      return triggerAlertOnlyMessage(MIN_ANSWER_PER_QUESTION_ALERT_MESSAGE);
     }
     // delete success
     toggleEditQuestion(question.id, true);
-    triggerAlert("Do you want to delete answer ?").then((result) => {
+    triggerAlertConfirm("Do you want to delete answer ?").then((result) => {
       if (result.isConfirmed) {
         setIsChange(true);
         const newAnswers = answers.filter((answer) => answer.id !== id);

@@ -19,6 +19,7 @@ export default function Participants() {
   const { sessionId } = params;
   const [participants, setParticipants] = useState([]);
   const [session, setSession] = useState({});
+
   useEffect(() => {
     if (sessionsStore.length === 0) {
       dispatch(getListSession());
@@ -28,39 +29,17 @@ export default function Participants() {
         // add unique key to map with antd
         const configDataParticipants = matchSession[0].participants.map((participant) => {
           const { username } = participant;
-          return { ...participant, key: username };
+          let { result } = participant;
+          if (!result) {
+            result = 0;
+          }
+          return { ...participant, key: username, result };
         });
         setParticipants(configDataParticipants);
         setSession(matchSession[0]);
-      } else {
-        setParticipants(null);
       }
     }
   }, []);
-
-  useEffect(() => {
-    const matchSession = sessionsStore.filter((session) => session._id === sessionId);
-    if (matchSession.length !== 0) {
-      const configDataParticipants = matchSession[0].participants.map((participant) => {
-        const { username } = participant;
-        return { ...participant, key: username };
-      });
-      setParticipants(configDataParticipants);
-      setSession(matchSession[0]);
-    } else {
-      setParticipants(null);
-    }
-  }, [sessionsStore[0]]);
-
-  const filterAsc = () => {
-    const participantsAsc = participants.sort((parA, parB) => parA.result - parB.result);
-    setParticipants([...participantsAsc]);
-  };
-
-  const filterDesc = () => {
-    const participantsDesc = participants.sort((parA, parB) => parB.result - parA.result);
-    setParticipants([...participantsDesc]);
-  };
 
   return (
     <div>
@@ -68,36 +47,21 @@ export default function Participants() {
         : (
           <div>
             <div className="px-[30px] pb-[20px]">
-              <h1 className="font-bold text-[20px]">
-                {"Category : "}
-                {session.category}
-              </h1>
-              <div className="font-bold text-[17px]">
-                Date :
+              <div className="font-bold">
+                {`Quiz name : ${session.category}`}
+              </div>
+              <div className="font-bold">
+                Test date :
                 {` ${moment(session.date).format("DD-MM-YYYY")}`}
               </div>
-              <div className="font-bold text-[17px]">
+              <div className="font-bold">
                 Time start :
                 {` ${convertTimeStampToDateTime(session.timeStart)}`}
               </div>
-              <div className="font-bold text-[17px]">
+              <div className="font-bold">
                 Time end :
                 {` ${convertTimeStampToDateTime(session.timeEnd)}`}
               </div>
-            </div>
-            <div className="flex mx-[20px] py-5">
-              <button
-                onClick={filterAsc}
-                className="py-2 px-4 bg-main-color text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75"
-              >
-                Ascending
-              </button>
-              <button
-                onClick={filterDesc}
-                className="py-2 ml-5 px-4 bg-danger-color text-white font-semibold opacity-75 rounded-lg hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-opacity-75"
-              >
-                decrease
-              </button>
             </div>
             <Table columns={COLUMNS_PARTICIPANTS_TABLE} dataSource={participants} />
           </div>
